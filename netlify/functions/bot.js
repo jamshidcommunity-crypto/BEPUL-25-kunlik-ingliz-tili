@@ -1,6 +1,7 @@
 // Telegram webhook for @InglizTili0danBot — referral gate for the Beginner 25 course.
-// Flow: /start (with ?start=ref_<id>) → user joins BOTH channels → presses "Tekshirish" →
-// counted for the referrer → when a referrer reaches REQUIRED (3) confirmed friends, the bot sends
+// Flow: friend opens the referrer's link (t.me/<bot>?start=ref_<id>) → presses Start → joins BOTH channels.
+// The bot sees the joins itself (chat_member updates; bot must be admin in both channels) — no button needed.
+// When a referrer has REQUIRED (3) friends in both channels (and is in both channels himself), the bot sends
 // an app access code + a one-time link to the closed channel.
 const { col, now, inc } = require('./lib/db');
 const tg = require('./lib/tg');
@@ -15,9 +16,12 @@ const ENV = {
   ADMINS: (process.env.ADMIN_IDS || '').split(',').map(s => s.trim()).filter(Boolean),
   SECRET: process.env.WEBHOOK_SECRET || '',
 };
+const norm = (ch) => String(ch || '').replace('@', '').toLowerCase();
+const isOurChannel = (chat) => chat && chat.username && [norm(ENV.CH1), norm(ENV.CH2)].includes(chat.username.toLowerCase());
 const chUrl = (ch) => `https://t.me/${String(ch).replace('@', '')}`;
 const refLink = (id) => `https://t.me/${ENV.BOT}?start=ref_${id}`;
-const shareUrl = (id) => `https://t.me/share/url?url=${encodeURIComponent(refLink(id))}&text=${encodeURIComponent('Ingliz tilini 0 dan bepul oʻrganamiz — 25 kunlik kurs, Imamov Academy. Shu havola orqali kiring:')}`;
+const SHARE_TEXT = 'Ingliz tilini 0 dan BEPUL oʻrganamiz — 25 kunlik kurs, Imamov Academy. Havolani bosing, «Start» ni bosing va 2 ta kanalga qoʻshiling:';
+const shareUrl = (id) => `https://t.me/share/url?url=${encodeURIComponent(refLink(id))}&text=${encodeURIComponent(SHARE_TEXT)}`;
 const users = () => col('b25_users');
 
 function genCode() {
@@ -26,38 +30,15 @@ function genCode() {
   for (let i = 0; i < 5; i++) s += A[Math.floor(Math.random() * A.length)];
   return 'B25-' + s;
 }
-const mainKb = () => tg.kb([
-  [{ text: '✅ Kanallarga aʼzo boʻldim — tekshirish', callback_data: 'check' }],
-  [{ text: '🔗 Mening havolam', callback_data: 'link' }, { text: '📊 Holatim', callback_data: 'status' }],
+const channelsKb = (extra = []) => tg.kb([
+  [{ text: `➕ ${ENV.CH1}`, url: chUrl(ENV.CH1) }],
+  [{ text: `➕ ${ENV.CH2}`, url: chUrl(ENV.CH2) }],
+  ...extra,
 ]);
-const joinKb = (missing) => tg.kb([
-  ...missing.map(ch => [{ text: `➕ ${ch} ga aʼzo boʻlish`, url: chUrl(ch) }]),
-  [{ text: '✅ Aʼzo boʻldim — tekshirish', callback_data: 'check' }],
-]);
+const shareRow = (id) => [{ text: '📤 Doʻstlarga ulashish', url: shareUrl(id) }];
+const mainKb = (id) => channelsKb([shareRow(id), [{ text: '📊 Holatim', callback_data: 'status' }]]);
 
 async function getUser(id) { const d = await users().doc(String(id)).get(); return d.exists ? d.data() : null; }
-
-async function onStart(from, payload) {
-  const id = String(from.id);
-  const u = await getUser(id);
-  const name = [from.first_name, from.last_name].filter(Boolean).join(' ');
-  if (!u) {
-    const m = /^ref_(\d+)$/.exec(payload || '');
-    const ref = m && m[1] !== id && (await getUser(m[1])) ? m[1] : null;
-    await users().doc(id).set({ id, name, username: from.username || '', ref, joined: false, invites: 0, code: null, createdAt: now() });
-    if (ref) await tg.send(ref, `👋 <b>${tg.esc(name)}</b> sizning havolangiz orqali kirdi. U ikkala kanalga aʼzo boʻlgach, hisobingizga qoʻshiladi.`).catch(() => {});
-  } else if (u.name !== name || u.username !== (from.username || '')) {
-    await users().doc(id).set({ name, username: from.username || '' }, { merge: true });
-  }
-  await tg.send(id,
-    `Assalomu alaykum, <b>${tg.esc(from.first_name)}</b>! 👋\n\n` +
-    `Bu — <b>Beginner 25</b>: ingliz tilini 0 dan oʻrganish uchun 25 kunlik <b>bepul</b> kurs (Imamov Academy).\n\n` +
-    `Kursga kirish uchun 2 ta qadam:\n` +
-    `1️⃣ Ikkala kanalga aʼzo boʻling:\n   • ${ENV.CH1}\n   • ${ENV.CH2}\n` +
-    `2️⃣ <b>${ENV.REQUIRED} ta doʻstingizni</b> oʻz havolangiz orqali taklif qiling — ular ham ikkala kanalga aʼzo boʻlsin.\n\n` +
-    `Shundan keyin bot sizga <b>ilovaga kirish kodini</b> va <b>yopiq kanal havolasini</b> beradi. 🎁`,
-    mainKb());
-}
 
 async function checkMembership(id) {
   const [a, b] = await Promise.all([tg.isMember(ENV.CH1, id), tg.isMember(ENV.CH2, id)]);
@@ -67,7 +48,67 @@ async function checkMembership(id) {
   return missing;
 }
 
+// Core: re-evaluate one user. Marks him "joined" when he is in both channels, credits his referrer once,
+// and issues his own code if he already has enough friends. Safe to call any number of times.
+async function evaluate(uid, { quiet } = {}) {
+  uid = String(uid);
+  let u = await getUser(uid);
+  if (!u) return null;
+  let missing;
+  try { missing = await checkMembership(uid); } catch (e) { console.error('membership', e.message); return u; }
+  if (missing.length) return Object.assign(u, { missing });
+  if (!u.joined) {
+    await users().doc(uid).set({ joined: true, joinedAt: now() }, { merge: true });
+    if (u.ref && !u.credited) {
+      await users().doc(uid).set({ credited: true }, { merge: true });
+      await users().doc(u.ref).set({ invites: inc(1) }, { merge: true });
+      const r = await getUser(u.ref);
+      const n = r.invites || 0;
+      await tg.send(u.ref, `✅ <b>${tg.esc(u.name)}</b> ikkala kanalga qoʻshildi va hisobingizga oʻtdi. Taklif qilganlaringiz: <b>${Math.min(n, ENV.REQUIRED)}/${ENV.REQUIRED}</b>` +
+        (n >= ENV.REQUIRED ? '' : `\nYana <b>${ENV.REQUIRED - n}</b> ta doʻst qoldi.`)).catch(() => {});
+      if (n >= ENV.REQUIRED && !r.code) {
+        if (r.joined) await issueCode(u.ref);
+        else await tg.send(u.ref, `🎯 ${ENV.REQUIRED} ta doʻst yigʻildi! Kodni olish uchun oʻzingiz ham ikkala kanalga qoʻshiling:`, channelsKb()).catch(() => {});
+      }
+    }
+    if (!quiet) {
+      await tg.send(uid, `✅ Ajoyib, siz ikkala kanalga qoʻshildingiz!` + (u.ref ? ' Doʻstingiz hisobiga oʻtdingiz.' : '') +
+        `\n\nEndi oʻzingiz ham kursga kiring: <b>${ENV.REQUIRED} ta doʻstingizni</b> taklif qiling. Sizning havolangiz:\n${refLink(uid)}`,
+        tg.kb([shareRow(uid), [{ text: '📊 Holatim', callback_data: 'status' }]])).catch(() => {});
+    }
+    u = await getUser(uid);
+  }
+  if ((u.invites || 0) >= ENV.REQUIRED && !u.code) { await issueCode(uid); u = await getUser(uid); }
+  return u;
+}
+
+async function onStart(from, payload) {
+  const id = String(from.id);
+  const u = await getUser(id);
+  const name = [from.first_name, from.last_name].filter(Boolean).join(' ');
+  let ref = null;
+  if (!u) {
+    const m = /^ref_(\d+)$/.exec(payload || '');
+    ref = m && m[1] !== id && (await getUser(m[1])) ? m[1] : null;
+    await users().doc(id).set({ id, name, username: from.username || '', ref, joined: false, credited: false, invites: 0, code: null, createdAt: now() });
+    if (ref) await tg.send(ref, `👋 <b>${tg.esc(name)}</b> sizning havolangiz orqali kirdi. Ikkala kanalga qoʻshilishi bilan hisobingizga avtomatik oʻtadi.`).catch(() => {});
+  } else if (u.name !== name || u.username !== (from.username || '')) {
+    await users().doc(id).set({ name, username: from.username || '' }, { merge: true });
+  }
+  const after = await evaluate(id, { quiet: false });
+  if (after && after.joined) return sendStatus(id, after);
+  await tg.send(id,
+    `Assalomu alaykum, <b>${tg.esc(from.first_name)}</b>! 👋\n\n` +
+    `<b>Beginner 25</b> — ingliz tilini 0 dan oʻrganish uchun 25 kunlik <b>bepul</b> kurs (Imamov Academy).\n\n` +
+    `1️⃣ Pastdagi <b>ikkala kanalga</b> qoʻshiling — bot buni oʻzi koʻradi, hech narsa bosish shart emas.\n` +
+    `2️⃣ <b>${ENV.REQUIRED} ta doʻstingizni</b> oʻz havolangiz orqali taklif qiling — ular ham ikkala kanalga qoʻshilsa, avtomatik hisobga oʻtadi.\n\n` +
+    `Shundan keyin bot sizga <b>ilovaga kirish kodini</b> va <b>yopiq kanal havolasini</b> yuboradi. 🎁\n\n` +
+    `🔗 Sizning havolangiz:\n${refLink(id)}`,
+    mainKb(id));
+}
+
 async function issueCode(uid) {
+  uid = String(uid);
   const u = await getUser(uid);
   if (!u) return;
   let code = u.code;
@@ -81,38 +122,9 @@ async function issueCode(uid) {
   await tg.send(uid,
     `🎉 <b>Tabriklaymiz!</b> ${ENV.REQUIRED} ta doʻstingiz qoʻshildi.\n\n` +
     `🔑 Ilovaga kirish kodingiz: <code>${code}</code>\n` +
-    `📱 Ilova: ${ENV.APP}\n   (ochib, kodni kiriting; telefonga ilova sifatida oʻrnatish mumkin)\n\n` +
+    `📱 Ilova: ${ENV.APP}/?code=${code}\n   Havolani <b>Chrome</b> (Android/kompyuter) yoki <b>Safari</b> (iPhone) da oching va «Oʻrnatish» ni bosing — ilova telefoningizga oʻrnatiladi.\n\n` +
     (link ? `🔒 Yopiq kanal (darslar shu yerda): ${link}\n   <i>Havola faqat siz uchun, 1 marta ishlaydi.</i>` : `🔒 Yopiq kanal havolasi tez orada yuboriladi.`),
-    tg.kb([[{ text: '📱 Ilovani ochish', url: ENV.APP }], ...(link ? [[{ text: '🔒 Yopiq kanalga kirish', url: link }]] : [])]));
-}
-
-async function onCheck(from, cbId) {
-  const id = String(from.id);
-  let u = await getUser(id);
-  if (!u) { await onStart(from, ''); u = await getUser(id); }
-  let missing;
-  try { missing = await checkMembership(id); }
-  catch (e) { console.error(e); await tg.answerCb(cbId); return tg.send(id, '⚠️ Tekshirishda xatolik. Bot kanallarda admin ekanini tekshiring yoki keyinroq urinib koʻring.'); }
-  if (missing.length) {
-    await tg.answerCb(cbId, 'Hali hamma kanalga aʼzo emassiz');
-    return tg.send(id, `Hali aʼzo boʻlmagan kanal${missing.length > 1 ? 'lar' : ''}:\n${missing.map(c => '• ' + c).join('\n')}\n\nAʼzo boʻlib, yana «tekshirish»ni bosing.`, joinKb(missing));
-  }
-  await tg.answerCb(cbId, 'Ikkala kanalga aʼzosiz ✅');
-  if (!u.joined) {
-    await users().doc(id).set({ joined: true, joinedAt: now() }, { merge: true });
-    if (u.ref) {
-      await users().doc(u.ref).set({ invites: inc(1) }, { merge: true });
-      const r = await getUser(u.ref);
-      const n = r.invites || 0;
-      await tg.send(u.ref, `✅ <b>${tg.esc(u.name)}</b> ikkala kanalga aʼzo boʻldi. Taklif qilganlaringiz: <b>${n}/${ENV.REQUIRED}</b>`).catch(() => {});
-      if (n >= ENV.REQUIRED && !r.code) await issueCode(u.ref);
-    }
-  }
-  u = await getUser(id);
-  if (u.code) return sendStatus(id, u);
-  return tg.send(id,
-    `✅ Siz ikkala kanalga aʼzosiz!\n\nEndi <b>${ENV.REQUIRED} ta doʻstingizni</b> taklif qiling. Sizning havolangiz:\n${refLink(id)}\n\nHozir: <b>${u.invites || 0}/${ENV.REQUIRED}</b>`,
-    tg.kb([[{ text: '📤 Doʻstlarga ulashish', url: shareUrl(id) }], [{ text: '📊 Holatim', callback_data: 'status' }]]));
+    tg.kb([[{ text: '📱 Ilovani ochish', url: `${ENV.APP}/?code=${code}` }], ...(link ? [[{ text: '🔒 Yopiq kanalga kirish', url: link }]] : [])]));
 }
 
 async function sendStatus(id, u) {
@@ -120,15 +132,15 @@ async function sendStatus(id, u) {
   if (!u) return tg.send(id, 'Avval /start ni bosing.');
   const n = u.invites || 0;
   const inv = await users().where('ref', '==', String(id)).get();
-  const names = inv.docs.map(d => d.data()).map(x => `• ${tg.esc(x.name)} ${x.joined ? '✅' : '⏳ (kanallarga aʼzo emas)'}`).join('\n');
-  let txt = `📊 <b>Holatingiz</b>\nKanallar: ${u.joined ? 'aʼzo ✅' : 'tekshirilmagan ⏳'}\nTaklif qilganlar: <b>${n}/${ENV.REQUIRED}</b>\n${names || '• hali hech kim yoʻq'}\n\n🔗 Havolangiz: ${refLink(id)}`;
+  const names = inv.docs.map(d => d.data()).map(x => `• ${tg.esc(x.name)} ${x.joined ? '✅' : '⏳ (hali ikkala kanalga qoʻshilmagan)'}`).join('\n');
+  let txt = `📊 <b>Holatingiz</b>\nKanallar: ${u.joined ? 'ikkalasiga aʼzo ✅' : 'hali toʻliq emas ⏳'}\nTaklif qilganlar: <b>${Math.min(n, ENV.REQUIRED)}/${ENV.REQUIRED}</b>\n${names || '• hali hech kim yoʻq'}\n\n🔗 Havolangiz: ${refLink(id)}`;
   if (u.code) {
     const p = await col('b25_progress').doc(String(id)).get();
     const d = p.exists ? p.data() : null;
     const done = d ? Object.values(d.units || {}).filter(x => x.score >= 14).length : 0;
-    txt += `\n\n🔑 Kod: <code>${u.code}</code>\n📱 Ilova: ${ENV.APP}\n📚 Tugallangan darslar: <b>${done}/34</b>${d && d.test ? ` · Test: ${d.test.score}/40` : ''}`;
+    txt += `\n\n🔑 Kod: <code>${u.code}</code>\n📱 Ilova: ${ENV.APP}/?code=${u.code}\n📚 Tugallangan darslar: <b>${done}/34</b>${d && d.test ? ` · Test: ${d.test.score}/40` : ''}`;
   }
-  return tg.send(id, txt, tg.kb([[{ text: '📤 Doʻstlarga ulashish', url: shareUrl(id) }], [{ text: '✅ Tekshirish', callback_data: 'check' }]]));
+  return tg.send(id, txt, u.joined ? tg.kb([shareRow(id)]) : mainKb(id));
 }
 
 async function onAdmin(from, text) {
@@ -161,22 +173,35 @@ exports.handler = async (event) => {
   if (ENV.SECRET && event.headers['x-telegram-bot-api-secret-token'] !== ENV.SECRET) return { statusCode: 403, body: 'forbidden' };
   let up; try { up = JSON.parse(event.body); } catch { return { statusCode: 400, body: 'bad json' }; }
   try {
+    // Someone joined one of our channels → evaluate him (auto credit, no button).
+    if (up.chat_member && isOurChannel(up.chat_member.chat)) {
+      const cm = up.chat_member, st = cm.new_chat_member.status, old = cm.old_chat_member.status;
+      if (['member', 'administrator', 'creator', 'restricted'].includes(st) && ['left', 'kicked'].includes(old)) {
+        await evaluate(cm.new_chat_member.user.id);
+      }
+      return { statusCode: 200, body: 'ok' };
+    }
+    // Bot added as admin to a channel, or someone posts /id in a channel → tell admins the chat id.
+    const mc = up.my_chat_member, cp = up.channel_post;
+    if ((mc && ['administrator', 'member'].includes(mc.new_chat_member.status) && mc.chat.type !== 'private') || (cp && /^\/id\b/.test(cp.text || ''))) {
+      const chat = (mc || cp).chat;
+      for (const a of ENV.ADMINS) await tg.send(a, `📌 Kanal: <b>${tg.esc(chat.title)}</b>\nID: <code>${chat.id}</code>\n\nYopiq kanal boʻlsa, shu raqamni Netlify’da <b>CLOSED_CHANNEL_ID</b> ga qoʻying.`).catch(() => {});
+      return { statusCode: 200, body: 'ok' };
+    }
     if (up.message && up.message.text) {
       const m = up.message, from = m.from, t = m.text.trim();
       if (m.chat.type !== 'private') return { statusCode: 200, body: 'ok' };
       if (t.startsWith('/start')) await onStart(from, t.split(/\s+/)[1]);
-      else if (t.startsWith('/link') || t.startsWith('/havola')) await tg.send(from.id, `🔗 Sizning havolangiz:\n${refLink(from.id)}`, tg.kb([[{ text: '📤 Doʻstlarga ulashish', url: shareUrl(from.id) }]]));
-      else if (t.startsWith('/holat') || t.startsWith('/status')) await sendStatus(String(from.id));
-      else if (t.startsWith('/kod')) { const u = await getUser(from.id); await tg.send(from.id, u && u.code ? `🔑 Kodingiz: <code>${u.code}</code>\n📱 ${ENV.APP}` : `Hali kod yoʻq. ${ENV.REQUIRED} ta doʻst taklif qiling: ${refLink(from.id)}`); }
-      else if (t.startsWith('/tekshir')) await onCheck(from, null);
+      else if (t.startsWith('/link') || t.startsWith('/havola')) await tg.send(from.id, `🔗 Sizning havolangiz:\n${refLink(from.id)}`, tg.kb([shareRow(from.id)]));
+      else if (t.startsWith('/holat') || t.startsWith('/status') || t.startsWith('/tekshir')) { const u = await evaluate(from.id, { quiet: true }); await sendStatus(String(from.id), u); }
+      else if (t.startsWith('/kod')) { const u = await evaluate(from.id, { quiet: true }); await tg.send(from.id, u && u.code ? `🔑 Kodingiz: <code>${u.code}</code>\n📱 ${ENV.APP}/?code=${u.code}` : `Hali kod yoʻq. ${ENV.REQUIRED} ta doʻst taklif qiling: ${refLink(from.id)}`); }
       else if (ENV.ADMINS.includes(String(from.id)) && t.startsWith('/')) await onAdmin(from, t);
-      else await tg.send(from.id, 'Buyruqlar: /start, /tekshir, /havola, /holat, /kod', mainKb());
+      else { await getUser(from.id) ? await sendStatus(String(from.id)) : await onStart(from, ''); }
     } else if (up.callback_query) {
       const cq = up.callback_query, from = cq.from;
-      if (cq.data === 'check') await onCheck(from, cq.id);
-      else if (cq.data === 'link') { await tg.answerCb(cq.id); await tg.send(from.id, `🔗 Sizning havolangiz:\n${refLink(from.id)}\n\nDoʻstingiz shu havola orqali botga kirib, ikkala kanalga aʼzo boʻlishi kerak.`, tg.kb([[{ text: '📤 Doʻstlarga ulashish', url: shareUrl(from.id) }]])); }
-      else if (cq.data === 'status') { await tg.answerCb(cq.id); await sendStatus(String(from.id)); }
-      else await tg.answerCb(cq.id);
+      await tg.answerCb(cq.id);
+      if (cq.data === 'status' || cq.data === 'check') { const u = await evaluate(from.id, { quiet: true }); await sendStatus(String(from.id), u); }
+      else if (cq.data === 'link') await tg.send(from.id, `🔗 Sizning havolangiz:\n${refLink(from.id)}`, tg.kb([shareRow(from.id)]));
     }
   } catch (e) { console.error('bot error', e); }
   return { statusCode: 200, body: 'ok' };

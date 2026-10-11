@@ -5,7 +5,7 @@ AI yoʻq — hamma mashq kalit boʻyicha tekshiriladi.
 
 ## Qanday ishlaydi
 1. Oʻquvchi botga kiradi → shaxsiy havola oladi.
-2. 3 ta doʻsti shu havola orqali botga kirib, **ikkala kanalga** (@jamshid_akhatkulov_en va @Imamov_academy) aʼzo boʻladi va «Tekshirish»ni bosadi.
+2. 3 ta doʻsti shu havola orqali botga kirib (Start), **ikkala kanalga** (@jamshid_akhatkulov_en va @Imamov_academy) qoʻshiladi — bot qoʻshilganini oʻzi koʻradi, hech qanday tugma bosish shart emas; doʻst avtomatik hisobga oʻtadi.
 3. 3 ta doʻst tasdiqlangach bot **ilova kodini** (`B25-XXXXX`) va **yopiq kanalga 1 martalik havola** beradi.
 4. Oʻquvchi ilovani ochib kodni kiritadi; natijalari avtomatik botga yoziladi (`/holat`), siz `/natija` va `/stat` bilan koʻrasiz.
 
@@ -53,12 +53,14 @@ AI yoʻq — hamma mashq kalit boʻyicha tekshiriladi.
 | `FIREBASE_SERVICE_ACCOUNT` | service-account JSON (butun matn yoki base64) |
 | `REQUIRED_INVITES` | `3` |
 
-- Deploy tugagach webhookni ulang (brauzerda oching):
-  `https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://<sayt>.netlify.app/.netlify/functions/bot&secret_token=<WEBHOOK_SECRET>`
+- Deploy tugagach webhookni ulang — brauzerda bitta havolani oching:
+  `https://<sayt>.netlify.app/.netlify/functions/setup?key=<WEBHOOK_SECRET>`
+  Sahifa «✅ Bot ulandi» deb, bot qaysi kanallarda admin ekanini ham koʻrsatadi. (Bu havola webhookni *chat_member* hodisalari bilan ulaydi — avtomatik hisoblash uchun shart.)
+- Netlify’da **Project configuration → Access & security → Team protection** oʻchirilgan boʻlsin (aks holda Telegram 401 oladi).
 - Tekshirish: botga `/start` yozing.
 
 ## Bot buyruqlari
-Oʻquvchi: `/start`, `/tekshir`, `/havola`, `/holat`, `/kod`.
+Oʻquvchi: `/start`, `/havola`, `/holat`, `/kod`. Kanalga qoʻshilgan doʻst avtomatik hisoblanadi (bot ikkala kanalda admin boʻlishi shart).
 Admin: `/stat` (statistika), `/natija` (oʻquvchilar natijalari), `/kun N` (ilovada N-kungacha ochish — rebuild shart emas), `/kodber <user_id>` (kodni majburan berish).
 
 ## Kontentni oʻzgartirish
@@ -70,5 +72,5 @@ Admin: `/stat` (statistika), `/natija` (oʻquvchilar natijalari), `/kun N` (ilov
 ## Ilova
 - Kod bilan kirish; `DEMO` kodi — serversiz sinov (natija yuborilmaydi).
 - Orqaga: telefon «orqaga» tugmasi va kompyuterda **Esc** — bir qadam orqaga; bosh sahifada chiqish uchun ikki marta bosiladi.
-- Oʻrnatish: bosh sahifadagi «Ilovani oʻrnatish» — Android/kompyuterda tugma, iPhone’da koʻrsatma.
+- Oʻrnatish: kirish sahifasida va birinchi kirishdan keyin «Ilova qilib oʻrnating» — Android/kompyuterda bir tugma, iPhone’da Safari koʻrsatmasi, Telegram ichida ochilsa «Brauzerda ochish» koʻrsatmasi. Bot kodni `?code=` bilan havola qilib yuboradi — ilova kodni oʻzi toʻldiradi.
 - Shadowing brauzer ovozi bilan (TTS). Oʻz ovozingizni qoʻshish uchun `shadowing[].audio` maydoniga MP3 yoʻlini qoʻyish mumkin (keyingi versiyada).

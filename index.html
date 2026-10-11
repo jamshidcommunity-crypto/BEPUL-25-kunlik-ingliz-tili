@@ -157,7 +157,7 @@ canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
 .codein:focus{outline:none;border-color:var(--sky)}
 .err{color:var(--bad);font-size:14px;font-weight:600;min-height:20px;margin:8px 0;text-align:center}
 .steps{display:grid;gap:8px;margin:14px 0}
-.steps div{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)} .steps b{width:24px;height:24px;border-radius:50%;background:var(--tint);color:var(--royal);display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:none}
+.steps>div{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)} .steps>div>b{width:24px;height:24px;border-radius:50%;background:var(--tint);color:var(--royal);display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:none} .steps span b{color:var(--ink)}
 /* install */
 .install{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;text-align:left;width:100%}
 .install .ic{width:44px;height:44px;border-radius:12px;background:var(--tint);display:flex;align-items:center;justify-content:center;font-size:22px}
@@ -248,7 +248,7 @@ window.addEventListener('popstate',e=>{if(e.state&&e.state.root){if(exitArmed){r
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const pop=document.querySelector('.pop');if(pop){pop.remove();return;}if(location.hash&&location.hash!=='#home'&&location.hash!=='#start')back();}});
 function initHistory(){const h=location.hash||'#home';history.replaceState({root:1},'','#home');history.pushState({b25:0},'',h);}
 function route(){TTS.stop();document.querySelectorAll('.pop').forEach(p=>p.remove());const h=location.hash.replace('#','').replace(/^(all|demo)\/?/,'');const [k,a,b]=h.split('/');window.scrollTo(0,0);
-  if(!P.code&&!DEMO())return viewStart();
+  if(!P.code&&!DEMO())return k==='install'?viewInstall():viewStart();
   if(k==='start'&&P.code)return go('home');
   if(k==='day')return viewDay(+a);
   if(k==='unit')return viewUnit(+a,b||'rule');
@@ -267,12 +267,13 @@ render(`<div class="login"><div class="logo"><img src="${EMBLEM}" alt="Imamov Ac
 <div class="card"><input class="codein" id="code" placeholder="B25-XXXXX" value="${esc(pre)}" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" maxlength="12" onkeydown="if(event.key==='Enter')login()"><div class="err" id="err"></div><button class="btn wide" id="loginbtn" onclick="login()">Kirish</button>
 <div class="steps"><div><b>1</b><span>Telegramda <a href="https://t.me/${BOT}" target="_blank" rel="noopener">@${BOT}</a> ni oching</span></div><div><b>2</b><span>Ikkala kanalga aʼzo boʻling va 3 ta doʻstingizni taklif qiling</span></div><div><b>3</b><span>Bot bergan kodni shu yerga yozing — ilova va yopiq kanal ochiladi</span></div></div>
 <a class="btn ghost wide" href="https://t.me/${BOT}" target="_blank" rel="noopener">Kod olish — @${BOT}</a></div>
-<p class="note" style="text-align:center">Kod bitta oʻquvchi uchun. Natijalar botdagi profilingizga yoziladi.</p></div>`);
-setTimeout(()=>$('#code')?.focus(),50);}
+<p class="note" style="text-align:center">Kod bitta oʻquvchi uchun. Natijalar botdagi profilingizga yoziladi.</p>
+<div id="loginInstall">${installBlock(true)}</div></div>`);
+setTimeout(()=>{if(!pre)$('#code')?.focus();},50);}
 async function login(){const inp=$('#code'),err=$('#err'),btn=$('#loginbtn');let code=inp.value.trim().toUpperCase().replace(/\s+/g,'');if(code&&!code.startsWith('B25-')&&/^[A-Z2-9]{5}$/.test(code))code='B25-'+code;if(!code){err.textContent='Kodni kiriting';return;}
 if(code==='DEMO'){P.uid='demo';P.code='DEMO';P.name='Mehmon';save();return go('home');}
 btn.disabled=true;btn.textContent='Tekshirilmoqda…';err.textContent='';
-try{const j=await verifyCode(code);if(j.ok){P.code=code;P.uid=j.uid;P.name=j.name||'Oʻquvchi';P.tg=j.username?'@'+j.username:'';if(j.openDay)P.openDay=j.openDay;save();buzz(20);go('home');}
+try{const j=await verifyCode(code);if(j.ok){P.code=code;P.uid=j.uid;P.name=j.name||'Oʻquvchi';P.tg=j.username?'@'+j.username:'';if(j.openDay)P.openDay=j.openDay;save();buzz(20);go(isStandalone()||P.hideInstall?'home':'install');}
 else{err.textContent=j.error==='invalid'?'Bunday kod topilmadi. Botdan olgan kodni tekshiring.':'Xatolik. Keyinroq urinib koʻring.';}}
 catch(e){err.textContent=navigator.onLine?'Server bilan bogʻlanib boʻlmadi.':'Internet yoʻq. Ulanib, qayta urinib koʻring.';}
 btn.disabled=false;btn.textContent='Kirish';}
@@ -285,18 +286,38 @@ ${installCard()}
 <div class="days">${DAYS.map(d=>{const {st,got,total}=dayStatus(d);const locked=d.day>od;const n=d.units.length;const sub=n?`${n} ta dars (Unit ${d.units[0].id}${n>1?'–'+d.units[n-1].id:''}) · shadowing`:'40 ta savol · shadowing';return `<button class="day ${st} ${locked?'locked':''} ${nextDay&&nextDay.day===d.day?'next':''}" ${locked?'disabled':''} onclick="go('day/${d.day}')"><span class="num">${d.day}</span><span><span class="t">${esc(d.title)}</span><span class="s">${esc(sub)}</span>${!locked&&got?`<span class="mini"><i style="width:${got/total*100}%"></i></span>`:''}</span><span class="st">${locked?'🔒':st==='done'?'✅':'›'}</span></button>`;}).join('')}</div>${foot()}`);}
 
 /* ===== Install (PWA) ===== */
-let deferredInstall=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;if(location.hash==='#home'||!location.hash){const c=$('#installcard');if(c)c.outerHTML=installCard();}});
-const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
-const isIOS=()=>/iPhone|iPad|iPod/i.test(navigator.userAgent)&&!window.MSStream;
-function installCard(){if(isStandalone()||P.hideInstall)return '';return `<button class="card install" id="installcard" onclick="go('install')"><span class="ic">📲</span><span><span class="t">Ilovani oʻrnatish</span><span class="s">Telefon yoki kompyuterga oʻrnating — bosh ekrandan ochiladi, oflayn ham ishlaydi</span></span><span class="st">›</span></button>`;}
-function viewInstall(){const ios=isIOS();const android=/Android/i.test(navigator.userAgent);
-render(`${topbar('home','Oʻrnatish')}<h2 class="sec">Ilovani oʻrnatish</h2><p class="sub">Beginner 25 — oddiy sayt emas, ilova. Bir marta oʻrnatsangiz, bosh ekrandan ochiladi va internet boʻlmasa ham ishlaydi.</p>
-${deferredInstall?`<div class="card"><p style="margin:0 0 10px">Qurilmangiz oʻrnatishni qoʻllaydi:</p><button class="btn wide" onclick="doInstall()">📲 Hozir oʻrnatish</button></div>`:''}
-<div class="card"><h3 style="font-size:17px;color:var(--royal)">iPhone / iPad (Safari)</h3><div class="steps"><div><b>1</b><span>Safari pastidagi <b>Ulashish</b> (kvadrat va yuqoriga strelka) tugmasini bosing</span></div><div><b>2</b><span>Roʻyxatdan <b>«Bosh ekranga qoʻshish» / «Add to Home Screen»</b> ni tanlang</span></div><div><b>3</b><span><b>Qoʻshish</b> ni bosing — ilova bosh ekranda paydo boʻladi</span></div></div>${ios?'<p class="note">Siz iPhone’dasiz — yuqoridagi 3 qadamni bajaring.</p>':''}</div>
-<div class="card"><h3 style="font-size:17px;color:var(--royal)">Android (Chrome)</h3><div class="steps"><div><b>1</b><span>Chrome oʻng yuqoridagi <b>⋮</b> menyusini oching</span></div><div><b>2</b><span><b>«Ilovani oʻrnatish» / «Install app»</b> (yoki «Bosh ekranga qoʻshish») ni bosing</span></div><div><b>3</b><span><b>Oʻrnatish</b> ni tasdiqlang</span></div></div>${android&&!deferredInstall?'<p class="note">Agar tugma chiqmasa, sahifani yangilab, yana urinib koʻring.</p>':''}</div>
-<div class="card"><h3 style="font-size:17px;color:var(--royal)">Kompyuter (Chrome / Edge)</h3><div class="steps"><div><b>1</b><span>Manzil qatorining oʻng tomonidagi <b>oʻrnatish belgisi</b> (monitor + strelka) ni bosing</span></div><div><b>2</b><span><b>Oʻrnatish</b> ni tasdiqlang — ilova alohida oynada ochiladi</span></div></div><p class="note">Klaviatura: <b>Esc</b> — bir qadam orqaga.</p></div>
-<button class="btn ghost wide" onclick="P.hideInstall=true;save();go('home')">Keyinroq</button>${foot()}`);}
-async function doInstall(){if(!deferredInstall)return;deferredInstall.prompt();const r=await deferredInstall.userChoice;deferredInstall=null;if(r.outcome==='accepted'){toast('Oʻrnatildi! Bosh ekrandan oching.');go('home');}}
+let deferredInstall=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;refreshInstallUI();});
+window.addEventListener('appinstalled',()=>{deferredInstall=null;P.installed=true;save();toast('Ilova oʻrnatildi! Bosh ekrandan oching.');refreshInstallUI();});
+const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.matchMedia('(display-mode: window-controls-overlay)').matches||navigator.standalone===true;
+const UA=navigator.userAgent;
+const isIOS=()=>/iPhone|iPad|iPod/i.test(UA)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const isAndroid=()=>/Android/i.test(UA);
+const isDesktop=()=>!isIOS()&&!isAndroid();
+const isInApp=()=>/Telegram|FBAN|FBAV|Instagram|Line\//i.test(UA)||(isIOS()&&!/Safari/i.test(UA)&&!/CriOS|FxiOS/i.test(UA));
+const isIOSSafari=()=>isIOS()&&/Safari/i.test(UA)&&!/CriOS|FxiOS|EdgiOS/i.test(UA);
+function refreshInstallUI(){const a=$('#loginInstall');if(a)a.innerHTML=installBlock(true);const c=$('#installcard');if(c)c.outerHTML=installCard();const b=$('#installMain');if(b)b.innerHTML=installMain();}
+function installCard(){if(isStandalone()||P.hideInstall)return '';return `<button class="card install" id="installcard" onclick="go('install')"><span class="ic">📲</span><span><span class="t">Ilovani oʻrnatish</span><span class="s">${deferredInstall?'Bir tugma bilan — bosh ekrandan ochiladi, oflayn ham ishlaydi':'Telefon yoki kompyuterga oʻrnating — bosh ekrandan ochiladi, oflayn ham ishlaydi'}</span></span><span class="st">›</span></button>`;}
+// Compact block shown on the login screen (before the code is entered)
+function installBlock(compact){if(isStandalone())return '';
+if(deferredInstall)return `<button class="btn wide" style="margin-top:10px" onclick="doInstall()">📲 Ilovani oʻrnatish</button>`;
+if(isInApp())return `<div class="ios"><b>Telegram ichida ochildi.</b> Ilova qilib oʻrnatish uchun yuqori oʻngdagi <b>⋮</b> (iPhone’da <b>Safari</b> belgisi) → <b>Brauzerda ochish</b> ni bosing.</div>`;
+if(isIOSSafari())return `<div class="ios">📲 <b>iPhone:</b> pastdagi <b>Ulashish</b> ${SHARE_ICON} → <b>Bosh ekranga qoʻshish</b> → <b>Qoʻshish</b>. Ilova bosh ekranda paydo boʻladi.</div>`;
+return compact?`<p class="note" style="text-align:center;margin-top:10px"><a href="#install" onclick="event.preventDefault();go('install')">📲 Ilova qilib oʻrnatish</a></p>`:'';}
+const SHARE_ICON='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+const steps=a=>`<div class="steps">${a.map((t,i)=>`<div><b>${i+1}</b><span>${t}</span></div>`).join('')}</div>`;
+function installMain(){
+if(isStandalone())return `<div class="result"><div class="big">✓</div><p>Ilova oʻrnatilgan va shu yerdan ishlayapti.</p><button class="btn" onclick="go('home')">Darslarga ›</button></div>`;
+if(deferredInstall)return `<div class="card" style="text-align:center"><div style="font-size:44px">📲</div><p style="margin:6px 0 14px">Qurilmangiz bir tugma bilan oʻrnatishni qoʻllaydi.</p><button class="btn wide" onclick="doInstall()">Hozir oʻrnatish</button></div>`;
+if(isInApp())return `<div class="card"><h3 style="font-size:17px;color:var(--royal)">Avval brauzerda oching</h3>${steps(['Hozir sahifa Telegram ichida ochilgan — bu yerdan oʻrnatib boʻlmaydi','Yuqori oʻngdagi <b>⋮</b> (iPhone’da pastdagi <b>Safari</b> belgisi) ni bosing','<b>Brauzerda ochish / Open in Chrome (Safari)</b> ni tanlang — keyin shu sahifa oʻrnatish tugmasini koʻrsatadi'])}</div>`;
+if(isIOS())return `<div class="card"><h3 style="font-size:17px;color:var(--royal)">iPhone / iPad — Safari</h3>${steps([`Safari pastidagi <b>Ulashish</b> ${SHARE_ICON} tugmasini bosing`,'Roʻyxatni pastga surib <b>«Bosh ekranga qoʻshish» / «Add to Home Screen»</b> ni tanlang','Oʻng yuqoridagi <b>Qoʻshish / Add</b> ni bosing'])}${isIOSSafari()?'':'<p class="note">Bu brauzerda oʻrnatib boʻlmaydi — manzilni <b>Safari</b> da oching.</p>'}<p class="note">Oʻrnatilgach, ilova bosh ekranda Imamov Academy belgisi bilan turadi.</p></div>`;
+if(isAndroid())return `<div class="card"><h3 style="font-size:17px;color:var(--royal)">Android — Chrome</h3>${steps(['Chrome’ning oʻng yuqoridagi <b>⋮</b> menyusini oching','<b>«Ilovani oʻrnatish» / «Install app»</b> (yoki «Bosh ekranga qoʻshish») ni bosing','<b>Oʻrnatish</b> ni tasdiqlang'])}<p class="note">Tugma chiqmasa: sahifani yangilang (Chrome oʻrnatish taklifini 1–2 soniyada tayyorlaydi) yoki Chrome’ni yangilang.</p></div>`;
+return `<div class="card"><h3 style="font-size:17px;color:var(--royal)">Kompyuter — Chrome / Edge</h3>${steps(['Manzil qatorining oʻng tomonidagi <b>oʻrnatish belgisi</b> (monitor + strelka) ni bosing','<b>Oʻrnatish</b> ni tasdiqlang — ilova alohida oynada ochiladi va ish stoliga qoʻshiladi'])}<p class="note">Belgi chiqmasa: ⋮ menyu → <b>Cast, save and share → Install page as app</b>. Klaviatura: <b>Esc</b> — bir qadam orqaga.</p></div>`;}
+function viewInstall(){render(`${topbar(P.code?'home':'start','Oʻrnatish')}<div style="text-align:center;margin:6px 0 12px"><img src="${EMBLEM}" alt="" style="height:72px"></div><h2 class="sec" style="text-align:center">Ilova qilib oʻrnating</h2><p class="sub" style="text-align:center">Bosh ekrandan bir bosishda ochiladi, internet boʻlmasa ham ishlaydi, «orqaga» tugmasi ilova ichida qoladi.</p>
+<div id="installMain">${installMain()}</div>
+${isStandalone()?'':`<details class="card" style="margin-top:4px"><summary style="cursor:pointer;font-weight:600;color:var(--royal)">Boshqa qurilma uchun koʻrsatma</summary><div style="margin-top:10px;font-size:14px;color:var(--muted)"><b>iPhone:</b> Safari → Ulashish → Bosh ekranga qoʻshish.<br><b>Android:</b> Chrome → ⋮ → Ilovani oʻrnatish.<br><b>Kompyuter:</b> Chrome/Edge → manzil qatoridagi oʻrnatish belgisi.</div></details>
+<button class="btn ghost wide" onclick="P.hideInstall=true;save();go('home')">${P.code?'Keyinroq — darslarga oʻtish':'Keyinroq'}</button>`}${foot()}`);}
+async function doInstall(){if(!deferredInstall){toast('Oʻrnatish tugmasi hali tayyor emas — sahifani yangilang');return;}deferredInstall.prompt();const r=await deferredInstall.userChoice;deferredInstall=null;if(r.outcome==='accepted'){P.installed=true;save();toast('Oʻrnatildi! Bosh ekrandan oching.');if(P.code)go('home');}else refreshInstallUI();}
 
 /* ===== Profile ===== */
 function viewProfile(){const {t,g}=courseProgress();const done=Object.keys(P.units).filter(unitDone).length;const sh=Object.keys(P.shadow).length;

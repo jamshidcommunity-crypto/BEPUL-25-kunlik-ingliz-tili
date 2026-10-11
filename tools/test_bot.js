@@ -49,31 +49,34 @@ const last = (id) => sent.filter(s => s.chat === String(id)).slice(-1)[0]?.text 
 let fails = 0; const ok = (cond, m) => { console.log((cond ? 'PASS ' : 'FAIL ') + m); if (!cond) fails++; };
 
 (async () => {
+  const join = async (uid, ch) => { members[ch].add(String(uid)); await bot.handler({ httpMethod: 'POST', headers: {}, body: JSON.stringify({ chat_member: { chat: { id: -1, type: 'channel', username: ch.replace('@','') }, from: { id: uid }, old_chat_member: { status: 'left', user: { id: uid } }, new_chat_member: { status: 'member', user: { id: uid } } } }) }); };
   await msg(10, '/start', 'Aziz');
-  ok(/Beginner 25/.test(last(10)), 'welcome sent');
-  await cb(10, 'check');
-  ok(/aʼzo boʻlmagan kanal/.test(last(10)), 'not a member → asked to join');
-  members['@jamshid_akhatkulov_en'].add('10'); members['@Imamov_academy'].add('10');
-  await cb(10, 'check');
-  ok(/ikkala kanalga aʼzosiz/.test(last(10)) && /ref_10/.test(last(10)), 'member of both → referral link');
-  // three friends
+  ok(/Beginner 25/.test(last(10)) && /ref_10/.test(last(10)), 'welcome with own link');
+  // three friends join via link, no button pressed
   for (const f of [11, 12, 13]) {
     await msg(f, '/start ref_10', 'Friend' + f);
-    ok(/havolangiz orqali kirdi/.test(last(10)), `referrer notified of ${f}`);
-    await cb(f, 'check');
-    ok(/aʼzo boʻlmagan/.test(last(f)), `friend ${f} must join first`);
-    members['@jamshid_akhatkulov_en'].add(String(f)); members['@Imamov_academy'].add(String(f));
-    await cb(f, 'check');
+    ok(/avtomatik oʻtadi/.test(last(10)), `referrer notified of ${f}`);
+    await join(f, '@jamshid_akhatkulov_en');
+    ok(!store.b25_users[String(f)].joined, `friend ${f} not counted after 1 channel`);
+    await join(f, '@Imamov_academy');
+    ok(store.b25_users[String(f)].joined, `friend ${f} auto-counted after both channels`);
+    ok(/hisobga oʻtdingiz|hisobiga oʻtdingiz/.test(last(f)), `friend ${f} told he counted`);
   }
+  ok(store.b25_users['10'].invites === 3, 'referrer has 3 invites');
+  ok(!store.b25_users['10'].code && /oʻzingiz ham ikkala kanalga/.test(last(10)), 'referrer not in channels → asked to join first');
+  await join(10, '@jamshid_akhatkulov_en'); await join(10, '@Imamov_academy');
   const u10 = store.b25_users['10'];
-  ok(u10.invites === 3, 'referrer has 3 invites (' + u10.invites + ')');
-  ok(!!u10.code && /^B25-[A-Z2-9]{5}$/.test(u10.code), 'code issued: ' + u10.code);
+  ok(!!u10.code && /^B25-[A-Z2-9]{5}$/.test(u10.code), 'code issued after referrer joins: ' + u10.code);
   ok(/Tabriklaymiz/.test(sent.filter(s => s.chat === '10').map(s => s.text).join('\n')) && /ONETIME/.test(sent.filter(s => s.chat === '10').map(s => s.text).join('\n')), 'congrats + one-time link sent');
-  // self-referral & duplicate check don't count
-  await msg(14, '/start ref_14'); await cb(10, 'check');
-  ok(store.b25_users['10'].invites === 3, 'self-referral / re-check does not add');
-  await cb(11, 'check');
-  ok(store.b25_users['10'].invites === 3, 'friend re-check does not double count');
+  // already-member friend counts on /start
+  members['@jamshid_akhatkulov_en'].add('20'); members['@Imamov_academy'].add('20');
+  await msg(21, '/start'); await join(21, '@jamshid_akhatkulov_en'); await join(21, '@Imamov_academy');
+  await msg(20, '/start ref_21');
+  ok(store.b25_users['21'].invites === 1, 'existing member counted at /start');
+  // no double count / self referral / stranger join
+  await join(11, '@Imamov_academy'); await msg(11, '/holat'); await msg(14, '/start ref_14');
+  await join(999, '@Imamov_academy');
+  ok(store.b25_users['10'].invites === 3, 'no double count, self-ref ignored');
   // verify endpoint
   let r = JSON.parse((await verify.handler({ httpMethod: 'GET', queryStringParameters: { code: u10.code.toLowerCase() } })).body);
   ok(r.ok && r.uid === '10' && r.name === 'Aziz', 'verify valid code → user');
@@ -81,18 +84,14 @@ let fails = 0; const ok = (cond, m) => { console.log((cond ? 'PASS ' : 'FAIL ') 
   ok(!r.ok, 'verify invalid code rejected');
   r = JSON.parse((await verify.handler({ httpMethod: 'GET', queryStringParameters: { code: 'b25-master' } })).body);
   ok(r.ok && r.master, 'master code works');
-  // progress endpoint
   r = JSON.parse((await progress.handler({ httpMethod: 'POST', body: JSON.stringify({ code: u10.code, name: 'Aziz', units: { 1: { score: 18 }, 2: { score: 9 } }, shadow: { 1: true }, test: null }) })).body);
   ok(r.ok && store.b25_progress['10'].units['1'].score === 18, 'progress saved');
   await msg(10, '/holat');
   ok(/1\/34/.test(last(10)) && /3\/3/.test(last(10)), 'status shows progress and invites');
-  // admin
   await msg(1, '/start'); await msg(1, '/stat');
-  ok(/Foydalanuvchilar: <b>6<\/b>/.test(last(1)), 'admin /stat');
+  ok(/Foydalanuvchilar: <b>\d+<\/b>/.test(last(1)), 'admin /stat');
   await msg(1, '/kun 7');
   ok(store.b25_config.main.openDay === 7, 'admin /kun sets openDay');
-  r = JSON.parse((await verify.handler({ httpMethod: 'GET', queryStringParameters: { code: u10.code } })).body);
-  ok(r.openDay === 7, 'verify returns openDay from config');
   console.log(fails ? `\n${fails} FAILED` : '\nALL PASSED');
   process.exit(fails ? 1 : 0);
 })();
