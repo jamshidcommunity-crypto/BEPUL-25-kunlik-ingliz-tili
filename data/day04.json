@@ -1,0 +1,202 @@
+{
+  "day": 4,
+  "title": "Possessives · can / can't · the imperative",
+  "units": [
+    {
+      "id": 6,
+      "code": "G",
+      "title": "Possessives (my / your … + 's)",
+      "rule": "Egalik olmoshlari ot oldida keladi: *my* (mening), *your* (sizning), *his* (uning — erkak), *her* (uning — ayol), *its* (uning — narsa), *our* (bizning), *their* (ularning): *my book*, *her bag*, *our house*. Ismga *'s* qoʻshsak \"-ning\" maʼnosi chiqadi: *Dilnoza's book* — Dilnozaning kitobi, *Bekzod's bike* — Bekzodning velosipedi. *Whose...?* — Kimning? *Whose bag is this? — It is Malika's bag.*",
+      "examples": [
+        "This is my bag.",
+        "Her name is Nodira.",
+        "Our house is big.",
+        "Their car is new.",
+        "This is Bekzod's bike.",
+        "Whose pen is this?"
+      ],
+      "words": [
+        { "en": "my", "uz": "mening" },
+        { "en": "your", "uz": "sizning" },
+        { "en": "his", "uz": "uning (erkak)" },
+        { "en": "her", "uz": "uning (ayol)" },
+        { "en": "its", "uz": "uning (narsa)" },
+        { "en": "our", "uz": "bizning" },
+        { "en": "their", "uz": "ularning" },
+        { "en": "whose", "uz": "kimning" }
+      ],
+      "text": {
+        "title": "My family",
+        "en": "Hello! My name is Bekzod. I am 17. This is my family. My father's name is Karim. His farm is big. My mother's name is Nodira. Her hospital is in Usmat. My sister is Dilnoza. Her students are Aziz and Malika. Their teacher is good. Our grandmother is Hamida. She is 70. Our cat is Tom. Its bed is small."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "This is ___ book. (mening)", "o": ["my", "your", "his"], "a": 0 },
+          { "q": "Dilnoza is a teacher. ___ students are good.", "o": ["His", "Her", "Their"], "a": 1 },
+          { "q": "We live in Usmat. ___ house is big.", "o": ["Their", "Your", "Our"], "a": 2 },
+          { "q": "This is ___ bike.", "o": ["Bekzod", "Bekzod's", "Bekzods"], "a": 1 },
+          { "q": "Aziz and Malika are students. ___ teacher is Dilnoza.", "o": ["Their", "Our", "Her"], "a": 0 },
+          { "q": "Tom is a cat. ___ bed is small.", "o": ["His", "Her", "Its"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["name", "my", "Bekzod", "is"], "a": "My name is Bekzod." },
+          { "w": ["is", "big", "our", "house"], "a": "Our house is big." },
+          { "w": ["bike", "this", "Bekzod's", "is"], "a": "This is Bekzod's bike." },
+          { "w": ["is", "whose", "this", "bag"], "a": "Whose bag is this?" }
+        ],
+        "text": [
+          { "q": "Bekzod is 17.", "o": ["True", "False"], "a": 0 },
+          { "q": "Karim's farm is small.", "o": ["True", "False"], "a": 1 },
+          { "q": "Nodira's hospital is in ___.", "o": ["Jizzax", "Usmat", "Tashkent"], "a": 1 },
+          { "q": "Hamida is Bekzod's ___.", "o": ["mother", "sister", "grandmother"], "a": 2 }
+        ],
+        "fill": [
+          { "q": "I am Dilnoza. ___ brother is Bekzod.", "a": ["My", "my"], "hint": "mening" },
+          { "q": "Karim is a farmer. ___ farm is big.", "a": ["His", "his"], "hint": "uning (erkak)" },
+          { "q": "This is ___ bike.", "a": ["Bekzod's"], "hint": "Bekzod + 's" },
+          { "q": "They are students. ___ teacher is Mr Kim.", "a": ["Their", "their"], "hint": "ularning" }
+        ]
+      },
+      "glossary": {
+        "bed": "karavot", "name": "ism", "new": "yangi", "bag": "sumka", "sister": "opa, singil",
+        "grandmother": "buvi", "hospital": "kasalxona", "farm": "ferma", "bike": "velosiped",
+        "dilnoza's": "Dilnozaning", "bekzod's": "Bekzodning", "karim's": "Karimning", "nodira's": "Nodiraning",
+        "hamida's": "Hamidaning", "aziz's": "Azizning", "malika's": "Malikaning", "tom's": "Tomning"
+      }
+    },
+    {
+      "id": 7,
+      "code": "G",
+      "title": "can / can't",
+      "rule": "*Can* — \"qila olmoq\". Hamma ega bilan bir xil: *I can, he can, she can, they can*. *Can* dan keyin feʼl oʻzgarmaydi, *-s* qoʻshilmaydi: *She can swim.* — U suza oladi. Inkor: *can't* (*cannot*): *I can't drive.* — Men mashina hayday olmayman. Savol: *Can you swim? — Yes, I can. / No, I can't.*",
+      "examples": [
+        "I can swim.",
+        "Bekzod can play football.",
+        "Tom can run fast.",
+        "She can't drive a car.",
+        "Can you speak English?",
+        "Can he cook? Yes, he can."
+      ],
+      "words": [
+        { "en": "swim", "uz": "suzmoq" },
+        { "en": "drive", "uz": "mashina haydamoq" },
+        { "en": "cook", "uz": "ovqat pishirmoq" },
+        { "en": "play football", "uz": "futbol oʻynamoq" },
+        { "en": "speak English", "uz": "inglizcha gapirmoq" },
+        { "en": "sing", "uz": "kuylamoq" },
+        { "en": "dance", "uz": "raqsga tushmoq" },
+        { "en": "ride a bike", "uz": "velosiped haydamoq" }
+      ],
+      "text": {
+        "title": "What can you do?",
+        "en": "Dilnoza: Aziz, can you speak English?\nAziz: Yes, I can. I can speak English and Russian. I can't speak Korean.\nDilnoza: Can you swim?\nAziz: No, I can't. But I can ride a bike. I can play football too.\nMalika: I can sing and dance. I can cook. I can't drive.\nDilnoza: Mr Kim can speak Korean and English. Tom can't speak!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ swim.", "o": ["can", "am", "have"], "a": 0 },
+          { "q": "Bekzod can ___ football.", "o": ["plays", "play", "playing"], "a": 1 },
+          { "q": "She ___ drive. (inkor)", "o": ["isn't", "can", "can't"], "a": 2 },
+          { "q": "___ you speak English?", "o": ["Are", "Can", "Do"], "a": 1 },
+          { "q": "Can Malika sing? — Yes, she ___.", "o": ["can", "is", "cans"], "a": 0 },
+          { "q": "Tom ___ speak. It is a cat.", "o": ["can", "can't", "isn't"], "a": 1 }
+        ],
+        "order": [
+          { "w": ["well", "can", "I", "swim"], "a": "I can swim well." },
+          { "w": ["speak", "you", "can", "English"], "a": "Can you speak English?" },
+          { "w": ["a", "can't", "drive", "she", "car"], "a": "She can't drive a car." },
+          { "w": ["football", "Bekzod", "play", "can"], "a": "Bekzod can play football." }
+        ],
+        "text": [
+          { "q": "Aziz can speak Russian.", "o": ["True", "False"], "a": 0 },
+          { "q": "Aziz can swim.", "o": ["True", "False"], "a": 1 },
+          { "q": "Malika can't ___.", "o": ["sing", "cook", "drive"], "a": 2 },
+          { "q": "Mr Kim can speak ___.", "o": ["Korean and English", "Uzbek and English", "Russian and Uzbek"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "I ___ ride a bike.", "a": ["can"], "hint": "qila olmoq (ha)" },
+          { "q": "Tom ___ speak.", "a": ["can't", "cannot", "can not"], "hint": "can + not (inkor)" },
+          { "q": "___ you cook?", "a": ["Can", "can"], "hint": "can (savol)" },
+          { "q": "Can she sing? Yes, she ___.", "a": ["can"], "hint": "can (qisqa javob)" }
+        ]
+      },
+      "glossary": {
+        "ride": "haydamoq (velosiped)", "swim": "suzmoq", "drive": "mashina haydamoq", "cook": "ovqat pishirmoq",
+        "sing": "kuylamoq", "dance": "raqsga tushmoq", "run": "yugurmoq", "fast": "tez", "well": "yaxshi",
+        "speak": "gapirmoq", "play": "oʻynamoq", "football": "futbol", "but": "lekin"
+      }
+    },
+    {
+      "id": 8,
+      "code": "G",
+      "title": "The imperative",
+      "rule": "Buyruq gap feʼlning oddiy shaklidan boshlanadi, ega yoʻq: *Open the door.* — Eshikni oching. *Sit down, please.* — Oʻtiring, iltimos. Inkor buyruq: *Don't* + feʼl: *Don't open the window.* — Derazani ochmang. *Don't run!* — Yugurmang! *Please* soʻzi buyruqni muloyim qiladi: *Close the door, please.*",
+      "examples": [
+        "Open the door.",
+        "Sit down, please.",
+        "Listen to me.",
+        "Don't run!",
+        "Don't open the window.",
+        "Close your books, please."
+      ],
+      "words": [
+        { "en": "open", "uz": "ochmoq" },
+        { "en": "close", "uz": "yopmoq" },
+        { "en": "sit down", "uz": "oʻtirmoq" },
+        { "en": "stand up", "uz": "oʻrnidan turmoq" },
+        { "en": "listen to", "uz": "tinglamoq" },
+        { "en": "look at", "uz": "qaramoq" },
+        { "en": "don't", "uz": "…mang (inkor buyruq)" },
+        { "en": "please", "uz": "iltimos" }
+      ],
+      "text": {
+        "title": "In the lesson",
+        "en": "Dilnoza: Good morning, students! Sit down, please. Open your books. Look at the picture. Aziz, read the text, please. Malika, listen to Aziz. Don't talk, please. Bekzod, don't play with your phone! Close the window, please. It is cold. Now write the words. Don't write in the book. Write in your notebook. Good! Stand up. Goodbye!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "___ the door, please.", "o": ["Open", "Opens", "Opening"], "a": 0 },
+          { "q": "___ run in the classroom!", "o": ["Not", "Don't", "Isn't"], "a": 1 },
+          { "q": "Buyruq gap qaysi?", "o": ["You sit down.", "Sits down.", "Sit down."], "a": 2 },
+          { "q": "___ quiet, please.", "o": ["Be", "Are", "Is"], "a": 0 },
+          { "q": "Inkor buyruq qaysi?", "o": ["Not open the window.", "Don't open the window.", "No open the window."], "a": 1 },
+          { "q": "Bekzod, ___ to the teacher.", "o": ["listens", "listening", "listen"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["door", "the", "open", "please"], "a": "Open the door, please." },
+          { "w": ["in", "run", "don't", "the", "classroom"], "a": "Don't run in the classroom." },
+          { "w": ["please", "close", "your", "books"], "a": "Close your books, please." },
+          { "w": ["to", "listen", "me", "please"], "a": "Listen to me, please." }
+        ],
+        "text": [
+          { "q": "Aziz reads the text.", "o": ["True", "False"], "a": 0 },
+          { "q": "Dilnoza says: \"Close the door.\"", "o": ["True", "False"], "a": 1 },
+          { "q": "The students write in the ___.", "o": ["book", "notebook", "picture"], "a": 1 },
+          { "q": "Dilnoza says: \"Close the window.\" Why?", "o": ["It is cold.", "It is hot.", "It is late."], "a": 0 }
+        ],
+        "fill": [
+          { "q": "___ the window, please.", "a": ["Open", "open"], "hint": "open (buyruq)" },
+          { "q": "___ talk in the lesson!", "a": ["Don't", "don't", "Do not", "do not"], "hint": "inkor buyruq" },
+          { "q": "___ down, please.", "a": ["Sit", "sit"], "hint": "sit" },
+          { "q": "___ at the picture.", "a": ["Look", "look"], "hint": "look" }
+        ]
+      },
+      "glossary": {
+        "text": "matn", "notebook": "daftar", "sit down": "oʻtirmoq", "stand up": "oʻrnidan turmoq",
+        "be quiet": "jim boʻling", "listen to": "tinglamoq", "look at": "qaramoq", "classroom": "sinfxona",
+        "open": "ochmoq", "close": "yopmoq", "talk": "gaplashmoq", "picture": "rasm", "word": "soʻz",
+        "cold": "sovuq", "goodbye": "xayr", "please": "iltimos", "quiet": "jim", "say": "aytmoq"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "This is my book.", "uz": "Bu mening kitobim." },
+    { "en": "Her name is Nodira.", "uz": "Uning ismi Nodira." },
+    { "en": "I can swim.", "uz": "Men suza olaman." },
+    { "en": "Open the door, please.", "uz": "Eshikni oching, iltimos." },
+    { "en": "This is Bekzod's bike.", "uz": "Bu Bekzodning velosipedi." },
+    { "en": "Can you speak English?", "uz": "Siz inglizcha gapira olasizmi?" },
+    { "en": "Whose bag is this?", "uz": "Bu kimning sumkasi?" },
+    { "en": "Don't open the window.", "uz": "Derazani ochmang." }
+  ],
+  "test": null
+}

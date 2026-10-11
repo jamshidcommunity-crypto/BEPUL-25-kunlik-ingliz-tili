@@ -1,0 +1,79 @@
+{
+  "day": 1,
+  "title": "3 golden rules of English",
+  "units": [
+    {
+      "id": 1,
+      "code": "S",
+      "title": "3 golden rules of English",
+      "rule": "Ingliz tilida har bir gap 3 ta oltin qoidaga boʻysunadi. 1-qoida: har gapda EGA bor — kim yoki nima haqida gapiryapmiz (*I, you, he, she, it, we, they* yoki ism: *Dilnoza, the cat*). 2-qoida: har gapda FEʼL bor — ega nima qiladi yoki qanday (*am, is, are* yoki *go, like, work*). Oʻzbekchada \"Men oʻquvchiman\" da feʼl yoʻq, inglizchada esa *am* shart: *I am a student.* 3-qoida: soʻz tartibi doim bir xil — EGA + FEʼL + qolgani: *Dilnoza + lives + in Usmat.* Oʻzbekchadagi kabi feʼlni oxiriga qoʻymaymiz.",
+      "examples": [
+        "I am a student.",
+        "Dilnoza is a teacher.",
+        "We live in Usmat.",
+        "Bekzod likes football.",
+        "The cat is under the table.",
+        "They go to school."
+      ],
+      "words": [
+        { "en": "subject", "uz": "ega" },
+        { "en": "verb", "uz": "feʼl" },
+        { "en": "sentence", "uz": "gap" },
+        { "en": "word order", "uz": "soʻz tartibi" },
+        { "en": "live", "uz": "yashamoq" },
+        { "en": "like", "uz": "yoqtirmoq" },
+        { "en": "go to school", "uz": "maktabga bormoq" },
+        { "en": "every day", "uz": "har kuni" }
+      ],
+      "text": {
+        "title": "Dilnoza and her family",
+        "en": "Hello! I am Dilnoza. I am a teacher. I live in Usmat. Usmat is a small town. My brother is Bekzod. He is a student. He likes football. We have a cat. The cat is Tom. Tom is under the table. My mother is a nurse. My father is a farmer. We are a happy family."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "\"Dilnoza is a teacher.\" — EGA qaysi?", "o": ["Dilnoza", "is", "teacher"], "a": 0 },
+          { "q": "\"We live in Usmat.\" — FEʼL qaysi?", "o": ["We", "live", "Usmat"], "a": 1 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["I student.", "I am a student.", "Student I am."], "a": 1 },
+          { "q": "\"Bekzod likes football.\" — FEʼL qaysi?", "o": ["Bekzod", "football", "likes"], "a": 2 },
+          { "q": "Toʻgʻri tartib qaysi?", "o": ["In Usmat live we.", "We in Usmat live.", "We live in Usmat."], "a": 2 },
+          { "q": "\"The cat is under the table.\" — EGA qaysi?", "o": ["The cat", "is", "the table"], "a": 0 }
+        ],
+        "order": [
+          { "w": ["am", "I", "a", "teacher"], "a": "I am a teacher." },
+          { "w": ["in", "live", "Usmat", "we"], "a": "We live in Usmat." },
+          { "w": ["football", "likes", "Bekzod"], "a": "Bekzod likes football." },
+          { "w": ["is", "the cat", "under", "the table"], "a": "The cat is under the table." }
+        ],
+        "text": [
+          { "q": "Dilnoza is a teacher.", "o": ["True", "False"], "a": 0 },
+          { "q": "Usmat is a big city.", "o": ["True", "False"], "a": 1 },
+          { "q": "Bekzod likes ___.", "o": ["football", "music", "cats"], "a": 0 },
+          { "q": "Tom is ___.", "o": ["a dog", "a cat", "a student"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "I ___ a student.", "a": ["am", "'m"], "hint": "be" },
+          { "q": "Dilnoza ___ a teacher.", "a": ["is", "'s"], "hint": "be" },
+          { "q": "___ live in Usmat.", "a": ["We", "we", "They", "they", "I"], "hint": "ega: biz" },
+          { "q": "Bekzod ___ football.", "a": ["likes"], "hint": "like" }
+        ]
+      },
+      "glossary": {
+        "football": "futbol", "under": "tagida", "table": "stol", "cat": "mushuk", "live": "yashamoq", "like": "yoqtirmoq",
+        "teacher": "oʻqituvchi", "student": "oʻquvchi", "town": "shaharcha", "small": "kichkina", "brother": "aka, uka",
+        "mother": "ona", "father": "ota", "nurse": "hamshira", "farmer": "fermer, dehqon", "happy": "xursand", "family": "oila",
+        "school": "maktab", "go": "bormoq", "music": "musiqa", "dog": "it", "big": "katta", "city": "shahar", "hello": "salom", "have": "ega boʻlmoq"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I am a student.", "uz": "Men oʻquvchiman." },
+    { "en": "Dilnoza is a teacher.", "uz": "Dilnoza oʻqituvchi." },
+    { "en": "We live in Usmat.", "uz": "Biz Usmatda yashaymiz." },
+    { "en": "Bekzod likes football.", "uz": "Bekzod futbolni yoqtiradi." },
+    { "en": "The cat is under the table.", "uz": "Mushuk stol tagida." },
+    { "en": "Are you a student?", "uz": "Siz oʻquvchimisiz?" },
+    { "en": "Is Dilnoza a teacher?", "uz": "Dilnoza oʻqituvchimi?" },
+    { "en": "I am not a teacher.", "uz": "Men oʻqituvchi emasman." }
+  ],
+  "test": null
+}

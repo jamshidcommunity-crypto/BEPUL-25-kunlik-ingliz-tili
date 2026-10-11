@@ -1,0 +1,82 @@
+{
+  "day": 20,
+  "title": "Past continuous",
+  "units": [
+    {
+      "id": 30,
+      "code": "G",
+      "title": "Past continuous",
+      "rule": "Past continuous *was/were + feʼl + -ing* bilan yasaladi. U oʻtgan zamonda maʼlum bir paytda davom etayotgan ishni bildiradi: *At eight I was eating dinner.* — Soat sakkizda men ovqat yeyayotgan edim. *I, he, she, it* bilan *was*, *you, we, they* bilan *were*: *They were playing football.* Inkor: *wasn't / weren't + -ing*; savol: *Was she sleeping? — Yes, she was.* *While* (…ayotganda) bilan ikki ishni birga aytamiz: *While I was cooking, Tom was sleeping.*",
+      "examples": [
+        "I was sleeping at ten o'clock.",
+        "Dilnoza was reading a book.",
+        "They were playing football.",
+        "Was Bekzod watching TV?",
+        "We weren't working yesterday morning.",
+        "While I was cooking, Tom was sleeping."
+      ],
+      "words": [
+        { "en": "while", "uz": "…ayotganda" },
+        { "en": "at nine o'clock", "uz": "soat toʻqqizda" },
+        { "en": "sleep", "uz": "uxlamoq" },
+        { "en": "watch TV", "uz": "televizor koʻrmoq" },
+        { "en": "cook", "uz": "pishirmoq" },
+        { "en": "wait", "uz": "kutmoq" },
+        { "en": "rain", "uz": "yomgʻir yogʻmoq" },
+        { "en": "talk", "uz": "gaplashmoq" }
+      ],
+      "text": {
+        "title": "Yesterday evening",
+        "en": "Yesterday at eight o'clock the family was at home. Karim was watching TV. Nodira was cooking dinner in the kitchen. Dilnoza was reading a book. Bekzod was doing his homework. Hamida was drinking tea. Tom was sleeping under the table. It was raining outside. While Nodira was cooking, Bekzod was helping her."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "Yesterday I ___ sleeping at ten.", "o": ["was", "were", "am"], "a": 0 },
+          { "q": "Yesterday they ___ playing football.", "o": ["was", "were", "are"], "a": 1 },
+          { "q": "Dilnoza was ___ a book.", "o": ["read", "reads", "reading"], "a": 2 },
+          { "q": "___ Bekzod watching TV?", "o": ["Was", "Were", "Did"], "a": 0 },
+          { "q": "We ___ working yesterday. (inkor)", "o": ["wasn't", "weren't", "didn't"], "a": 1 },
+          { "q": "While I was cooking, Tom ___ sleeping.", "o": ["is", "were", "was"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["sleeping", "under the table", "Tom", "was"], "a": "Tom was sleeping under the table." },
+          { "w": ["football", "were", "they", "playing"], "a": "They were playing football." },
+          { "w": ["doing", "Bekzod", "was", "what"], "a": "What was Bekzod doing?" },
+          { "w": ["watching", "we", "TV", "weren't"], "a": "We weren't watching TV." }
+        ],
+        "text": [
+          { "q": "Karim was cooking dinner.", "o": ["True", "False"], "a": 1 },
+          { "q": "Tom was sleeping under the table.", "o": ["True", "False"], "a": 0 },
+          { "q": "Hamida was ___.", "o": ["drinking tea", "reading a book", "watching TV"], "a": 0 },
+          { "q": "It was ___ outside.", "o": ["snowing", "raining", "hot"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "Yesterday I ___ reading a book at nine o'clock.", "a": ["was"], "hint": "be (oʻtgan)" },
+          { "q": "Yesterday they ___ playing football.", "a": ["were"], "hint": "be (oʻtgan)" },
+          { "q": "Dilnoza was ___ dinner.", "a": ["cooking"], "hint": "cook" },
+          { "q": "Yesterday Bekzod ___ sleeping at ten.", "a": ["wasn't", "was not"], "hint": "inkor: be (oʻtgan)" }
+        ]
+      },
+      "glossary": {
+        "while": "…ayotganda", "o'clock": "soat … (aniq)", "sleep": "uxlamoq", "watch": "tomosha qilmoq", "cook": "pishirmoq",
+        "wait": "kutmoq", "rain": "yomgʻir yogʻmoq; yomgʻir", "talk": "gaplashmoq", "read": "oʻqimoq", "play": "oʻynamoq",
+        "work": "ishlamoq", "eat": "yemoq", "drink": "ichmoq", "help": "yordam bermoq", "do": "qilmoq", "snow": "qor yogʻmoq; qor",
+        "outside": "tashqarida", "was": "edi (be, oʻtgan)", "were": "edilar (be, oʻtgan)", "wasn't": "emas edi", "weren't": "emas edilar",
+        "book": "kitob", "football": "futbol", "dinner": "kechki ovqat", "kitchen": "oshxona", "homework": "uy vazifasi",
+        "tea": "choy", "table": "stol", "under": "tagida", "family": "oila", "home": "uy", "yesterday": "kecha",
+        "morning": "ertalab", "evening": "kechqurun", "hot": "issiq", "at": "-da (vaqt)"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I was sleeping at ten o'clock.", "uz": "Men soat oʻnda uxlayotgan edim." },
+    { "en": "Dilnoza was reading a book.", "uz": "Dilnoza kitob oʻqiyotgan edi." },
+    { "en": "They were playing football.", "uz": "Ular futbol oʻynayotgan edilar." },
+    { "en": "It was raining yesterday evening.", "uz": "Kecha kechqurun yomgʻir yogʻayotgan edi." },
+    { "en": "While I was cooking, Tom was sleeping.", "uz": "Men ovqat pishirayotganimda Tom uxlayotgan edi." },
+    { "en": "Was Bekzod watching TV?", "uz": "Bekzod televizor koʻrayotganmidi?" },
+    { "en": "What were you doing at nine?", "uz": "Soat toʻqqizda nima qilayotgan edingiz?" },
+    { "en": "We weren't working yesterday.", "uz": "Biz kecha ishlamayotgan edik." }
+  ],
+  "test": null
+}

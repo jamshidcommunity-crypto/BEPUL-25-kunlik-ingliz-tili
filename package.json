@@ -1,0 +1,14 @@
+{
+  "name": "beginner25",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Beginner 25 — Imamov Academy: 25-day beginner English course PWA + Telegram referral bot",
+  "scripts": {
+    "validate": "node tools/validate.js",
+    "build": "node tools/build.js",
+    "test": "node tools/validate.js && node tools/test_bot.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.6.0"
+  }
+}

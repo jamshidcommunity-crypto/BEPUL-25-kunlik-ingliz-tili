@@ -1,0 +1,82 @@
+{
+  "day": 12,
+  "title": "Reflexive pronouns",
+  "units": [
+    {
+      "id": 20,
+      "code": "G",
+      "title": "Reflexive pronouns (myself, yourself…)",
+      "rule": "Oʻzlik olmoshlari \"oʻzim, oʻzingiz, oʻzi…\" maʼnosini beradi: *I → myself, you → yourself, he → himself, she → herself, it → itself, we → ourselves, you → yourselves, they → themselves.* Ular ega va toʻldiruvchi bir xil odam boʻlganda ishlatiladi: *I cut myself.* (Men oʻzimni kesib oldim.) Shuningdek \"oʻzi, birovning yordamisiz\" maʼnosida gap oxirida keladi: *Bekzod makes breakfast himself.* Oʻzlik olmoshi doim feʼldan keyin keladi.",
+      "examples": [
+        "I cut myself with the knife.",
+        "Be careful! You can hurt yourself.",
+        "Dilnoza looks at herself in the mirror.",
+        "The cat washes itself.",
+        "We enjoy ourselves at the party.",
+        "They make dinner themselves."
+      ],
+      "words": [
+        { "en": "myself", "uz": "oʻzim" },
+        { "en": "yourself", "uz": "oʻzingiz" },
+        { "en": "himself", "uz": "oʻzi (erkak)" },
+        { "en": "herself", "uz": "oʻzi (ayol)" },
+        { "en": "ourselves", "uz": "oʻzimiz" },
+        { "en": "themselves", "uz": "oʻzlari" },
+        { "en": "mirror", "uz": "oyna, koʻzgu" },
+        { "en": "enjoy yourself", "uz": "yaxshi dam olmoq, zavqlanmoq" }
+      ],
+      "text": {
+        "title": "Sunday at home",
+        "en": "It is Sunday. Dilnoza looks at herself in the mirror. She is happy. Bekzod makes breakfast himself. He cuts the bread carefully. \"Be careful, Bekzod! Don't cut yourself!\" says Nodira. Hamida makes tea herself. Karim washes the car himself. Tom washes itself in the garden. In the evening, they enjoy themselves. They watch a film together."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I look at ___ in the mirror.", "o": ["myself", "me", "himself"], "a": 0 },
+          { "q": "Dilnoza makes tea ___.", "o": ["himself", "herself", "itself"], "a": 1 },
+          { "q": "Be careful! Don't cut ___.", "o": ["himself", "myself", "yourself"], "a": 2 },
+          { "q": "The cat washes ___.", "o": ["himself", "herself", "itself"], "a": 2 },
+          { "q": "We enjoy ___ at the party.", "o": ["ourselves", "themselves", "myself"], "a": 0 },
+          { "q": "Bekzod and Aziz make dinner ___.", "o": ["himself", "themselves", "ourselves"], "a": 1 }
+        ],
+        "order": [
+          { "w": ["myself", "the knife", "I", "cut", "with"], "a": "I cut myself with the knife." },
+          { "w": ["itself", "washes", "the cat"], "a": "The cat washes itself." },
+          { "w": ["ourselves", "at the party", "we", "enjoy"], "a": "We enjoy ourselves at the party." },
+          { "w": ["himself", "breakfast", "Bekzod", "makes"], "a": "Bekzod makes breakfast himself." }
+        ],
+        "text": [
+          { "q": "Dilnoza looks at herself in the mirror.", "o": ["True", "False"], "a": 0 },
+          { "q": "Bekzod makes ___ himself.", "o": ["dinner", "breakfast", "tea"], "a": 1 },
+          { "q": "Karim washes the cat himself.", "o": ["True", "False"], "a": 1 },
+          { "q": "In the evening they watch ___.", "o": ["a film", "football", "TV"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "I cut ___ with the knife.", "a": ["myself"], "hint": "oʻzim" },
+          { "q": "Dilnoza looks at ___ in the mirror.", "a": ["herself"], "hint": "oʻzi (ayol)" },
+          { "q": "They make dinner ___.", "a": ["themselves"], "hint": "oʻzlari" },
+          { "q": "We enjoy ___ at the party.", "a": ["ourselves"], "hint": "oʻzimiz" }
+        ]
+      },
+      "glossary": {
+        "myself": "oʻzim", "yourself": "oʻzingiz", "himself": "oʻzi (erkak)", "herself": "oʻzi (ayol)", "itself": "oʻzi (narsa)",
+        "ourselves": "oʻzimiz", "yourselves": "oʻzingizlar", "themselves": "oʻzlari",
+        "knife": "pichoq", "mirror": "oyna, koʻzgu", "party": "bazm, ziyofat", "cut": "kesmoq", "hurt": "jarohatlamoq, ogʻritmoq",
+        "careful": "ehtiyotkor", "carefully": "ehtiyotkorlik bilan", "enjoy": "zavqlanmoq", "wash": "yuvmoq", "film": "film",
+        "together": "birga", "evening": "kechqurun", "car": "mashina", "garden": "bogʻ", "bread": "non", "watch": "tomosha qilmoq",
+        "say": "aytmoq", "happy": "xursand", "tea": "choy", "dinner": "kechki ovqat", "breakfast": "nonushta", "make": "qilmoq, tayyorlamoq",
+        "look": "qaramoq", "look at": "…ga qaramoq", "cat": "mushuk", "football": "futbol", "tv": "televizor", "be": "boʻlmoq (am/is/are)"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I look at myself in the mirror.", "uz": "Men oynada oʻzimga qarayman." },
+    { "en": "Dilnoza makes tea herself.", "uz": "Dilnoza choyni oʻzi damlaydi." },
+    { "en": "Bekzod washes the car himself.", "uz": "Bekzod mashinani oʻzi yuvadi." },
+    { "en": "The cat washes itself.", "uz": "Mushuk oʻzini oʻzi yuvadi." },
+    { "en": "We enjoy ourselves at the party.", "uz": "Biz bazmda yaxshi dam olamiz." },
+    { "en": "Do you make breakfast yourself?", "uz": "Siz nonushtani oʻzingiz tayyorlaysizmi?" },
+    { "en": "Does Karim wash the car himself?", "uz": "Karim mashinani oʻzi yuvadimi?" },
+    { "en": "Don't cut yourself!", "uz": "Oʻzingizni kesib olmang!" }
+  ],
+  "test": null
+}

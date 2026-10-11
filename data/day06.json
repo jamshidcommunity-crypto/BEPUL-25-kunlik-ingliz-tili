@@ -1,0 +1,80 @@
+{
+  "day": 6,
+  "title": "Present simple",
+  "units": [
+    {
+      "id": 11,
+      "code": "G",
+      "title": "Present simple",
+      "rule": "Present Simple — har doim, odatda boʻladigan ish-harakat: *I work in Usmat.* — Men Usmatda ishlayman. *He/she/it* bilan feʼlga *-s* qoʻshiladi: *She works. He likes tea.* Baʼzi feʼllarga *-es* qoʻshiladi: *goes, watches, does*. Inkor: *I don't work*, *he doesn't work* — inkorda feʼl *-s*siz keladi! Savol: *Do you work? — Yes, I do.* *Does she work? — No, she doesn't.* *Every day, usually, always* soʻzlari bilan keladi.",
+      "examples": [
+        "I live in Usmat.",
+        "Dilnoza works at a school.",
+        "Bekzod goes to school every day.",
+        "We don't like cold tea.",
+        "He doesn't play football.",
+        "Do you speak English? Yes, I do."
+      ],
+      "words": [
+        { "en": "get up", "uz": "uygʻonib turmoq" },
+        { "en": "go to work", "uz": "ishga bormoq" },
+        { "en": "have breakfast", "uz": "nonushta qilmoq" },
+        { "en": "come home", "uz": "uyga kelmoq" },
+        { "en": "watch TV", "uz": "televizor koʻrmoq" },
+        { "en": "go to bed", "uz": "uxlagani yotmoq" },
+        { "en": "every day", "uz": "har kuni" },
+        { "en": "help", "uz": "yordam bermoq" }
+      ],
+      "text": {
+        "title": "Dilnoza's day",
+        "en": "Dilnoza gets up early. She has breakfast with her family. Then she goes to work. She works at a school in Usmat. She teaches English. Her students like her lessons. She comes home late. She helps her mother. She reads books and watches TV. She doesn't watch films. Bekzod doesn't help. He plays football with his friends."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ in Usmat.", "o": ["live", "lives", "living"], "a": 0 },
+          { "q": "Dilnoza ___ at a school.", "o": ["work", "works", "is work"], "a": 1 },
+          { "q": "Bekzod ___ to school every day.", "o": ["go", "gos", "goes"], "a": 2 },
+          { "q": "We ___ like cold tea.", "o": ["doesn't", "don't", "aren't"], "a": 1 },
+          { "q": "He ___ play football.", "o": ["doesn't", "don't", "isn't"], "a": 0 },
+          { "q": "___ you speak English?", "o": ["Does", "Are", "Do"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["in", "live", "Usmat", "I"], "a": "I live in Usmat." },
+          { "w": ["works", "Dilnoza", "a", "at", "school"], "a": "Dilnoza works at a school." },
+          { "w": ["like", "we", "don't", "tea", "cold"], "a": "We don't like cold tea." },
+          { "w": ["she", "does", "English", "speak"], "a": "Does she speak English?" }
+        ],
+        "text": [
+          { "q": "Dilnoza gets up early.", "o": ["True", "False"], "a": 0 },
+          { "q": "Dilnoza watches films.", "o": ["True", "False"], "a": 1 },
+          { "q": "Dilnoza works at ___.", "o": ["a hospital", "a school", "a farm"], "a": 1 },
+          { "q": "Bekzod plays football with ___.", "o": ["his friends", "his father", "Dilnoza"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "Dilnoza ___ English.", "a": ["teaches"], "hint": "teach" },
+          { "q": "Bekzod ___ football every day.", "a": ["plays"], "hint": "play" },
+          { "q": "I ___ like cold tea.", "a": ["don't", "do not"], "hint": "do + not (inkor)" },
+          { "q": "___ she work at a school?", "a": ["Does", "does"], "hint": "do (savol: she)" }
+        ]
+      },
+      "glossary": {
+        "get up": "uygʻonib turmoq", "go to work": "ishga bormoq", "have breakfast": "nonushta qilmoq",
+        "come home": "uyga kelmoq", "watch tv": "televizor koʻrmoq", "go to bed": "uxlagani yotmoq",
+        "early": "erta", "late": "kech", "then": "keyin", "teach": "oʻqitmoq", "lesson": "dars",
+        "help": "yordam bermoq", "read": "oʻqimoq", "watch": "tomosha qilmoq", "film": "film",
+        "breakfast": "nonushta", "cold": "sovuq", "tea": "choy", "friend": "doʻst", "every": "har bir"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I live in Usmat.", "uz": "Men Usmatda yashayman." },
+    { "en": "Dilnoza works at a school.", "uz": "Dilnoza maktabda ishlaydi." },
+    { "en": "Bekzod goes to school every day.", "uz": "Bekzod har kuni maktabga boradi." },
+    { "en": "We like tea.", "uz": "Biz choyni yoqtiramiz." },
+    { "en": "Karim works on a farm.", "uz": "Karim fermada ishlaydi." },
+    { "en": "Do you speak English?", "uz": "Siz inglizcha gapirasizmi?" },
+    { "en": "Does she like music?", "uz": "U musiqani yoqtiradimi?" },
+    { "en": "He doesn't play football.", "uz": "U futbol oʻynamaydi." }
+  ],
+  "test": null
+}

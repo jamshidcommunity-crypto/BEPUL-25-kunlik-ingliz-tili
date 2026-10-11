@@ -1,0 +1,80 @@
+{
+  "day": 21,
+  "title": "How long does it take…?",
+  "units": [
+    {
+      "id": 31,
+      "code": "G",
+      "title": "How long does it take…?",
+      "rule": "Biror ish qancha vaqt olishini soʻrash uchun *How long does it take to + feʼl?* deymiz: *How long does it take to get to school?* — Maktabga borish qancha vaqt oladi? Javob: *It takes + vaqt*: *It takes ten minutes.* — Oʻn daqiqa oladi. Kimga ekanini aytsak, *me, him, her* qoʻshamiz: *It takes me an hour.* Oʻtgan zamonda *took*: *It took two hours.* Inkor: *It doesn't take long.* — Koʻp vaqt olmaydi.",
+      "examples": [
+        "How long does it take to get to school?",
+        "It takes ten minutes.",
+        "It takes me an hour to cook dinner.",
+        "How long does it take to walk to the park?",
+        "It takes Bekzod five minutes.",
+        "It doesn't take long."
+      ],
+      "words": [
+        { "en": "how long", "uz": "qancha vaqt" },
+        { "en": "take", "uz": "(vaqt) olmoq" },
+        { "en": "minute", "uz": "daqiqa" },
+        { "en": "hour", "uz": "soat (davomiylik)" },
+        { "en": "get to", "uz": "yetib bormoq" },
+        { "en": "by bus", "uz": "avtobusda" },
+        { "en": "on foot", "uz": "piyoda" },
+        { "en": "long", "uz": "uzoq (vaqt)" }
+      ],
+      "text": {
+        "title": "How long does it take?",
+        "en": "Dilnoza: Aziz, how long does it take to get to Usmat from Samarkand?\nAziz: It takes two hours by bus.\nDilnoza: That's long! How do you come to school?\nAziz: On foot. It takes me fifteen minutes.\nDilnoza: It takes me five minutes. I live near the school.\nAziz: And Malika? She lives in Tashkent.\nDilnoza: It takes her four hours by car. She comes on Monday."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "How long ___ it take to get to school?", "o": ["do", "does", "is"], "a": 1 },
+          { "q": "It ___ ten minutes.", "o": ["takes", "take", "taking"], "a": 0 },
+          { "q": "___ does it take to cook dinner?", "o": ["How much", "How long", "How many"], "a": 1 },
+          { "q": "It takes ___ an hour to get to work.", "o": ["I", "my", "me"], "a": 2 },
+          { "q": "It doesn't ___ long.", "o": ["take", "takes", "took"], "a": 0 },
+          { "q": "How long ___ it take yesterday?", "o": ["does", "was", "did"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["does it take", "how long", "to get", "to school"], "a": "How long does it take to get to school?" },
+          { "w": ["ten", "takes", "minutes", "it"], "a": "It takes ten minutes." },
+          { "w": ["me", "it", "an hour", "takes"], "a": "It takes me an hour." },
+          { "w": ["take", "it", "long", "doesn't"], "a": "It doesn't take long." }
+        ],
+        "text": [
+          { "q": "It takes two hours from Samarkand to Usmat by bus.", "o": ["True", "False"], "a": 0 },
+          { "q": "Aziz comes to school by car.", "o": ["True", "False"], "a": 1 },
+          { "q": "It takes Dilnoza ___ to get to school.", "o": ["five minutes", "fifteen minutes", "two hours"], "a": 0 },
+          { "q": "It takes Malika ___ by car.", "o": ["two hours", "four hours", "ten minutes"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "How long ___ it take to get to Jizzax?", "a": ["does"], "hint": "do/does" },
+          { "q": "It ___ ten minutes.", "a": ["takes"], "hint": "take" },
+          { "q": "It takes ___ an hour to cook dinner.", "a": ["me"], "hint": "menga (I)" },
+          { "q": "It doesn't ___ long.", "a": ["take"], "hint": "take" }
+        ]
+      },
+      "glossary": {
+        "how long": "qancha vaqt", "how": "qanday; qancha", "long": "uzoq (vaqt); uzun", "take": "(vaqt) olmoq; olmoq", "took": "oldi (take, oʻtgan)",
+        "minute": "daqiqa", "hour": "soat (davomiylik)", "get": "yetib bormoq; olmoq", "get to": "yetib bormoq", "by bus": "avtobusda", "bus": "avtobus",
+        "on foot": "piyoda", "foot": "oyoq", "car": "mashina", "walk": "piyoda bormoq", "come": "kelmoq", "live": "yashamoq",
+        "cook": "pishirmoq", "dinner": "kechki ovqat", "school": "maktab", "park": "park", "work": "ish", "near": "yaqinida",
+        "that's": "bu …dir", "from": "-dan", "to": "-ga", "it": "u (narsa)", "doesn't": "…maydi (inkor)"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "It takes ten minutes.", "uz": "Oʻn daqiqa oladi." },
+    { "en": "It takes me an hour to get to work.", "uz": "Ishga borishim bir soat oladi." },
+    { "en": "It takes two hours by bus.", "uz": "Avtobusda ikki soat oladi." },
+    { "en": "It takes Bekzod five minutes.", "uz": "Bekzodga besh daqiqa kerak boʻladi." },
+    { "en": "It took me two hours yesterday.", "uz": "Kecha menga ikki soat kerak boʻldi." },
+    { "en": "How long does it take by bus?", "uz": "Avtobusda qancha vaqt oladi?" },
+    { "en": "Does it take long?", "uz": "Koʻp vaqt oladimi?" },
+    { "en": "It doesn't take long.", "uz": "Koʻp vaqt olmaydi." }
+  ],
+  "test": null
+}

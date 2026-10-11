@@ -1,0 +1,80 @@
+{
+  "day": 17,
+  "title": "Comparatives and superlatives",
+  "units": [
+    {
+      "id": 27,
+      "code": "G",
+      "title": "Comparatives and superlatives",
+      "rule": "Qiyosiy daraja (\"…roq\"): qisqa sifatlarga *-er* qoʻshiladi va *than* (\"-dan\") ishlatiladi: *Bekzod is taller than Aziz.* Orttirma daraja (\"eng …\"): *the + sifat + -est*: *Hamida is the oldest in the family.* Uzun sifatlar oldiga *more / the most* qoʻyiladi: *more expensive, the most beautiful.* Imlo: *big → bigger → the biggest; happy → happier → the happiest.* Istisnolar: *good → better → the best; bad → worse → the worst.*",
+      "examples": [
+        "Bekzod is taller than Aziz.",
+        "Tashkent is bigger than Jizzax.",
+        "Hamida is the oldest in the family.",
+        "This bag is more expensive than that bag.",
+        "Samarkand is the most beautiful city.",
+        "Tea is better than coffee."
+      ],
+      "words": [
+        { "en": "tall", "uz": "baland boʻyli" },
+        { "en": "than", "uz": "-dan (koʻra)" },
+        { "en": "older", "uz": "kattaroq (yoshi)" },
+        { "en": "bigger", "uz": "kattaroq" },
+        { "en": "more expensive", "uz": "qimmatroq" },
+        { "en": "the most beautiful", "uz": "eng goʻzal" },
+        { "en": "better", "uz": "yaxshiroq" },
+        { "en": "the best", "uz": "eng yaxshi" }
+      ],
+      "text": {
+        "title": "Our family and our cities",
+        "en": "Karim is 55. Nodira is 50. Karim is older than Nodira. But Hamida is the oldest in the family. Bekzod is 17. He is the youngest. He is taller than Dilnoza. Usmat is a small town. Jizzax is bigger than Usmat. Tashkent is the biggest city in Uzbekistan. Samarkand is the most beautiful city. Dilnoza thinks Samarkand is better than Tashkent."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "Bekzod is ___ than Aziz.", "o": ["tall", "taller", "the tallest"], "a": 1 },
+          { "q": "Hamida is ___ in the family.", "o": ["the oldest", "older", "old"], "a": 0 },
+          { "q": "Tashkent is ___ than Jizzax.", "o": ["more big", "bigger", "biggest"], "a": 1 },
+          { "q": "This bag is ___ than that bag.", "o": ["the most expensive", "expensiver", "more expensive"], "a": 2 },
+          { "q": "Samarkand is ___ city in Uzbekistan.", "o": ["beautiful", "more beautiful", "the most beautiful"], "a": 2 },
+          { "q": "Tea is ___ than coffee.", "o": ["better", "gooder", "the best"], "a": 0 }
+        ],
+        "order": [
+          { "w": ["than", "taller", "Aziz", "Bekzod", "is"], "a": "Bekzod is taller than Aziz." },
+          { "w": ["bigger", "Jizzax", "Tashkent", "than", "is"], "a": "Tashkent is bigger than Jizzax." },
+          { "w": ["the oldest", "in the family", "Hamida", "is"], "a": "Hamida is the oldest in the family." },
+          { "w": ["city", "the most", "beautiful", "is", "Samarkand"], "a": "Samarkand is the most beautiful city." }
+        ],
+        "text": [
+          { "q": "Karim is older than Nodira.", "o": ["True", "False"], "a": 0 },
+          { "q": "___ is the oldest in the family.", "o": ["Karim", "Nodira", "Hamida"], "a": 2 },
+          { "q": "Dilnoza is taller than Bekzod.", "o": ["True", "False"], "a": 1 },
+          { "q": "___ is the biggest city in Uzbekistan.", "o": ["Jizzax", "Tashkent", "Samarkand"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "Bekzod is ___ than Aziz.", "a": ["taller"], "hint": "tall" },
+          { "q": "Hamida is the ___ in the family.", "a": ["oldest"], "hint": "old" },
+          { "q": "This bag is ___ than that bag.", "a": ["more expensive"], "hint": "expensive" },
+          { "q": "Tea is ___ than coffee.", "a": ["better"], "hint": "good" }
+        ]
+      },
+      "glossary": {
+        "tall": "baland boʻyli", "old": "keksa; eski", "young": "yosh", "big": "katta", "small": "kichkina", "beautiful": "goʻzal",
+        "expensive": "qimmat", "cheap": "arzon", "good": "yaxshi", "better": "yaxshiroq", "best": "eng yaxshi", "bad": "yomon",
+        "worse": "yomonroq", "worst": "eng yomon", "than": "-dan (koʻra)", "more": "koʻproq; (uzun sifat) …roq", "most": "eng",
+        "city": "shahar", "town": "shaharcha", "family": "oila", "bag": "sumka", "tea": "choy", "coffee": "kofe", "think": "oʻylamoq",
+        "happy": "xursand", "who": "kim", "your": "sizning", "in": "ichida, -da", "this": "bu", "that": "u, ana u", "but": "lekin", "is": "-dir (be: he/she/it)"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "Bekzod is taller than Aziz.", "uz": "Bekzod Azizdan balandroq." },
+    { "en": "Tashkent is bigger than Jizzax.", "uz": "Toshkent Jizzaxdan kattaroq." },
+    { "en": "Hamida is the oldest in the family.", "uz": "Hamida oilada eng kattasi." },
+    { "en": "Samarkand is the most beautiful city.", "uz": "Samarqand eng goʻzal shahar." },
+    { "en": "Tea is better than coffee.", "uz": "Choy kofedan yaxshiroq." },
+    { "en": "Is Tashkent bigger than Jizzax?", "uz": "Toshkent Jizzaxdan kattaroqmi?" },
+    { "en": "Who is the oldest in your family?", "uz": "Oilangizda kim eng katta?" },
+    { "en": "Jizzax isn't bigger than Tashkent.", "uz": "Jizzax Toshkentdan katta emas." }
+  ],
+  "test": null
+}

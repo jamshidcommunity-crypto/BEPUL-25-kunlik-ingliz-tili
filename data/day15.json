@@ -1,0 +1,83 @@
+{
+  "day": 15,
+  "title": "Past simple",
+  "units": [
+    {
+      "id": 25,
+      "code": "G",
+      "title": "Past simple",
+      "rule": "Oʻtgan zamon — oʻtgan vaqtda tugagan ish-harakat (*yesterday, last week, last night*). Toʻgʻri feʼllarga *-ed* qoʻshiladi: *work → worked, play → played, live → lived, study → studied.* Notoʻgʻri feʼllarni yodlaymiz: *go → went, have → had, see → saw, eat → ate, buy → bought, make → made, get → got, come → came, take → took, give → gave, meet → met, write → wrote, read → read, sleep → slept, drink → drank.* *be* feʼli: *was* (I, he, she, it), *were* (you, we, they). Inkor: *didn't + asosiy shakl* (*I didn't go*); soʻroq: *Did you go?* — *Yes, I did. / No, I didn't.*",
+      "examples": [
+        "I visited Samarkand last week.",
+        "Dilnoza worked at school yesterday.",
+        "Bekzod went to the park.",
+        "We were at home last night.",
+        "I didn't see Aziz yesterday.",
+        "Did you buy some bread?"
+      ],
+      "words": [
+        { "en": "yesterday", "uz": "kecha" },
+        { "en": "last week", "uz": "oʻtgan hafta" },
+        { "en": "last night", "uz": "kecha kechqurun" },
+        { "en": "ago", "uz": "oldin (two days ago)" },
+        { "en": "went (go)", "uz": "bordi" },
+        { "en": "had (have)", "uz": "bor edi; (ovqat) yedi" },
+        { "en": "saw (see)", "uz": "koʻrdi" },
+        { "en": "bought (buy)", "uz": "sotib oldi" }
+      ],
+      "text": {
+        "title": "Yesterday",
+        "en": "Yesterday was Sunday. Dilnoza didn't work. She got up at nine. She had breakfast with her family. Then she went to the market with Nodira. They bought some fruit and bread. In the afternoon, Aziz and Malika came to Usmat. They drank tea and talked. Bekzod played football. Then Dilnoza read a book. She was tired, but she was happy."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ Samarkand last week. (visit)", "o": ["visit", "visited", "visits"], "a": 1 },
+          { "q": "Bekzod ___ to the park yesterday. (go)", "o": ["went", "goed", "go"], "a": 0 },
+          { "q": "We ___ at home last night.", "o": ["was", "are", "were"], "a": 2 },
+          { "q": "I ___ see Aziz yesterday.", "o": ["didn't", "don't", "wasn't"], "a": 0 },
+          { "q": "___ you buy some bread?", "o": ["Do", "Did", "Were"], "a": 1 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["She didn't went.", "She didn't goed.", "She didn't go."], "a": 2 }
+        ],
+        "order": [
+          { "w": ["yesterday", "at school", "Dilnoza", "worked"], "a": "Dilnoza worked at school yesterday." },
+          { "w": ["last night", "at home", "were", "we"], "a": "We were at home last night." },
+          { "w": ["Aziz", "didn't", "yesterday", "I", "see"], "a": "I didn't see Aziz yesterday." },
+          { "w": ["bread", "buy", "did", "some", "you"], "a": "Did you buy some bread?" }
+        ],
+        "text": [
+          { "q": "Yesterday was Sunday.", "o": ["True", "False"], "a": 0 },
+          { "q": "Dilnoza got up at ___.", "o": ["seven", "nine", "ten"], "a": 1 },
+          { "q": "Dilnoza went to the market with Hamida.", "o": ["True", "False"], "a": 1 },
+          { "q": "Bekzod ___ football.", "o": ["played", "watched", "bought"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "Dilnoza ___ at school yesterday.", "a": ["worked"], "hint": "work" },
+          { "q": "Bekzod ___ to the park yesterday.", "a": ["went"], "hint": "go" },
+          { "q": "We ___ at home last night.", "a": ["were"], "hint": "be" },
+          { "q": "I ___ see Aziz yesterday.", "a": ["didn't", "did not"], "hint": "do (− inkor)" }
+        ]
+      },
+      "glossary": {
+        "yesterday": "kecha", "last": "oʻtgan; oxirgi", "last week": "oʻtgan hafta", "last night": "kecha kechqurun", "night": "tun, kech",
+        "week": "hafta", "ago": "oldin", "visit": "ziyorat qilmoq, bormoq", "work": "ishlamoq", "nine": "toʻqqiz", "seven": "yetti", "ten": "oʻn",
+        "breakfast": "nonushta", "family": "oila", "market": "bozor", "fruit": "meva", "bread": "non", "afternoon": "tushdan keyin",
+        "come": "kelmoq", "drink": "ichmoq", "tea": "choy", "talk": "gaplashmoq", "play": "oʻynamoq", "football": "futbol", "friend": "doʻst",
+        "evening": "kechqurun", "read": "oʻqimoq", "book": "kitob", "tired": "charchagan", "happy": "xursand", "see": "koʻrmoq",
+        "buy": "sotib olmoq", "go": "bormoq", "park": "park", "home": "uy", "school": "maktab", "watch": "tomosha qilmoq", "get up": "turmoq (uyqudan)",
+        "get": "olmoq; turmoq", "then": "keyin", "have": "ega boʻlmoq; (ovqat) yemoq", "be": "boʻlmoq (am/is/are)", "was": "edi", "were": "edilar",
+        "did": "qildi; (yordamchi: oʻtgan)", "didn't": "…madi (inkor: oʻtgan)", "some": "bir oz", "with": "bilan", "at": "-da", "but": "lekin", "her": "uning (ayol)"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I visited Samarkand last week.", "uz": "Men oʻtgan hafta Samarqandga bordim." },
+    { "en": "Dilnoza worked at school yesterday.", "uz": "Dilnoza kecha maktabda ishladi." },
+    { "en": "Bekzod went to the park.", "uz": "Bekzod parkka bordi." },
+    { "en": "We were at home last night.", "uz": "Biz kecha kechqurun uyda edik." },
+    { "en": "They bought some bread.", "uz": "Ular non sotib olishdi." },
+    { "en": "Did you see Aziz yesterday?", "uz": "Siz kecha Azizni koʻrdingizmi?" },
+    { "en": "Were you at school yesterday?", "uz": "Siz kecha maktabda edingizmi?" },
+    { "en": "I didn't go to the market.", "uz": "Men bozorga bormadim." }
+  ],
+  "test": null
+}

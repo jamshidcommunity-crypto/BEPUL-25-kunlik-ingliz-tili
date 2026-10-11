@@ -1,0 +1,147 @@
+{
+  "day": 13,
+  "title": "Would you like…? · should",
+  "units": [
+    {
+      "id": 21,
+      "code": "G",
+      "title": "Would you like…?",
+      "rule": "*Would you like…?* — muloyim taklif yoki soʻrov: \"…xohlaysizmi?\" Undan keyin ot keladi: *Would you like some tea?* yoki *to + feʼl*: *Would you like to go to the park?* Javob: *Yes, please.* / *No, thank you.* Oʻzingiz xohlagan narsani muloyim aytish uchun *I'd like…* (= *I would like*) ishlatiladi: *I'd like some water, please.* Taklifda *some* ishlatamiz.",
+      "examples": [
+        "Would you like some tea?",
+        "Would you like a sandwich?",
+        "Would you like to go to the park?",
+        "Yes, please. I'd like some coffee.",
+        "No, thank you.",
+        "I'd like to visit Samarkand."
+      ],
+      "words": [
+        { "en": "Would you like…?", "uz": "…xohlaysizmi?" },
+        { "en": "I'd like…", "uz": "men … xohlardim" },
+        { "en": "Yes, please.", "uz": "Ha, iltimos." },
+        { "en": "No, thank you.", "uz": "Yoʻq, rahmat." },
+        { "en": "sandwich", "uz": "sendvich" },
+        { "en": "ice cream", "uz": "muzqaymoq" },
+        { "en": "cake", "uz": "tort" },
+        { "en": "hungry", "uz": "och" }
+      ],
+      "text": {
+        "title": "Tea with Mr Kim",
+        "en": "Mr Kim: Hello, Dilnoza! Would you like some tea?\nDilnoza: Yes, please. I'd like some green tea.\nMr Kim: Would you like a sandwich?\nDilnoza: No, thank you. I'm not hungry. But I'd like some cake.\nMr Kim: OK. Would you like to go to the park after lunch?\nDilnoza: Yes, I'd like that. The weather is nice today."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "___ you like some tea?", "o": ["Would", "Do", "Are"], "a": 0 },
+          { "q": "Would you like ___ sandwich?", "o": ["some", "a", "any"], "a": 1 },
+          { "q": "Would you like ___ go to the park?", "o": ["go", "going", "to"], "a": 2 },
+          { "q": "Yes, ___.", "o": ["please", "thank", "like"], "a": 0 },
+          { "q": "No, ___ you.", "o": ["please", "thank", "like"], "a": 1 },
+          { "q": "I'd like ___ coffee.", "o": ["any", "to", "some"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["some", "tea", "you", "would", "like"], "a": "Would you like some tea?" },
+          { "w": ["water", "please", "I'd", "some", "like"], "a": "I'd like some water, please." },
+          { "w": ["go", "to", "home", "would", "you like"], "a": "Would you like to go home?" },
+          { "w": ["visit", "Samarkand", "I'd", "to", "like"], "a": "I'd like to visit Samarkand." }
+        ],
+        "text": [
+          { "q": "Dilnoza would like some green tea.", "o": ["True", "False"], "a": 0 },
+          { "q": "Dilnoza would like a sandwich.", "o": ["True", "False"], "a": 1 },
+          { "q": "Dilnoza would like some ___.", "o": ["cake", "bread", "juice"], "a": 0 },
+          { "q": "They would like to go to the ___ after lunch.", "o": ["market", "school", "park"], "a": 2 }
+        ],
+        "fill": [
+          { "q": "___ you like some coffee?", "a": ["Would", "would"], "hint": "would / do" },
+          { "q": "I ___ like some tea, please.", "a": ["would", "'d"], "hint": "would" },
+          { "q": "Yes, ___.", "a": ["please"], "hint": "iltimos" },
+          { "q": "I'd like ___ go to the park.", "a": ["to"], "hint": "to / going" }
+        ]
+      },
+      "glossary": {
+        "would": "…ar edi (muloyim)", "would like": "xohlamoq (muloyim)", "i'd": "men …ardim", "sandwich": "sendvich", "hungry": "och",
+        "cake": "tort", "coffee": "kofe", "green": "yashil", "green tea": "koʻk choy", "tea": "choy", "lunch": "tushlik", "park": "park",
+        "weather": "ob-havo", "nice": "yoqimli, yaxshi", "today": "bugun", "visit": "ziyorat qilmoq, bormoq", "water": "suv",
+        "please": "iltimos", "thank": "rahmat aytmoq", "yes": "ha", "no": "yoʻq", "home": "uy", "go": "bormoq", "like": "yoqtirmoq",
+        "some": "bir oz", "any": "hech; biror", "that": "u, shu", "after": "keyin", "great": "ajoyib", "hello": "salom",
+        "ice cream": "muzqaymoq", "ice": "muz", "cream": "qaymoq", "bread": "non", "juice": "sharbat", "market": "bozor", "school": "maktab",
+        "i'm": "men …man", "not": "emas", "but": "lekin"
+      }
+    },
+    {
+      "id": 22,
+      "code": "G",
+      "title": "should / shouldn't",
+      "rule": "*should* — maslahat berishda ishlatiladi: \"…ishingiz kerak, …sangiz yaxshi boʻladi\". Hamma shaxs uchun bir xil, keyin feʼlning asosiy shakli keladi (*to* siz, *-s* siz): *You should sleep. He should study.* Inkor: *shouldn't* (= *should not*): *You shouldn't eat a lot of sugar.* Soʻroq: *Should I go to the doctor?* — *should* egadan oldin turadi.",
+      "examples": [
+        "You should drink some water.",
+        "Bekzod should study every day.",
+        "You shouldn't eat a lot of sugar.",
+        "Aziz shouldn't go to bed late.",
+        "Should I go to the doctor?",
+        "We should visit Hamida."
+      ],
+      "words": [
+        { "en": "should", "uz": "…ishi kerak (maslahat)" },
+        { "en": "shouldn't", "uz": "…masligi kerak" },
+        { "en": "doctor", "uz": "shifokor" },
+        { "en": "medicine", "uz": "dori" },
+        { "en": "ill", "uz": "kasal" },
+        { "en": "go to bed", "uz": "uxlashga yotmoq" },
+        { "en": "stay at home", "uz": "uyda qolmoq" },
+        { "en": "rest", "uz": "dam olmoq" }
+      ],
+      "text": {
+        "title": "Bekzod is ill",
+        "en": "Bekzod is ill today. He has got a cold. Nodira is a nurse. She says: You should stay at home. You should drink hot tea. You shouldn't go to school today. You should sleep a lot. Bekzod asks: Should I take some medicine? Nodira says: Yes, you should. And you shouldn't play football this week."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "Bekzod is ill. He ___ stay at home.", "o": ["should", "shouldn't", "should to"], "a": 0 },
+          { "q": "You ___ eat a lot of sugar. It's bad.", "o": ["should", "shouldn't", "should not to"], "a": 1 },
+          { "q": "Aziz should ___ every day.", "o": ["studies", "to study", "study"], "a": 2 },
+          { "q": "___ I go to the doctor?", "o": ["Should", "Do", "Am"], "a": 0 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["He should sleeps.", "He should sleep.", "He shoulds sleep."], "a": 1 },
+          { "q": "It's cold. You ___ wear a coat.", "o": ["shouldn't", "should not", "should"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["drink", "some", "you", "water", "should"], "a": "You should drink some water." },
+          { "w": ["every day", "study", "should", "Bekzod"], "a": "Bekzod should study every day." },
+          { "w": ["eat", "a lot of", "you", "sugar", "shouldn't"], "a": "You shouldn't eat a lot of sugar." },
+          { "w": ["go", "should", "to the doctor", "I"], "a": "Should I go to the doctor?" }
+        ],
+        "text": [
+          { "q": "Bekzod is ill.", "o": ["True", "False"], "a": 0 },
+          { "q": "Bekzod should go to school today.", "o": ["True", "False"], "a": 1 },
+          { "q": "Bekzod should drink ___.", "o": ["hot tea", "cold water", "juice"], "a": 0 },
+          { "q": "Bekzod shouldn't play ___ this week.", "o": ["music", "football", "with Tom"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "You ___ drink some water.", "a": ["should"], "hint": "should (+ maslahat)" },
+          { "q": "You ___ eat a lot of sugar.", "a": ["shouldn't", "should not"], "hint": "should (− inkor)" },
+          { "q": "___ I go to the doctor?", "a": ["Should", "should"], "hint": "should (?)" },
+          { "q": "He should ___ at home.", "a": ["stay"], "hint": "stay" }
+        ]
+      },
+      "glossary": {
+        "should": "…ishi kerak (maslahat)", "shouldn't": "…masligi kerak", "ill": "kasal", "cold": "sovuq; shamollash", "medicine": "dori",
+        "doctor": "shifokor", "bed": "karavot, toʻshak", "go to bed": "uxlashga yotmoq", "rest": "dam olmoq", "stay": "qolmoq", "hot": "issiq",
+        "tea": "choy", "sleep": "uxlamoq", "school": "maktab", "football": "futbol", "play": "oʻynamoq", "week": "hafta", "ask": "soʻramoq",
+        "say": "aytmoq", "nurse": "hamshira", "home": "uy", "coat": "palto", "wear": "kiymoq", "sugar": "shakar", "water": "suv",
+        "drink": "ichmoq", "eat": "yemoq", "study": "oʻqimoq", "every": "har bir", "every day": "har kuni", "day": "kun", "visit": "ziyorat qilmoq, bormoq",
+        "music": "musiqa", "take": "olmoq; (dori) ichmoq", "a lot": "koʻp", "lot": "koʻp", "late": "kech", "bad": "yomon", "today": "bugun",
+        "this": "bu", "with": "bilan", "juice": "sharbat", "go": "bormoq", "it's": "u …dir", "some": "bir oz"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I'd like some water, please.", "uz": "Men bir oz suv xohlardim, iltimos." },
+    { "en": "I'd like to visit Samarkand.", "uz": "Men Samarqandga borishni xohlardim." },
+    { "en": "You should drink some water.", "uz": "Siz bir oz suv ichishingiz kerak." },
+    { "en": "Bekzod should study every day.", "uz": "Bekzod har kuni oʻqishi kerak." },
+    { "en": "We should visit Hamida.", "uz": "Biz Hamidani koʻrgani borishimiz kerak." },
+    { "en": "Would you like some tea?", "uz": "Choy xohlaysizmi?" },
+    { "en": "Should I go to the doctor?", "uz": "Shifokorga borishim kerakmi?" },
+    { "en": "You shouldn't eat a lot of sugar.", "uz": "Siz koʻp shakar yemasligingiz kerak." }
+  ],
+  "test": null
+}

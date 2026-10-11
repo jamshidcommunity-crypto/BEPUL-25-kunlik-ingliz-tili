@@ -1,0 +1,81 @@
+{
+  "day": 22,
+  "title": "Do you know where…? / I don't know what…",
+  "units": [
+    {
+      "id": 32,
+      "code": "G",
+      "title": "Do you know where…? / I don't know what…",
+      "rule": "Savolni muloyim qilib soʻrash uchun *Do you know…?* bilan boshlaymiz: *Where is the bank?* → *Do you know where the bank is?* Diqqat: ichki qismda soʻz tartibi oddiy gapdagidek — avval ega, keyin feʼl: *where the bank is* (*where is the bank* emas). Present simple savoldagi *do/does* ichki qismda tushib qoladi: *Where does Aziz live?* → *Do you know where Aziz lives?* Xuddi shunday *I don't know…* bilan: *I don't know what time it is.* — Men soat nechaligini bilmayman.",
+      "examples": [
+        "Do you know where the bank is?",
+        "Do you know what time it is?",
+        "I don't know where Aziz lives.",
+        "I don't know what this word means.",
+        "Do you know who that man is?",
+        "I don't know when the bus comes."
+      ],
+      "words": [
+        { "en": "know", "uz": "bilmoq" },
+        { "en": "mean", "uz": "anglatmoq" },
+        { "en": "bank", "uz": "bank" },
+        { "en": "post office", "uz": "pochta" },
+        { "en": "bus station", "uz": "avtobus bekati" },
+        { "en": "what time", "uz": "soat necha" },
+        { "en": "who", "uz": "kim" },
+        { "en": "excuse me", "uz": "kechirasiz" }
+      ],
+      "text": {
+        "title": "In Jizzax",
+        "en": "Aziz: Excuse me. Do you know where the bus station is?\nMr Kim: Sorry, I don't know. I'm new here.\nAziz: Do you know what time it is?\nMr Kim: Yes, it's two o'clock.\nAziz: Thank you. Do you know where Dilnoza lives?\nMr Kim: Yes, I do. She lives near the park. I don't know the street.\nAziz: I know the park! Thanks a lot."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "Do you know where ___?", "o": ["is the bank", "the bank is", "bank is the"], "a": 1 },
+          { "q": "I don't know what time ___.", "o": ["it is", "is it", "it does"], "a": 0 },
+          { "q": "Do you know where ___?", "o": ["does Aziz live", "Aziz lives", "Aziz live"], "a": 1 },
+          { "q": "I don't know ___ that man is.", "o": ["what time", "which", "who"], "a": 2 },
+          { "q": "Do you know ___ this word means?", "o": ["what", "where", "who"], "a": 0 },
+          { "q": "I don't know when the bus ___.", "o": ["come", "comes", "does come"], "a": 1 }
+        ],
+        "order": [
+          { "w": ["where", "do you know", "is", "the bank"], "a": "Do you know where the bank is?" },
+          { "w": ["what time", "I", "it is", "don't know"], "a": "I don't know what time it is." },
+          { "w": ["Aziz", "where", "lives", "do you know"], "a": "Do you know where Aziz lives?" },
+          { "w": ["who", "is", "I don't know", "that man"], "a": "I don't know who that man is." }
+        ],
+        "text": [
+          { "q": "Mr Kim knows where the bus station is.", "o": ["True", "False"], "a": 1 },
+          { "q": "It is two o'clock.", "o": ["True", "False"], "a": 0 },
+          { "q": "Dilnoza lives near ___.", "o": ["the bank", "the park", "the station"], "a": 1 },
+          { "q": "Mr Kim doesn't know ___.", "o": ["the street", "the park", "the time"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "Do you know where the bank ___?", "a": ["is"], "hint": "be" },
+          { "q": "I don't know what time ___ is.", "a": ["it"], "hint": "u (narsa)" },
+          { "q": "Do you know where Aziz ___?", "a": ["lives"], "hint": "live" },
+          { "q": "I don't ___ who that man is.", "a": ["know"], "hint": "bilmoq" }
+        ]
+      },
+      "glossary": {
+        "know": "bilmoq", "mean": "anglatmoq", "bank": "bank", "post office": "pochta", "post": "pochta", "office": "idora",
+        "bus station": "avtobus bekati", "station": "bekat", "what time": "soat necha", "who": "kim", "excuse me": "kechirasiz", "excuse": "kechirmoq",
+        "where": "qayerda", "what": "nima", "when": "qachon", "which": "qaysi", "word": "soʻz", "man": "erkak, kishi", "bus": "avtobus",
+        "live": "yashamoq", "come": "kelmoq", "time": "vaqt", "o'clock": "soat … (aniq)", "street": "koʻcha", "park": "park",
+        "new": "yangi", "here": "bu yerda", "near": "yaqinida", "sorry": "kechirasiz", "thank": "rahmat aytmoq", "thanks": "rahmat",
+        "a lot": "koʻp", "lot": "koʻp", "i'm": "men …man", "it's": "u …dir", "don't": "…maslik (inkor)", "doesn't": "…maydi (inkor)", "that": "u, ana u"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I know where the bank is.", "uz": "Men bank qayerdaligini bilaman." },
+    { "en": "I know what time it is.", "uz": "Men soat nechaligini bilaman." },
+    { "en": "Dilnoza knows where Aziz lives.", "uz": "Dilnoza Aziz qayerda yashashini biladi." },
+    { "en": "I know who that man is.", "uz": "Men u kishi kimligini bilaman." },
+    { "en": "Bekzod knows when the bus comes.", "uz": "Bekzod avtobus qachon kelishini biladi." },
+    { "en": "Do you know where the bank is?", "uz": "Bank qayerdaligini bilasizmi?" },
+    { "en": "Do you know what time it is?", "uz": "Soat nechaligini bilasizmi?" },
+    { "en": "I don't know where she lives.", "uz": "Men u qayerda yashashini bilmayman." }
+  ],
+  "test": null
+}

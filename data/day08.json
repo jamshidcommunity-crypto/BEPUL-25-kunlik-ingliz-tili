@@ -1,0 +1,141 @@
+{
+  "day": 8,
+  "title": "Prepositions of time · going to",
+  "units": [
+    {
+      "id": 13,
+      "code": "G",
+      "title": "Prepositions of time (at / on / in)",
+      "rule": "Vaqt predloglari uchta: *at* — soat va baʼzi soʻzlar bilan: *at seven, at night, at the weekend*. *On* — hafta kunlari bilan: *on Monday, on Sunday*. *In* — oylar, fasllar va kun qismlari bilan: *in May, in summer, in the morning, in the evening*. *I get up at seven.* — Men soat yettida turaman. *We go to the park on Sunday.* — Biz yakshanba kuni parkka boramiz. *It is cold in winter.* — Qishda sovuq boʻladi.",
+      "examples": [
+        "I get up at seven.",
+        "We have lunch at one.",
+        "Bekzod plays football on Saturday.",
+        "Dilnoza works in the morning.",
+        "It is cold in winter.",
+        "My birthday is in May."
+      ],
+      "words": [
+        { "en": "at seven", "uz": "soat yettida" },
+        { "en": "at night", "uz": "kechasi" },
+        { "en": "at the weekend", "uz": "dam olish kunlari" },
+        { "en": "on Monday", "uz": "dushanba kuni" },
+        { "en": "in the morning", "uz": "ertalab" },
+        { "en": "in summer", "uz": "yozda" },
+        { "en": "winter", "uz": "qish" },
+        { "en": "birthday", "uz": "tugʻilgan kun" }
+      ],
+      "text": {
+        "title": "Bekzod's week",
+        "en": "Bekzod gets up at seven. He goes to school at eight. He plays football on Monday and Wednesday. On Friday he helps his father on the farm. At the weekend he visits his grandmother. In the evening he does his homework. He goes to bed at eleven. In summer he doesn't go to school. His birthday is in June."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I get up ___ seven.", "o": ["at", "on", "in"], "a": 0 },
+          { "q": "We go to the park ___ Sunday.", "o": ["at", "in", "on"], "a": 2 },
+          { "q": "It is hot ___ summer.", "o": ["in", "on", "at"], "a": 0 },
+          { "q": "Dilnoza works ___ the morning.", "o": ["at", "in", "on"], "a": 1 },
+          { "q": "Bekzod sleeps ___ night.", "o": ["on", "in", "at"], "a": 2 },
+          { "q": "My birthday is ___ May.", "o": ["in", "at", "on"], "a": 0 }
+        ],
+        "order": [
+          { "w": ["at", "get", "I", "seven", "up"], "a": "I get up at seven." },
+          { "w": ["football", "on", "he", "Saturday", "plays"], "a": "He plays football on Saturday." },
+          { "w": ["cold", "is", "in", "it", "winter"], "a": "It is cold in winter." },
+          { "w": ["the", "works", "in", "she", "morning"], "a": "She works in the morning." }
+        ],
+        "text": [
+          { "q": "Bekzod gets up at eight.", "o": ["True", "False"], "a": 1 },
+          { "q": "Bekzod plays football on Monday.", "o": ["True", "False"], "a": 0 },
+          { "q": "Bekzod visits his grandmother ___.", "o": ["on Friday", "at the weekend", "in the evening"], "a": 1 },
+          { "q": "His birthday is in ___.", "o": ["May", "June", "July"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "I go to bed ___ ten.", "a": ["at"], "hint": "soat bilan" },
+          { "q": "We don't work ___ Sunday.", "a": ["on"], "hint": "hafta kuni bilan" },
+          { "q": "It is cold ___ winter.", "a": ["in"], "hint": "fasl bilan" },
+          { "q": "Bekzod does his homework ___ the evening.", "a": ["in"], "hint": "kun qismi bilan" }
+        ]
+      },
+      "glossary": {
+        "birthday": "tugʻilgan kun", "winter": "qish", "summer": "yoz", "spring": "bahor", "autumn": "kuz",
+        "weekend": "dam olish kunlari", "night": "kecha, tun", "morning": "ertalab", "evening": "kechqurun",
+        "lunch": "tushlik", "visit": "ziyorat qilmoq", "homework": "uy vazifasi", "farm": "ferma",
+        "grandmother": "buvi", "hot": "issiq", "cold": "sovuq", "park": "park", "bed": "karavot"
+      }
+    },
+    {
+      "id": 14,
+      "code": "G",
+      "title": "going to",
+      "rule": "*Be going to* — kelajakdagi reja, niyat: *am/is/are going to* + feʼl. *I am going to visit Samarkand.* — Men Samarqandga bormoqchiman. *She is going to cook dinner.* — U kechki ovqat pishirmoqchi. Inkor: *We aren't going to watch TV.* — Biz televizor koʻrmoqchi emasmiz. Savol: *Are you going to study? — Yes, I am.* *Is he going to play? — No, he isn't.* *Tomorrow, next week, at the weekend* soʻzlari bilan keladi.",
+      "examples": [
+        "I am going to visit Samarkand.",
+        "Dilnoza is going to buy a car.",
+        "We are going to have a party.",
+        "Bekzod isn't going to play football.",
+        "Are you going to study tonight?",
+        "Is she going to cook? Yes, she is."
+      ],
+      "words": [
+        { "en": "going to", "uz": "…moqchi (reja)" },
+        { "en": "tomorrow", "uz": "ertaga" },
+        { "en": "next week", "uz": "keyingi hafta" },
+        { "en": "party", "uz": "bazm, ziyofat" },
+        { "en": "visit", "uz": "ziyorat qilmoq, bormoq" },
+        { "en": "buy", "uz": "sotib olmoq" },
+        { "en": "holiday", "uz": "taʼtil" },
+        { "en": "plan", "uz": "reja" }
+      ],
+      "text": {
+        "title": "Plans for the weekend",
+        "en": "It is Friday evening. The family is talking about the weekend. Dilnoza is going to visit Malika in Tashkent. Bekzod is going to play football with his friends. Karim is going to work on the farm. Nodira isn't going to work. She is going to cook a big dinner. Tom isn't going to do anything. He is going to sleep!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ going to visit Samarkand.", "o": ["am", "is", "are"], "a": 0 },
+          { "q": "Dilnoza is going ___ buy a car.", "o": ["for", "to", "at"], "a": 1 },
+          { "q": "We are going to ___ a party.", "o": ["having", "has", "have"], "a": 2 },
+          { "q": "Bekzod ___ going to play. (inkor)", "o": ["isn't", "aren't", "doesn't"], "a": 0 },
+          { "q": "___ you going to study tonight?", "o": ["Is", "Are", "Do"], "a": 1 },
+          { "q": "They ___ going to watch a film.", "o": ["is", "am", "are"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["going", "I", "to", "visit", "am", "Samarkand"], "a": "I am going to visit Samarkand." },
+          { "w": ["is", "she", "to", "cook", "going", "dinner"], "a": "She is going to cook dinner." },
+          { "w": ["going", "aren't", "we", "to", "work"], "a": "We aren't going to work." },
+          { "w": ["you", "are", "going", "to", "study"], "a": "Are you going to study?" }
+        ],
+        "text": [
+          { "q": "Dilnoza is going to visit Malika.", "o": ["True", "False"], "a": 0 },
+          { "q": "Nodira is going to work.", "o": ["True", "False"], "a": 1 },
+          { "q": "Bekzod is going to ___.", "o": ["cook dinner", "play football", "sleep"], "a": 1 },
+          { "q": "Tom is going to ___.", "o": ["sleep", "work", "play"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "I ___ going to buy a bike.", "a": ["am", "'m"], "hint": "be" },
+          { "q": "She is going ___ cook dinner.", "a": ["to"], "hint": "going to" },
+          { "q": "They ___ going to play football.", "a": ["aren't", "are not"], "hint": "be + not (inkor)" },
+          { "q": "___ he going to study?", "a": ["Is", "is"], "hint": "be (savol: he)" }
+        ]
+      },
+      "glossary": {
+        "party": "bazm, ziyofat", "holiday": "taʼtil", "plan": "reja", "tomorrow": "ertaga", "tonight": "bugun kechqurun",
+        "visit": "ziyorat qilmoq, bormoq", "buy": "sotib olmoq", "study": "oʻqimoq", "dinner": "kechki ovqat",
+        "talk": "gaplashmoq", "about": "haqida", "anything": "biror narsa", "sleep": "uxlamoq", "film": "film",
+        "weekend": "dam olish kunlari", "evening": "kechqurun", "friend": "doʻst", "farm": "ferma"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I get up at seven.", "uz": "Men soat yettida turaman." },
+    { "en": "We go to the park on Sunday.", "uz": "Biz yakshanba kuni parkka boramiz." },
+    { "en": "It is cold in winter.", "uz": "Qishda sovuq boʻladi." },
+    { "en": "I am going to visit Samarkand.", "uz": "Men Samarqandga bormoqchiman." },
+    { "en": "She is going to cook dinner.", "uz": "U kechki ovqat pishirmoqchi." },
+    { "en": "Are you going to study tonight?", "uz": "Siz bugun kechqurun oʻqimoqchimisiz?" },
+    { "en": "Is he going to play football?", "uz": "U futbol oʻynamoqchimi?" },
+    { "en": "We aren't going to work on Sunday.", "uz": "Biz yakshanba kuni ishlamoqchi emasmiz." }
+  ],
+  "test": null
+}

@@ -1,0 +1,139 @@
+{
+  "day": 2,
+  "title": "Personal pronouns · to be",
+  "units": [
+    {
+      "id": 2,
+      "code": "G",
+      "title": "Personal pronouns",
+      "rule": "Kishilik olmoshlari ot oʻrnida keladi: *I* (men), *you* (siz, sen), *he* (u — erkak), *she* (u — ayol), *it* (u — narsa, hayvon), *we* (biz), *they* (ular). Inglizchada ega olmoshi doim yoziladi: *She is a nurse.* — U hamshira. *Bekzod* oʻrniga *he*, *Dilnoza* oʻrniga *she*, *the cat* oʻrniga *it*, *Aziz and Malika* oʻrniga *they* deymiz. *I* olmoshi doim katta harf bilan yoziladi. Feʼldan keyin esa *me, you, him, her, it, us, them* shakli keladi: *I like her.* — Men uni yoqtiraman.",
+      "examples": [
+        "I am Dilnoza.",
+        "He is my brother.",
+        "She is a nurse.",
+        "It is a cat.",
+        "We are from Usmat.",
+        "They are students."
+      ],
+      "words": [
+        { "en": "I", "uz": "men" },
+        { "en": "you", "uz": "siz, sen" },
+        { "en": "he", "uz": "u (erkak)" },
+        { "en": "she", "uz": "u (ayol)" },
+        { "en": "it", "uz": "u (narsa, hayvon)" },
+        { "en": "we", "uz": "biz" },
+        { "en": "they", "uz": "ular" },
+        { "en": "me", "uz": "meni, menga" }
+      ],
+      "text": {
+        "title": "We are friends",
+        "en": "Hello! I am Dilnoza. I am a teacher. Aziz is a student. He is from Samarkand. Malika is a student. She is from Tashkent. They are good students. Mr Kim is a teacher. He is from Korea. We are friends. Tom is a cat. It is black. Bekzod is a student. He likes Tom. I like Tom too."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "Dilnoza is a teacher. ___ is from Usmat.", "o": ["He", "She", "It"], "a": 1 },
+          { "q": "Aziz and Malika are students. ___ are young.", "o": ["They", "We", "He"], "a": 0 },
+          { "q": "Tom is a cat. ___ is black.", "o": ["He", "She", "It"], "a": 2 },
+          { "q": "Dilnoza and I are friends. ___ are teachers.", "o": ["They", "You", "We"], "a": 2 },
+          { "q": "Mr Kim is a teacher. ___ is from Korea.", "o": ["He", "She", "They"], "a": 0 },
+          { "q": "I like Malika. I like ___.", "o": ["she", "her", "he"], "a": 1 }
+        ],
+        "order": [
+          { "w": ["is", "a", "nurse", "she"], "a": "She is a nurse." },
+          { "w": ["from", "we", "Usmat", "are"], "a": "We are from Usmat." },
+          { "w": ["students", "they", "are", "good"], "a": "They are good students." },
+          { "w": ["a", "cat", "it", "is"], "a": "It is a cat." }
+        ],
+        "text": [
+          { "q": "Aziz is from Samarkand.", "o": ["True", "False"], "a": 0 },
+          { "q": "Malika is a teacher.", "o": ["True", "False"], "a": 1 },
+          { "q": "Mr Kim is from ___.", "o": ["Korea", "Tashkent", "Usmat"], "a": 0 },
+          { "q": "Tom is ___.", "o": ["a dog", "white", "a cat"], "a": 2 }
+        ],
+        "fill": [
+          { "q": "Nodira is a nurse. ___ is 50.", "a": ["She", "she"], "hint": "u (ayol)" },
+          { "q": "Karim is a farmer. ___ is 55.", "a": ["He", "he"], "hint": "u (erkak)" },
+          { "q": "Aziz and Malika are students. ___ are young.", "a": ["They", "they"], "hint": "ular" },
+          { "q": "Bekzod and I are from Usmat. ___ are happy.", "a": ["We", "we"], "hint": "biz" }
+        ]
+      },
+      "glossary": {
+        "friend": "doʻst", "black": "qora", "white": "oq", "young": "yosh", "good": "yaxshi", "too": "ham",
+        "nurse": "hamshira", "farmer": "fermer, dehqon", "teacher": "oʻqituvchi", "student": "oʻquvchi",
+        "cat": "mushuk", "dog": "it", "brother": "aka, uka", "happy": "xursand", "from": "-dan", "like": "yoqtirmoq"
+      }
+    },
+    {
+      "id": 3,
+      "code": "G",
+      "title": "to be",
+      "rule": "*To be* feʼli uch shaklda keladi: *I am*, *he/she/it is*, *you/we/they are*. Qisqa shakllari: *I'm, he's, she's, it's, you're, we're, they're*. Inkor uchun *not* qoʻshamiz: *I am not*, *he is not* (*isn't*), *they are not* (*aren't*): *Tom isn't a dog.* — Tom it emas. Savolda *be* egadan oldin keladi: *Are you a student? — Yes, I am. / No, I'm not.* *Is she a nurse? — Yes, she is. / No, she isn't.*",
+      "examples": [
+        "I'm a student.",
+        "She is a nurse.",
+        "We are from Usmat.",
+        "He isn't a doctor.",
+        "Are you a teacher?",
+        "Is Tom a cat? Yes, it is."
+      ],
+      "words": [
+        { "en": "hospital", "uz": "kasalxona" },
+        { "en": "tired", "uz": "charchagan" },
+        { "en": "hungry", "uz": "och" },
+        { "en": "at home", "uz": "uyda" },
+        { "en": "at work", "uz": "ishda" },
+        { "en": "at school", "uz": "maktabda" },
+        { "en": "here", "uz": "bu yerda" },
+        { "en": "doctor", "uz": "shifokor" }
+      ],
+      "text": {
+        "title": "At home",
+        "en": "Dilnoza: Hello, Mum! Are you tired?\nNodira: Yes, I am. I'm a nurse. The hospital is big.\nDilnoza: Is Dad at home?\nNodira: No, he isn't. He is at work.\nDilnoza: Where is Bekzod?\nNodira: He is at school. He isn't at home.\nDilnoza: And Tom?\nNodira: Tom is here. He is hungry!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ a teacher.", "o": ["am", "is", "are"], "a": 0 },
+          { "q": "They ___ from Tashkent.", "o": ["is", "are", "am"], "a": 1 },
+          { "q": "Bekzod ___ at school.", "o": ["are", "am", "is"], "a": 2 },
+          { "q": "___ you tired?", "o": ["Are", "Is", "Am"], "a": 0 },
+          { "q": "Tom ___ a dog. It is a cat.", "o": ["aren't", "isn't", "am not"], "a": 1 },
+          { "q": "Is Nodira a nurse? — Yes, she ___.", "o": ["are", "am", "is"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["a", "nurse", "my", "mother", "is"], "a": "My mother is a nurse." },
+          { "w": ["you", "are", "from", "Usmat"], "a": "Are you from Usmat?" },
+          { "w": ["isn't", "at", "Bekzod", "home"], "a": "Bekzod isn't at home." },
+          { "w": ["are", "we", "not", "tired"], "a": "We are not tired." }
+        ],
+        "text": [
+          { "q": "Nodira is tired.", "o": ["True", "False"], "a": 0 },
+          { "q": "Karim is at home.", "o": ["True", "False"], "a": 1 },
+          { "q": "Bekzod is at ___.", "o": ["home", "school", "work"], "a": 1 },
+          { "q": "Tom is ___.", "o": ["hungry", "tired", "big"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "I ___ from Usmat.", "a": ["am", "'m"], "hint": "be" },
+          { "q": "Aziz and Malika ___ students.", "a": ["are"], "hint": "be" },
+          { "q": "Tom ___ a dog.", "a": ["isn't", "is not", "'s not"], "hint": "be + not (inkor)" },
+          { "q": "___ Dilnoza a teacher?", "a": ["Is", "is"], "hint": "be (savol)" }
+        ]
+      },
+      "glossary": {
+        "hospital": "kasalxona", "hungry": "och", "tired": "charchagan", "doctor": "shifokor", "here": "bu yerda",
+        "mum": "oyi", "dad": "dada", "work": "ish; ishlamoq", "home": "uy", "school": "maktab", "where": "qayerda",
+        "big": "katta", "mother": "ona", "nurse": "hamshira"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I'm a student.", "uz": "Men oʻquvchiman." },
+    { "en": "She is a nurse.", "uz": "U hamshira." },
+    { "en": "We are from Usmat.", "uz": "Biz Usmatdanmiz." },
+    { "en": "They are good students.", "uz": "Ular yaxshi oʻquvchilar." },
+    { "en": "He is at school.", "uz": "U maktabda." },
+    { "en": "Are you tired?", "uz": "Siz charchadingizmi?" },
+    { "en": "Is he a teacher?", "uz": "U oʻqituvchimi?" },
+    { "en": "It isn't a dog.", "uz": "U it emas." }
+  ],
+  "test": null
+}

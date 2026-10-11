@@ -1,0 +1,143 @@
+{
+  "day": 10,
+  "title": "Adverbs · some / any",
+  "units": [
+    {
+      "id": 16,
+      "code": "G",
+      "title": "Adverbs (of manner + frequency)",
+      "rule": "Ravish ish-harakat QANDAY yoki QANCHALIK TEZ-TEZ bajarilishini bildiradi. Holat ravishi sifatga *-ly* qoʻshib yasaladi: *slow → slowly, quick → quickly, careful → carefully*; istisno: *good → well, fast → fast, hard → hard*. Holat ravishi feʼldan keyin keladi: *Hamida walks slowly.* Takrorlanish ravishlari (*always, usually, often, sometimes, never*) asosiy feʼldan OLDIN, *be* feʼlidan esa KEYIN keladi: *I always get up early. Malika is never late.*",
+      "examples": [
+        "Bekzod runs quickly.",
+        "Hamida walks slowly.",
+        "Dilnoza speaks English well.",
+        "I always get up at seven.",
+        "Karim usually works in the garden.",
+        "Malika is never late."
+      ],
+      "words": [
+        { "en": "quickly", "uz": "tez" },
+        { "en": "slowly", "uz": "sekin" },
+        { "en": "carefully", "uz": "ehtiyotkorlik bilan" },
+        { "en": "well", "uz": "yaxshi (ravish)" },
+        { "en": "always", "uz": "har doim" },
+        { "en": "usually", "uz": "odatda" },
+        { "en": "sometimes", "uz": "baʼzan" },
+        { "en": "never", "uz": "hech qachon" }
+      ],
+      "text": {
+        "title": "Our mornings",
+        "en": "Karim always gets up early. He works hard in the garden. Nodira usually gets up at six. She drives carefully to work. Bekzod often gets up late. He eats his breakfast quickly. Hamida walks slowly in the garden. Dilnoza sometimes goes to school by bus. She speaks English well. Tom the cat never gets up early. He sleeps all day!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "Hamida walks ___.", "o": ["slow", "slowly", "slows"], "a": 1 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["Malika is never late.", "Malika is late never.", "Malika never is late."], "a": 0 },
+          { "q": "Dilnoza speaks English ___.", "o": ["good", "nice", "well"], "a": 2 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["I get always up early.", "I get up always early.", "I always get up early."], "a": 2 },
+          { "q": "Bekzod runs ___.", "o": ["quick", "quickly", "quiet"], "a": 1 },
+          { "q": "Hamida ___ drinks coffee. (0%)", "o": ["never", "always", "usually"], "a": 0 }
+        ],
+        "order": [
+          { "w": ["slowly", "Hamida", "very", "walks"], "a": "Hamida walks very slowly." },
+          { "w": ["up", "always", "I", "get", "early"], "a": "I always get up early." },
+          { "w": ["English", "well", "Dilnoza", "speaks"], "a": "Dilnoza speaks English well." },
+          { "w": ["never", "late", "is", "Karim"], "a": "Karim is never late." }
+        ],
+        "text": [
+          { "q": "Karim always gets up early.", "o": ["True", "False"], "a": 0 },
+          { "q": "Nodira drives ___.", "o": ["quickly", "carefully", "slowly"], "a": 1 },
+          { "q": "Bekzod eats his breakfast slowly.", "o": ["True", "False"], "a": 1 },
+          { "q": "Tom ___ gets up early.", "o": ["always", "sometimes", "never"], "a": 2 }
+        ],
+        "fill": [
+          { "q": "Hamida walks ___.", "a": ["slowly"], "hint": "slow" },
+          { "q": "Dilnoza speaks English ___.", "a": ["well"], "hint": "good" },
+          { "q": "I ___ get up at seven.", "a": ["always"], "hint": "har doim (100%)" },
+          { "q": "Nodira drives ___.", "a": ["carefully"], "hint": "careful" }
+        ]
+      },
+      "glossary": {
+        "get up": "turmoq (uyqudan)", "get": "olmoq; yetib bormoq", "early": "erta", "late": "kech", "garden": "bogʻ", "hard": "qattiq, astoydil",
+        "breakfast": "nonushta", "bus": "avtobus", "by bus": "avtobusda", "all day": "kun boʻyi", "drive": "haydamoq", "run": "yugurmoq",
+        "walk": "yurmoq", "speak": "gapirmoq", "slowly": "sekin", "quickly": "tez", "carefully": "ehtiyotkorlik bilan", "well": "yaxshi (ravish)",
+        "always": "har doim", "usually": "odatda", "often": "tez-tez", "sometimes": "baʼzan", "never": "hech qachon", "quiet": "jim",
+        "quick": "tez", "slow": "sekin", "careful": "ehtiyotkor", "nice": "yoqimli, yaxshi", "good": "yaxshi", "work": "ishlamoq; ish",
+        "sleep": "uxlamoq", "eat": "yemoq", "coffee": "kofe", "drink": "ichmoq", "seven": "yetti", "six": "olti", "very": "juda",
+        "english": "ingliz tili", "cat": "mushuk", "school": "maktab", "morning": "ertalab", "day": "kun", "all": "hamma, butun"
+      }
+    },
+    {
+      "id": 17,
+      "code": "G",
+      "title": "some / any",
+      "rule": "*some* va *any* \"bir oz, bir nechta\" maʼnosini beradi. Ular koʻplikdagi otlar (*apples, eggs*) va sanalmaydigan otlar (*milk, bread, sugar*) bilan ishlatiladi. *some* — darak (tasdiq) gapda: *There is some milk. I have got some apples.* *any* — inkor va soʻroq gapda: *There isn't any milk. Is there any milk?*",
+      "examples": [
+        "There is some bread on the table.",
+        "I have got some apples.",
+        "There isn't any milk.",
+        "We haven't got any eggs.",
+        "Is there any sugar?",
+        "Have you got any juice?"
+      ],
+      "words": [
+        { "en": "some", "uz": "bir oz, bir nechta (+)" },
+        { "en": "any", "uz": "hech; biror (−, ?)" },
+        { "en": "bread", "uz": "non" },
+        { "en": "milk", "uz": "sut" },
+        { "en": "eggs", "uz": "tuxum" },
+        { "en": "sugar", "uz": "shakar" },
+        { "en": "juice", "uz": "sharbat" },
+        { "en": "fridge", "uz": "muzlatgich" }
+      ],
+      "text": {
+        "title": "In the kitchen",
+        "en": "Nodira: Bekzod, is there any bread in the kitchen?\nBekzod: Yes, there is some bread on the table.\nNodira: Is there any milk in the fridge?\nBekzod: No, there isn't any milk. But there is some juice.\nNodira: Have we got any eggs?\nBekzod: Yes, we have got some eggs. And we have got some apples.\nNodira: Good. I want some tea now."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "There is ___ milk in the fridge.", "o": ["some", "any", "a"], "a": 0 },
+          { "q": "There isn't ___ sugar.", "o": ["some", "any", "an"], "a": 1 },
+          { "q": "Is there ___ bread?", "o": ["a", "some", "any"], "a": 2 },
+          { "q": "I have got ___ apples.", "o": ["any", "some", "an"], "a": 1 },
+          { "q": "We haven't got ___ eggs.", "o": ["any", "some", "a"], "a": 0 },
+          { "q": "Have you got ___ juice?", "o": ["some", "a", "any"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["is", "some", "there", "milk"], "a": "There is some milk." },
+          { "w": ["any", "sugar", "is", "there"], "a": "Is there any sugar?" },
+          { "w": ["got", "any", "we", "haven't", "eggs"], "a": "We haven't got any eggs." },
+          { "w": ["tea", "I", "some", "want"], "a": "I want some tea." }
+        ],
+        "text": [
+          { "q": "There is some bread on the table.", "o": ["True", "False"], "a": 0 },
+          { "q": "There is some milk in the fridge.", "o": ["True", "False"], "a": 1 },
+          { "q": "There is some ___.", "o": ["juice", "milk", "water"], "a": 0 },
+          { "q": "Nodira wants some ___.", "o": ["coffee", "tea", "juice"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "There is ___ bread on the table.", "a": ["some"], "hint": "some / any" },
+          { "q": "There isn't ___ milk.", "a": ["any"], "hint": "some / any" },
+          { "q": "Is there ___ sugar?", "a": ["any"], "hint": "some / any" },
+          { "q": "I have got ___ apples.", "a": ["some"], "hint": "some / any" }
+        ]
+      },
+      "glossary": {
+        "some": "bir oz, bir nechta", "any": "hech; biror", "fridge": "muzlatgich", "kitchen": "oshxona", "bread": "non", "milk": "sut",
+        "egg": "tuxum", "sugar": "shakar", "juice": "sharbat", "apple": "olma", "tea": "choy", "coffee": "kofe", "water": "suv",
+        "want": "xohlamoq", "now": "hozir", "table": "stol", "good": "yaxshi", "have got": "bor, ega boʻlmoq", "there": "u yerda; (there is — bor)"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "Hamida walks slowly.", "uz": "Hamida sekin yuradi." },
+    { "en": "Dilnoza speaks English well.", "uz": "Dilnoza inglizcha yaxshi gapiradi." },
+    { "en": "I always get up early.", "uz": "Men har doim erta turaman." },
+    { "en": "There is some bread on the table.", "uz": "Stolda bir oz non bor." },
+    { "en": "We have got some apples.", "uz": "Bizda bir nechta olma bor." },
+    { "en": "Is there any milk?", "uz": "Sut bormi?" },
+    { "en": "Do you always get up early?", "uz": "Siz har doim erta turasizmi?" },
+    { "en": "There isn't any sugar.", "uz": "Shakar yoʻq." }
+  ],
+  "test": null
+}

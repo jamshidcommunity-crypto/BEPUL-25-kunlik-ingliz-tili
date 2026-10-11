@@ -1,0 +1,82 @@
+{
+  "day": 23,
+  "title": "Infinitive / gerund (want to, like doing)",
+  "units": [
+    {
+      "id": 33,
+      "code": "G",
+      "title": "Infinitive / gerund (want to, like doing)",
+      "rule": "Baʼzi feʼllardan keyin *to + feʼl* keladi: *want, would like, need* — *I want to sleep.* (Men uxlashni xohlayman.) *We need to buy bread.* (Biz non sotib olishimiz kerak.) Baʼzi feʼllardan keyin *feʼl + -ing* keladi: *like, love, hate, enjoy* — *I like reading.* (Men oʻqishni yoqtiraman.) *Bekzod hates washing plates.* Bu juftliklarni yodlang: *want to, need to, would like to* — *like …ing, love …ing, hate …ing, enjoy …ing*.",
+      "examples": [
+        "I want to go home.",
+        "Dilnoza would like to drink tea.",
+        "We need to buy bread.",
+        "Bekzod likes playing football.",
+        "Hamida loves cooking.",
+        "Aziz hates getting up early."
+      ],
+      "words": [
+        { "en": "want to", "uz": "…ni xohlamoq" },
+        { "en": "need to", "uz": "…ishi kerak" },
+        { "en": "would like to", "uz": "…ni istamoq, …moqchi" },
+        { "en": "like", "uz": "yoqtirmoq" },
+        { "en": "love", "uz": "sevmoq, yaxshi koʻrmoq" },
+        { "en": "hate", "uz": "yomon koʻrmoq" },
+        { "en": "enjoy", "uz": "zavqlanmoq, yoqtirmoq" },
+        { "en": "get up", "uz": "turmoq (uyqudan)" }
+      ],
+      "text": {
+        "title": "What they like",
+        "en": "Dilnoza loves teaching English. She enjoys reading books. She wants to visit Korea. Bekzod likes playing football. He hates washing plates. He would like to buy a new phone. Karim enjoys working in the garden. Nodira likes cooking. Hamida loves drinking tea with her friends. Aziz needs to study every day. He wants to speak English well."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I want ___ home.", "o": ["go", "to go", "going"], "a": 1 },
+          { "q": "Bekzod likes ___ football.", "o": ["play", "to play", "playing"], "a": 2 },
+          { "q": "We need ___ bread.", "o": ["to buy", "buying", "buy"], "a": 0 },
+          { "q": "Hamida loves ___ tea.", "o": ["drink", "drinking", "drinks"], "a": 1 },
+          { "q": "Dilnoza would like ___ Korea.", "o": ["visit", "visiting", "to visit"], "a": 2 },
+          { "q": "Aziz hates ___ up early.", "o": ["getting", "to get", "get"], "a": 0 }
+        ],
+        "order": [
+          { "w": ["home", "to go", "I", "want"], "a": "I want to go home." },
+          { "w": ["playing", "Bekzod", "football", "likes"], "a": "Bekzod likes playing football." },
+          { "w": ["bread", "need", "we", "to buy"], "a": "We need to buy bread." },
+          { "w": ["tea", "drinking", "loves", "Hamida"], "a": "Hamida loves drinking tea." }
+        ],
+        "text": [
+          { "q": "Dilnoza loves teaching English.", "o": ["True", "False"], "a": 0 },
+          { "q": "Bekzod likes washing plates.", "o": ["True", "False"], "a": 1 },
+          { "q": "Dilnoza wants to visit ___.", "o": ["Korea", "Tashkent", "Samarkand"], "a": 0 },
+          { "q": "Karim enjoys ___.", "o": ["cooking", "working in the garden", "playing football"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "I want ___ sleep.", "a": ["to"], "hint": "want + ?" },
+          { "q": "Bekzod likes ___ football.", "a": ["playing"], "hint": "play" },
+          { "q": "We need to ___ bread.", "a": ["buy"], "hint": "sotib olmoq" },
+          { "q": "Hamida loves ___ tea.", "a": ["drinking"], "hint": "drink" }
+        ]
+      },
+      "glossary": {
+        "want": "xohlamoq", "need": "kerak boʻlmoq", "would": "…ar edi; (would like — istamoq)", "would like": "…ni istamoq, …moqchi", "like": "yoqtirmoq",
+        "love": "sevmoq, yaxshi koʻrmoq", "hate": "yomon koʻrmoq", "enjoy": "zavqlanmoq, yoqtirmoq", "get up": "turmoq (uyqudan)", "get": "olmoq; turmoq (get up)",
+        "go": "bormoq, ketmoq", "drink": "ichmoq", "buy": "sotib olmoq", "play": "oʻynamoq", "cook": "pishirmoq", "wash": "yuvmoq",
+        "teach": "oʻqitmoq", "read": "oʻqimoq", "visit": "ziyorat qilmoq", "work": "ishlamoq", "study": "oʻqimoq, oʻrganmoq",
+        "speak": "gapirmoq", "sleep": "uxlamoq", "home": "uy, uyga", "tea": "choy", "bread": "non", "football": "futbol",
+        "plate": "likopcha", "phone": "telefon", "new": "yangi", "garden": "bogʻ", "book": "kitob", "friend": "doʻst",
+        "early": "erta", "well": "yaxshi", "every day": "har kuni", "up": "yuqoriga", "with": "bilan", "english": "ingliz tili"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I want to go home.", "uz": "Men uyga ketmoqchiman." },
+    { "en": "Dilnoza would like to drink tea.", "uz": "Dilnoza choy ichmoqchi." },
+    { "en": "We need to buy bread.", "uz": "Biz non sotib olishimiz kerak." },
+    { "en": "Bekzod likes playing football.", "uz": "Bekzod futbol oʻynashni yoqtiradi." },
+    { "en": "Hamida loves cooking.", "uz": "Hamida ovqat pishirishni yaxshi koʻradi." },
+    { "en": "Do you like reading?", "uz": "Siz oʻqishni yoqtirasizmi?" },
+    { "en": "Would you like to drink tea?", "uz": "Choy ichmoqchimisiz?" },
+    { "en": "I don't want to get up early.", "uz": "Men erta turishni xohlamayman." }
+  ],
+  "test": null
+}

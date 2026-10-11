@@ -1,0 +1,79 @@
+{
+  "day": 9,
+  "title": "Future simple — will",
+  "units": [
+    {
+      "id": 15,
+      "code": "G",
+      "title": "Future simple (will)",
+      "rule": "*Will* — kelajak zamon: *will* + feʼl, hamma ega bilan bir xil: *I will help you.* — Men sizga yordam beraman. *It will be hot.* — Issiq boʻladi. Qisqa shakllari: *I'll, he'll, she'll, we'll, they'll*. Inkor: *will not* = *won't*: *It won't rain.* — Yomgʻir yogʻmaydi. Savol: *Will you come? — Yes, I will. / No, I won't.* *Tomorrow, next year, soon* soʻzlari bilan keladi.",
+      "examples": [
+        "I will help you.",
+        "It will be hot tomorrow.",
+        "Bekzod will be a doctor.",
+        "We'll go to Tashkent next year.",
+        "She won't come today.",
+        "Will you come to the party?"
+      ],
+      "words": [
+        { "en": "will", "uz": "…adi (kelajak)" },
+        { "en": "won't", "uz": "…maydi (kelajak, inkor)" },
+        { "en": "tomorrow", "uz": "ertaga" },
+        { "en": "next year", "uz": "kelasi yil" },
+        { "en": "soon", "uz": "tez orada" },
+        { "en": "help", "uz": "yordam bermoq" },
+        { "en": "call", "uz": "qoʻngʻiroq qilmoq" },
+        { "en": "forget", "uz": "unutmoq" }
+      ],
+      "text": {
+        "title": "Next year",
+        "en": "Dilnoza: Bekzod, what will you do next year?\nBekzod: I will go to Tashkent. I will be a doctor.\nDilnoza: Will you come home at the weekend?\nBekzod: Yes, I will. I won't forget you! I'll call you every day.\nDilnoza: Good. I will help you with English.\nBekzod: Thanks. Will Tom be sad?\nDilnoza: No, he won't. He will sleep on the sofa!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ help you.", "o": ["will", "am", "going"], "a": 0 },
+          { "q": "It ___ rain tomorrow. (inkor)", "o": ["willn't", "don't", "won't"], "a": 2 },
+          { "q": "Bekzod will ___ a doctor.", "o": ["is", "be", "being"], "a": 1 },
+          { "q": "___ you come to the party?", "o": ["Will", "Are", "Do"], "a": 0 },
+          { "q": "Will she call? — Yes, she ___.", "o": ["is", "does", "will"], "a": 2 },
+          { "q": "We ___ go to Tashkent next year.", "o": ["wills", "will", "are will"], "a": 1 }
+        ],
+        "order": [
+          { "w": ["help", "will", "I", "you"], "a": "I will help you." },
+          { "w": ["tomorrow", "be", "it", "hot", "will"], "a": "It will be hot tomorrow." },
+          { "w": ["won't", "today", "she", "come"], "a": "She won't come today." },
+          { "w": ["come", "you", "will", "to", "party", "the"], "a": "Will you come to the party?" }
+        ],
+        "text": [
+          { "q": "Bekzod will go to Tashkent.", "o": ["True", "False"], "a": 0 },
+          { "q": "Bekzod will be a teacher.", "o": ["True", "False"], "a": 1 },
+          { "q": "Bekzod will call Dilnoza ___.", "o": ["every day", "at the weekend", "next year"], "a": 0 },
+          { "q": "Tom will ___.", "o": ["be sad", "sleep on the sofa", "go to Tashkent"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "I ___ help you tomorrow.", "a": ["will", "'ll"], "hint": "will" },
+          { "q": "It ___ rain tomorrow.", "a": ["won't", "will not"], "hint": "will + not (inkor)" },
+          { "q": "___ you come to the party?", "a": ["Will", "will"], "hint": "will (savol)" },
+          { "q": "Bekzod will ___ a doctor.", "a": ["be"], "hint": "be (will dan keyin)" }
+        ]
+      },
+      "glossary": {
+        "sofa": "divan", "party": "bazm, ziyofat", "tomorrow": "ertaga", "today": "bugun", "soon": "tez orada",
+        "year": "yil", "next": "keyingi, kelasi", "help": "yordam bermoq", "call": "qoʻngʻiroq qilmoq",
+        "forget": "unutmoq", "doctor": "shifokor", "hot": "issiq", "sad": "xafa", "rain": "yomgʻir yogʻmoq",
+        "thanks": "rahmat", "weekend": "dam olish kunlari", "sleep": "uxlamoq", "come": "kelmoq"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I will help you.", "uz": "Men sizga yordam beraman." },
+    { "en": "It will be hot tomorrow.", "uz": "Ertaga issiq boʻladi." },
+    { "en": "Bekzod will be a doctor.", "uz": "Bekzod shifokor boʻladi." },
+    { "en": "We'll go to Tashkent next year.", "uz": "Biz kelasi yil Toshkentga boramiz." },
+    { "en": "I'll call you every day.", "uz": "Men sizga har kuni qoʻngʻiroq qilaman." },
+    { "en": "Will you come to the party?", "uz": "Siz bazmga kelasizmi?" },
+    { "en": "Will it rain tomorrow?", "uz": "Ertaga yomgʻir yogʻadimi?" },
+    { "en": "She won't come today.", "uz": "U bugun kelmaydi." }
+  ],
+  "test": null
+}

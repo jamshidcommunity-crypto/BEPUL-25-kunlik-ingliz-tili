@@ -1,0 +1,82 @@
+{
+  "day": 18,
+  "title": "Present perfect",
+  "units": [
+    {
+      "id": 28,
+      "code": "G",
+      "title": "Present perfect",
+      "rule": "Present perfect *have/has + feʼlning 3-shakli* bilan yasaladi. U natijani yoki hayotdagi tajribani bildiradi, aniq vaqt aytilmaydi: *I have visited Samarkand.* — Men Samarqandga borganman. *He, she, it* bilan *has*, qolganlari bilan *have*: *She has finished.* Toʻgʻri feʼllarga *-ed* qoʻshamiz (*visited, washed*), notoʻgʻri feʼllarning 3-shaklini yodlaymiz: *go – gone, see – seen, eat – eaten, buy – bought, write – written*. Savolda *Have you ever…?* (qachondir); *never* (hech qachon), *just* (hozirgina), *already* (allaqachon) feʼl oldiga qoʻyiladi; *yet* (hali) inkor va savolda gap oxiriga keladi: *I haven't eaten yet.*",
+      "examples": [
+        "I have visited Samarkand.",
+        "Dilnoza has just finished her lesson.",
+        "Bekzod has already eaten his lunch.",
+        "I have never written a letter.",
+        "Have you ever met Mr Kim?",
+        "Aziz hasn't finished his homework yet."
+      ],
+      "words": [
+        { "en": "ever", "uz": "qachondir (savolda)" },
+        { "en": "never", "uz": "hech qachon" },
+        { "en": "just", "uz": "hozirgina" },
+        { "en": "already", "uz": "allaqachon" },
+        { "en": "yet", "uz": "hali (inkor va savolda)" },
+        { "en": "visit", "uz": "ziyorat qilmoq, bormoq" },
+        { "en": "finish", "uz": "tugatmoq" },
+        { "en": "wash", "uz": "yuvmoq" }
+      ],
+      "text": {
+        "title": "Have you finished?",
+        "en": "Dilnoza: Hi, Bekzod. Have you finished your homework?\nBekzod: Yes, I have. I have just finished it.\nDilnoza: Have you washed the plates?\nBekzod: No, I haven't washed them yet.\nDilnoza: And the cat? Has Tom eaten?\nBekzod: Yes, he has already eaten. Mum has given him some fish.\nDilnoza: Good. Have you ever cooked dinner?\nBekzod: No, never! But I have made tea."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ visited Tashkent.", "o": ["have", "has", "am"], "a": 0 },
+          { "q": "Bekzod ___ just finished his homework.", "o": ["have", "has", "is"], "a": 1 },
+          { "q": "Have you ___ met Mr Kim?", "o": ["yet", "never", "ever"], "a": 2 },
+          { "q": "We have ___ eaten lunch.", "o": ["yet", "already", "ever"], "a": 1 },
+          { "q": "Malika hasn't written the letter ___.", "o": ["yet", "just", "already"], "a": 0 },
+          { "q": "Aziz has ___ a new phone.", "o": ["buy", "bought", "buys"], "a": 1 }
+        ],
+        "order": [
+          { "w": ["visited", "I", "Samarkand", "have"], "a": "I have visited Samarkand." },
+          { "w": ["just", "she", "finished", "has", "her", "lesson"], "a": "She has just finished her lesson." },
+          { "w": ["you", "ever", "have", "met", "Mr Kim"], "a": "Have you ever met Mr Kim?" },
+          { "w": ["eaten", "we", "yet", "haven't", "lunch"], "a": "We haven't eaten lunch yet." }
+        ],
+        "text": [
+          { "q": "Bekzod has finished his homework.", "o": ["True", "False"], "a": 0 },
+          { "q": "Bekzod has washed the plates.", "o": ["True", "False"], "a": 1 },
+          { "q": "Tom has ___.", "o": ["eaten", "slept", "gone"], "a": 0 },
+          { "q": "Bekzod has never ___.", "o": ["made tea", "cooked dinner", "finished homework"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "I ___ visited Tashkent.", "a": ["have", "'ve"], "hint": "have/has" },
+          { "q": "Dilnoza ___ just finished her lesson.", "a": ["has", "'s"], "hint": "have/has" },
+          { "q": "Bekzod has ___ his lunch.", "a": ["eaten"], "hint": "eat" },
+          { "q": "We ___ seen the film yet.", "a": ["haven't", "have not"], "hint": "inkor" }
+        ]
+      },
+      "glossary": {
+        "ever": "qachondir", "never": "hech qachon", "just": "hozirgina", "already": "allaqachon", "yet": "hali",
+        "visit": "ziyorat qilmoq, bormoq", "finish": "tugatmoq", "wash": "yuvmoq", "eat": "yemoq", "eaten": "yegan (eat, 3-shakl)",
+        "gone": "ketgan (go, 3-shakl)", "seen": "koʻrgan (see, 3-shakl)", "written": "yozgan (write, 3-shakl)", "bought": "sotib olgan",
+        "lesson": "dars", "lunch": "tushlik", "letter": "xat", "homework": "uy vazifasi", "plate": "likopcha", "fish": "baliq",
+        "mum": "oyi", "dinner": "kechki ovqat", "tea": "choy", "cook": "pishirmoq", "make": "qilmoq, tayyorlamoq",
+        "phone": "telefon", "new": "yangi", "film": "film", "cat": "mushuk", "hi": "salom", "good": "yaxshi",
+        "haven't": "…magan (inkor)", "hasn't": "…magan (inkor: he/she/it)", "i've": "men …ganman", "some": "bir oz", "but": "lekin"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I have visited Samarkand.", "uz": "Men Samarqandga borganman." },
+    { "en": "Dilnoza has just finished her lesson.", "uz": "Dilnoza hozirgina darsini tugatdi." },
+    { "en": "Bekzod has already eaten lunch.", "uz": "Bekzod allaqachon tushlik qilgan." },
+    { "en": "We have bought a new car.", "uz": "Biz yangi mashina sotib olganmiz." },
+    { "en": "Aziz has written a letter.", "uz": "Aziz xat yozgan." },
+    { "en": "Have you ever met Mr Kim?", "uz": "Siz janob Kim bilan uchrashganmisiz?" },
+    { "en": "Has Malika finished her homework?", "uz": "Malika uy vazifasini tugatdimi?" },
+    { "en": "I haven't seen the film yet.", "uz": "Men filmni hali koʻrmaganman." }
+  ],
+  "test": null
+}

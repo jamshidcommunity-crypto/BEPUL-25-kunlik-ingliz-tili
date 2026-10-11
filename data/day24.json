@@ -1,0 +1,83 @@
+{
+  "day": 24,
+  "title": "Passive voice — present simple",
+  "units": [
+    {
+      "id": 34,
+      "code": "G",
+      "title": "Passive voice — present simple",
+      "rule": "Passiv (majhul nisbat) kim qilgani emas, nima qilinishi muhim boʻlganda ishlatiladi. U *is/are + feʼlning 3-shakli* bilan yasaladi: *Bread is made at home.* — Non uyda tayyorlanadi. Birlik bilan *is*, koʻplik bilan *are*: *The rooms are cleaned every day.* Kim qilganini aytish kerak boʻlsa *by* (tomonidan) qoʻshamiz: *The plates are washed by Bekzod.* Inkor: *isn't / aren't + 3-shakl*: *Cars aren't made in Usmat.*",
+      "examples": [
+        "Bread is made at home.",
+        "Cotton is grown in Uzbekistan.",
+        "Tea is drunk every day.",
+        "The rooms are cleaned every morning.",
+        "This book is read by many students.",
+        "Cars aren't made in Usmat."
+      ],
+      "words": [
+        { "en": "cotton", "uz": "paxta" },
+        { "en": "grow", "uz": "yetishtirmoq, oʻsmoq" },
+        { "en": "make", "uz": "yasamoq, tayyorlamoq" },
+        { "en": "clean", "uz": "tozalamoq" },
+        { "en": "wash", "uz": "yuvmoq" },
+        { "en": "cook", "uz": "pishirmoq" },
+        { "en": "by", "uz": "tomonidan" },
+        { "en": "use", "uz": "ishlatmoq" }
+      ],
+      "text": {
+        "title": "Our home",
+        "en": "In our house many things are done every day. Breakfast is cooked by Nodira. Tea is made by Hamida. The rooms are cleaned by Dilnoza. The plates are washed by Bekzod. Tom is given fish every morning. In the garden, apples and tomatoes are grown by Karim. The apples are eaten by everybody. The tomatoes are taken to the market."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "Bread ___ made at home.", "o": ["is", "are", "am"], "a": 0 },
+          { "q": "The rooms ___ cleaned every day.", "o": ["is", "are", "be"], "a": 1 },
+          { "q": "Cotton is ___ in Uzbekistan.", "o": ["grow", "grows", "grown"], "a": 2 },
+          { "q": "Tea is ___ every day.", "o": ["drunk", "drink", "drank"], "a": 0 },
+          { "q": "The plates are washed ___ Bekzod.", "o": ["from", "with", "by"], "a": 2 },
+          { "q": "Cars ___ made in Usmat. (inkor)", "o": ["isn't", "aren't", "don't"], "a": 1 }
+        ],
+        "order": [
+          { "w": ["made", "at home", "bread", "is"], "a": "Bread is made at home." },
+          { "w": ["cleaned", "every day", "the rooms", "are"], "a": "The rooms are cleaned every day." },
+          { "w": ["by Bekzod", "washed", "the plates", "are"], "a": "The plates are washed by Bekzod." },
+          { "w": ["drunk", "tea", "is", "every day"], "a": "Tea is drunk every day." }
+        ],
+        "text": [
+          { "q": "Breakfast is cooked by Hamida.", "o": ["True", "False"], "a": 1 },
+          { "q": "The plates are washed by Bekzod.", "o": ["True", "False"], "a": 0 },
+          { "q": "The rooms are cleaned by ___.", "o": ["Dilnoza", "Nodira", "Karim"], "a": 0 },
+          { "q": "The tomatoes are ___.", "o": ["eaten by Tom", "taken to the market", "given to Aziz"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "Bread ___ made at home.", "a": ["is", "'s"], "hint": "be" },
+          { "q": "The rooms ___ cleaned every day.", "a": ["are"], "hint": "be" },
+          { "q": "Cotton is ___ in Uzbekistan.", "a": ["grown"], "hint": "grow" },
+          { "q": "The plates are washed ___ Bekzod.", "a": ["by"], "hint": "tomonidan" }
+        ]
+      },
+      "glossary": {
+        "cotton": "paxta", "grow": "yetishtirmoq, oʻsmoq", "grown": "yetishtiriladi (grow, 3-shakl)", "make": "yasamoq, tayyorlamoq", "made": "tayyorlangan (make, 3-shakl)",
+        "clean": "tozalamoq; toza", "wash": "yuvmoq", "cook": "pishirmoq", "by": "tomonidan", "use": "ishlatmoq",
+        "drink": "ichmoq", "drunk": "ichilgan (drink, 3-shakl)", "eat": "yemoq", "eaten": "yeyilgan (eat, 3-shakl)", "give": "bermoq", "given": "berilgan (give, 3-shakl)",
+        "take": "olmoq", "taken": "olib borilgan (take, 3-shakl)", "read": "oʻqimoq; oʻqilgan", "do": "qilmoq", "done": "qilingan (do, 3-shakl)",
+        "bread": "non", "tea": "choy", "room": "xona", "car": "mashina", "book": "kitob", "student": "oʻquvchi", "plate": "likopcha",
+        "breakfast": "nonushta", "fish": "baliq", "apple": "olma", "tomato": "pomidor", "garden": "bogʻ", "market": "bozor",
+        "house": "uy", "home": "uy", "thing": "narsa", "many": "koʻp", "everybody": "hamma", "every": "har bir", "morning": "ertalab", "day": "kun",
+        "isn't": "emas", "aren't": "emas (koʻplik)", "at": "-da", "in": "-da", "to": "-ga"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "Bread is made at home.", "uz": "Non uyda tayyorlanadi." },
+    { "en": "Cotton is grown in Uzbekistan.", "uz": "Paxta Oʻzbekistonda yetishtiriladi." },
+    { "en": "Tea is drunk every day.", "uz": "Choy har kuni ichiladi." },
+    { "en": "The rooms are cleaned every morning.", "uz": "Xonalar har kuni ertalab tozalanadi." },
+    { "en": "The plates are washed by Bekzod.", "uz": "Idishlar Bekzod tomonidan yuviladi." },
+    { "en": "Is bread made at home?", "uz": "Non uyda tayyorlanadimi?" },
+    { "en": "Are the rooms cleaned every day?", "uz": "Xonalar har kuni tozalanadimi?" },
+    { "en": "Cars aren't made in Usmat.", "uz": "Mashinalar Usmatda ishlab chiqarilmaydi." }
+  ],
+  "test": null
+}

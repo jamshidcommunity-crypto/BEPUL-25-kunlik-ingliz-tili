@@ -1,0 +1,139 @@
+{
+  "day": 3,
+  "title": "Demonstrative pronouns · have got",
+  "units": [
+    {
+      "id": 4,
+      "code": "G",
+      "title": "Demonstrative pronouns (this / that / these / those)",
+      "rule": "*This* (bu) va *that* (ana u) — bitta narsa uchun. *This* — yaqin turgan narsa, *that* — uzoq turgan narsa. *These* (bular) va *those* (ana ular) — koʻp narsa uchun: *these* — yaqin, *those* — uzoq. *This is a book.* — Bu kitob. *That is a car.* — Ana u mashina. *These are books.* — Bular kitoblar. *Those are cars.* — Ana ular mashinalar. *This/that* bilan *is*, *these/those* bilan *are* keladi.",
+      "examples": [
+        "This is a book.",
+        "That is a car.",
+        "These are my pens.",
+        "Those are big trees.",
+        "This is Aziz.",
+        "Is that a dictionary?"
+      ],
+      "words": [
+        { "en": "this", "uz": "bu (yaqin, 1 ta)" },
+        { "en": "that", "uz": "ana u (uzoq, 1 ta)" },
+        { "en": "these", "uz": "bular (yaqin, koʻp)" },
+        { "en": "those", "uz": "ana ular (uzoq, koʻp)" },
+        { "en": "here", "uz": "bu yerda" },
+        { "en": "there", "uz": "u yerda" },
+        { "en": "classroom", "uz": "sinfxona" },
+        { "en": "dictionary", "uz": "lugʻat" }
+      ],
+      "text": {
+        "title": "In the classroom",
+        "en": "Dilnoza: Good morning! This is the classroom. This is a table. That is the door. These are books. Those are pens.\nAziz: Is this a dictionary?\nDilnoza: Yes, it is. This is an English dictionary.\nMalika: Are those windows big?\nDilnoza: Yes, they are. That is Mr Kim. He is a teacher too."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "___ is a book. (yaqin, 1 ta)", "o": ["This", "These", "Those"], "a": 0 },
+          { "q": "___ are trees. (uzoq, koʻp)", "o": ["That", "This", "Those"], "a": 2 },
+          { "q": "___ are pens. (yaqin, koʻp)", "o": ["This", "These", "That"], "a": 1 },
+          { "q": "___ is a car. (uzoq, 1 ta)", "o": ["That", "Those", "These"], "a": 0 },
+          { "q": "This ___ Aziz.", "o": ["are", "is", "am"], "a": 1 },
+          { "q": "Those ___ books.", "o": ["is", "am", "are"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["a", "is", "this", "dictionary"], "a": "This is a dictionary." },
+          { "w": ["big", "are", "those", "trees"], "a": "Those are big trees." },
+          { "w": ["a", "is", "that", "car"], "a": "That is a car." },
+          { "w": ["these", "books", "are", "good"], "a": "These are good books." }
+        ],
+        "text": [
+          { "q": "That is the door.", "o": ["True", "False"], "a": 0 },
+          { "q": "These are pens.", "o": ["True", "False"], "a": 1 },
+          { "q": "This is ___ dictionary.", "o": ["a Russian", "an English", "an Uzbek"], "a": 1 },
+          { "q": "Mr Kim is ___.", "o": ["a student", "a doctor", "a teacher"], "a": 2 }
+        ],
+        "fill": [
+          { "q": "___ is a cat.", "a": ["This", "this"], "hint": "bu (yaqin, 1 ta)" },
+          { "q": "___ are books.", "a": ["These", "these"], "hint": "bular (yaqin, koʻp)" },
+          { "q": "___ is a car.", "a": ["That", "that"], "hint": "ana u (uzoq, 1 ta)" },
+          { "q": "___ are trees.", "a": ["Those", "those"], "hint": "ana ular (uzoq, koʻp)" }
+        ]
+      },
+      "glossary": {
+        "classroom": "sinfxona", "dictionary": "lugʻat", "far": "uzoq", "door": "eshik", "window": "deraza",
+        "pen": "ruchka", "book": "kitob", "tree": "daraxt", "car": "mashina", "table": "stol", "good": "yaxshi",
+        "morning": "ertalab", "big": "katta", "teacher": "oʻqituvchi", "doctor": "shifokor", "student": "oʻquvchi"
+      }
+    },
+    {
+      "id": 5,
+      "code": "G",
+      "title": "have got",
+      "rule": "*Have got* — \"bor\" maʼnosini beradi. *I/you/we/they have got*, *he/she/it has got*: *I have got a cat.* — Mening mushugim bor. *She has got a car.* — Uning mashinasi bor. Qisqa shakllari: *I've got, he's got, she's got*. Inkor: *haven't got / hasn't got*: *I haven't got a car.* — Mening mashinam yoʻq. Savol: *Have you got a pen? — Yes, I have. / No, I haven't.* *Has she got a cat? — Yes, she has.*",
+      "examples": [
+        "I have got a cat.",
+        "She has got a car.",
+        "We've got a big house.",
+        "He hasn't got a bike.",
+        "Have you got a pen?",
+        "Has Bekzod got a phone? Yes, he has."
+      ],
+      "words": [
+        { "en": "have got", "uz": "bor (menda, sizda, bizda, ularda)" },
+        { "en": "has got", "uz": "bor (unda)" },
+        { "en": "haven't got", "uz": "yoʻq" },
+        { "en": "hasn't got", "uz": "yoʻq (unda)" },
+        { "en": "farm", "uz": "ferma" },
+        { "en": "cow", "uz": "sigir" },
+        { "en": "sheep", "uz": "qoʻy" },
+        { "en": "bike", "uz": "velosiped" }
+      ],
+      "text": {
+        "title": "The farm",
+        "en": "Karim is a farmer. He has got a big farm. He has got ten cows and twenty sheep. Nodira has got a garden. She has got flowers and trees. Bekzod has got a bike. He hasn't got a car. Dilnoza has got a computer and a phone. We have got a cat. We haven't got a dog."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ got a bike.", "o": ["has", "have", "am"], "a": 1 },
+          { "q": "Bekzod ___ got a phone.", "o": ["has", "have", "is"], "a": 0 },
+          { "q": "We ___ got a dog. (inkor)", "o": ["hasn't", "haven't", "aren't"], "a": 1 },
+          { "q": "___ you got a pen?", "o": ["Has", "Are", "Have"], "a": 2 },
+          { "q": "Has Nodira got a garden? — Yes, she ___.", "o": ["has", "have", "is"], "a": 0 },
+          { "q": "Tom ___ got a ball.", "o": ["have", "is", "has"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["got", "a", "bike", "Bekzod", "has"], "a": "Bekzod has got a bike." },
+          { "w": ["a", "got", "we", "have", "cat"], "a": "We have got a cat." },
+          { "w": ["got", "car", "hasn't", "he", "a"], "a": "He hasn't got a car." },
+          { "w": ["you", "got", "have", "a", "pen"], "a": "Have you got a pen?" }
+        ],
+        "text": [
+          { "q": "Karim has got a big farm.", "o": ["True", "False"], "a": 0 },
+          { "q": "Bekzod has got a car.", "o": ["True", "False"], "a": 1 },
+          { "q": "Karim has got ___ cows.", "o": ["ten", "twenty", "two"], "a": 0 },
+          { "q": "The family has got ___.", "o": ["a dog", "a cat", "a horse"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "Dilnoza ___ got a computer.", "a": ["has", "'s"], "hint": "have got" },
+          { "q": "They ___ got a big house.", "a": ["have", "'ve"], "hint": "have got" },
+          { "q": "I ___ got a car.", "a": ["haven't", "have not"], "hint": "have got + not (inkor)" },
+          { "q": "___ Bekzod got a bike?", "a": ["Has", "has"], "hint": "have got (savol)" }
+        ]
+      },
+      "glossary": {
+        "farm": "ferma", "cow": "sigir", "sheep": "qoʻy", "bike": "velosiped", "horse": "ot", "ball": "toʻp",
+        "garden": "bogʻ", "flower": "gul", "tree": "daraxt", "computer": "kompyuter", "phone": "telefon",
+        "house": "uy", "family": "oila", "farmer": "fermer, dehqon", "pen": "ruchka", "car": "mashina"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "This is a book.", "uz": "Bu kitob." },
+    { "en": "Those are big trees.", "uz": "Ana ular katta daraxtlar." },
+    { "en": "I have got a cat.", "uz": "Mening mushugim bor." },
+    { "en": "She has got a car.", "uz": "Uning mashinasi bor." },
+    { "en": "These are good students.", "uz": "Bular yaxshi oʻquvchilar." },
+    { "en": "Is that a car?", "uz": "Ana u mashinami?" },
+    { "en": "Have you got a pen?", "uz": "Sizda ruchka bormi?" },
+    { "en": "He hasn't got a bike.", "uz": "Uning velosipedi yoʻq." }
+  ],
+  "test": null
+}

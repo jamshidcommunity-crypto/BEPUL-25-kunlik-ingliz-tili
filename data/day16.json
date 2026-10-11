@@ -1,0 +1,81 @@
+{
+  "day": 16,
+  "title": "too / enough",
+  "units": [
+    {
+      "id": 26,
+      "code": "G",
+      "title": "too / enough",
+      "rule": "*too* + sifat — \"juda ham, haddan tashqari\" (kerakidan ortiq, salbiy maʼno): *The tea is too hot.* (Choy juda issiq — icholmayman.) *enough* — \"yetarli\". U sifatdan KEYIN keladi: *The room is big enough.* Otdan esa OLDIN keladi: *We have got enough money.* Inkor bilan koʻp ishlatiladi: *Bekzod isn't old enough. There isn't enough milk.*",
+      "examples": [
+        "The tea is too hot.",
+        "This bag is too heavy.",
+        "The room is big enough.",
+        "We have got enough money.",
+        "Bekzod isn't old enough.",
+        "There isn't enough milk."
+      ],
+      "words": [
+        { "en": "too", "uz": "juda ham, haddan tashqari" },
+        { "en": "enough", "uz": "yetarli" },
+        { "en": "heavy", "uz": "ogʻir" },
+        { "en": "hot", "uz": "issiq" },
+        { "en": "cold", "uz": "sovuq" },
+        { "en": "expensive", "uz": "qimmat" },
+        { "en": "cheap", "uz": "arzon" },
+        { "en": "bag", "uz": "sumka" }
+      ],
+      "text": {
+        "title": "At the shop",
+        "en": "Malika: I want a new bag. This bag is nice, but it is too expensive.\nDilnoza: Look at this red bag. It is cheap enough.\nMalika: No, it is too small. My books are big.\nDilnoza: This blue bag is big enough. And it isn't expensive.\nMalika: Great! Have I got enough money? Yes, I have.\nDilnoza: Good. Buy it!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "The tea is ___ hot. I can't drink it.", "o": ["too", "enough", "many"], "a": 0 },
+          { "q": "The room is big ___.", "o": ["too", "enough", "many"], "a": 1 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["The bag is enough big.", "The bag is too big enough.", "The bag is big enough."], "a": 2 },
+          { "q": "We haven't got ___ money.", "o": ["too", "many", "enough"], "a": 2 },
+          { "q": "This bag is ___ heavy. I can't carry it.", "o": ["too", "enough", "much"], "a": 0 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["There isn't milk enough.", "There isn't enough milk.", "There isn't too milk."], "a": 1 }
+        ],
+        "order": [
+          { "w": ["hot", "too", "the tea", "is"], "a": "The tea is too hot." },
+          { "w": ["heavy", "this bag", "too", "is"], "a": "This bag is too heavy." },
+          { "w": ["enough", "big", "is", "the room"], "a": "The room is big enough." },
+          { "w": ["money", "enough", "we", "have got"], "a": "We have got enough money." }
+        ],
+        "text": [
+          { "q": "The first bag is too expensive.", "o": ["True", "False"], "a": 0 },
+          { "q": "The red bag is too ___.", "o": ["big", "small", "heavy"], "a": 1 },
+          { "q": "The blue bag is too expensive.", "o": ["True", "False"], "a": 1 },
+          { "q": "Malika has got ___ money.", "o": ["enough", "too much", "no"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "The tea is ___ hot. I can't drink it.", "a": ["too"], "hint": "too / enough" },
+          { "q": "The room is big ___.", "a": ["enough"], "hint": "too / enough" },
+          { "q": "We have got ___ money.", "a": ["enough"], "hint": "too / enough" },
+          { "q": "This bag is ___ heavy.", "a": ["too"], "hint": "too / enough" }
+        ]
+      },
+      "glossary": {
+        "too": "juda ham, haddan tashqari", "enough": "yetarli", "heavy": "ogʻir", "hot": "issiq", "cold": "sovuq", "expensive": "qimmat",
+        "cheap": "arzon", "big": "katta", "small": "kichkina", "bag": "sumka", "new": "yangi", "nice": "yoqimli, yaxshi", "red": "qizil",
+        "blue": "koʻk", "book": "kitob", "money": "pul", "buy": "sotib olmoq", "great": "ajoyib", "good": "yaxshi", "look": "qaramoq",
+        "look at": "…ga qaramoq", "want": "xohlamoq", "tea": "choy", "milk": "sut", "room": "xona", "carry": "koʻtarib yurmoq", "drink": "ichmoq",
+        "can't": "qila olmaslik", "one": "bir; (bitta narsa)", "first": "birinchi", "old": "keksa; eski", "much": "koʻp", "many": "koʻp",
+        "no": "yoʻq", "shop": "doʻkon", "have got": "bor, ega boʻlmoq", "there": "u yerda; (there is — bor)"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "The tea is too hot.", "uz": "Choy juda issiq." },
+    { "en": "This bag is too heavy.", "uz": "Bu sumka juda ogʻir." },
+    { "en": "The room is big enough.", "uz": "Xona yetarlicha katta." },
+    { "en": "We have got enough money.", "uz": "Bizda yetarli pul bor." },
+    { "en": "This bag is cheap enough.", "uz": "Bu sumka yetarlicha arzon." },
+    { "en": "Is the room big enough?", "uz": "Xona yetarlicha kattami?" },
+    { "en": "Have you got enough money?", "uz": "Sizda yetarli pul bormi?" },
+    { "en": "There isn't enough milk.", "uz": "Sut yetarli emas." }
+  ],
+  "test": null
+}

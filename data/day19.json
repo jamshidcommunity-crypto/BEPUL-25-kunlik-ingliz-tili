@@ -1,0 +1,82 @@
+{
+  "day": 19,
+  "title": "Purpose: to + verb",
+  "units": [
+    {
+      "id": 29,
+      "code": "G",
+      "title": "Purpose: to + verb",
+      "rule": "Nima uchun qilganimizni aytish uchun *to + feʼl* ishlatamiz: *I went to the shop to buy bread.* — Men non sotib olish uchun doʻkonga bordim. Oʻzbekchadagi \"…ish uchun\" inglizchada *to + feʼl* boʻladi. *for* bilan aytilmaydi: *to buy* toʻgʻri, *for buy* notoʻgʻri. Feʼl doim asosiy shaklda turadi: *to play* (*to playing* emas). Savol: *Why did you go to the shop?* — *To buy bread.*",
+      "examples": [
+        "I went to the shop to buy bread.",
+        "Dilnoza goes to school to teach English.",
+        "Bekzod went to the park to play football.",
+        "We went to Samarkand to see our friends.",
+        "Aziz studies every day to learn English.",
+        "Why did you go to the market? To buy apples."
+      ],
+      "words": [
+        { "en": "why", "uz": "nega, nima uchun" },
+        { "en": "to buy", "uz": "sotib olish uchun" },
+        { "en": "to see", "uz": "koʻrish uchun" },
+        { "en": "to help", "uz": "yordam berish uchun" },
+        { "en": "to learn", "uz": "oʻrganish uchun" },
+        { "en": "to visit", "uz": "ziyorat qilish uchun" },
+        { "en": "to get", "uz": "olish uchun" },
+        { "en": "purpose", "uz": "maqsad" }
+      ],
+      "text": {
+        "title": "A trip to Jizzax",
+        "en": "Yesterday Karim went to Jizzax. He went there to buy a new phone. Nodira went with him to see her sister. Bekzod went to the park to play football. Dilnoza stayed at home to cook dinner. Aziz came to her house to study English. In the evening they ate dinner together. Hamida went to bed early to sleep well."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I went to the shop ___ bread.", "o": ["to buy", "buy", "for buy"], "a": 0 },
+          { "q": "Bekzod goes to the park ___ football.", "o": ["playing", "to play", "play"], "a": 1 },
+          { "q": "Dilnoza went to Samarkand ___ her friend.", "o": ["for visit", "visiting", "to visit"], "a": 2 },
+          { "q": "Why did Aziz come? — ___ English.", "o": ["For study", "To study", "Study"], "a": 1 },
+          { "q": "We went to the market to ___ apples.", "o": ["bought", "buying", "buy"], "a": 2 },
+          { "q": "Nodira went to the kitchen ___ tea.", "o": ["to make", "to making", "for make"], "a": 0 }
+        ],
+        "order": [
+          { "w": ["to buy", "I", "bread", "went", "to the shop"], "a": "I went to the shop to buy bread." },
+          { "w": ["to play", "Bekzod", "football", "went", "to the park"], "a": "Bekzod went to the park to play football." },
+          { "w": ["home", "she", "to cook", "went", "dinner"], "a": "She went home to cook dinner." },
+          { "w": ["did", "why", "go", "you", "to Jizzax"], "a": "Why did you go to Jizzax?" }
+        ],
+        "text": [
+          { "q": "Karim went to Jizzax to buy a car.", "o": ["True", "False"], "a": 1 },
+          { "q": "Nodira went to Jizzax to see her sister.", "o": ["True", "False"], "a": 0 },
+          { "q": "Bekzod went to the park to ___.", "o": ["play football", "buy bread", "study English"], "a": 0 },
+          { "q": "Aziz came to the house to ___.", "o": ["eat dinner", "sleep", "study English"], "a": 2 }
+        ],
+        "fill": [
+          { "q": "I went to the shop ___ buy bread.", "a": ["to"], "hint": "maqsad" },
+          { "q": "Bekzod went to the park to ___ football.", "a": ["play"], "hint": "oʻynamoq" },
+          { "q": "Dilnoza goes to school to ___ English.", "a": ["teach"], "hint": "oʻqitmoq" },
+          { "q": "We went to the market ___ apples.", "a": ["to buy"], "hint": "sotib olish uchun" }
+        ]
+      },
+      "glossary": {
+        "why": "nega, nima uchun", "purpose": "maqsad", "to": "-ga; …ish uchun", "buy": "sotib olmoq", "see": "koʻrmoq",
+        "help": "yordam bermoq", "learn": "oʻrganmoq", "visit": "ziyorat qilmoq", "get": "olmoq", "teach": "oʻqitmoq",
+        "study": "oʻqimoq, oʻrganmoq", "play": "oʻynamoq", "cook": "pishirmoq", "sleep": "uxlamoq", "stay": "qolmoq",
+        "trip": "sayohat", "bed": "karavot; (go to bed — uxlashga yotmoq)", "together": "birga", "sister": "opa, singil",
+        "shop": "doʻkon", "bread": "non", "market": "bozor", "apple": "olma", "park": "park", "kitchen": "oshxona",
+        "phone": "telefon", "car": "mashina", "house": "uy", "home": "uy", "dinner": "kechki ovqat", "evening": "kechqurun",
+        "early": "erta", "well": "yaxshi", "friend": "doʻst", "every day": "har kuni", "yesterday": "kecha", "there": "u yerga, u yerda"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I went to the shop to buy bread.", "uz": "Men non olish uchun doʻkonga bordim." },
+    { "en": "Dilnoza goes to school to teach English.", "uz": "Dilnoza ingliz tilidan dars berish uchun maktabga boradi." },
+    { "en": "Bekzod went to the park to play football.", "uz": "Bekzod futbol oʻynash uchun parkga bordi." },
+    { "en": "We went to Samarkand to see our friends.", "uz": "Biz doʻstlarimizni koʻrish uchun Samarqandga bordik." },
+    { "en": "Aziz came here to study English.", "uz": "Aziz ingliz tilini oʻrganish uchun bu yerga keldi." },
+    { "en": "Why did you go to the market?", "uz": "Siz nega bozorga bordingiz?" },
+    { "en": "Did Karim go there to buy a phone?", "uz": "Karim u yerga telefon olish uchun bordimi?" },
+    { "en": "I didn't go there to play.", "uz": "Men u yerga oʻynash uchun bormadim." }
+  ],
+  "test": null
+}

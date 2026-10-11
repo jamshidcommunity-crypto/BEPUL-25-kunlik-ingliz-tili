@@ -1,0 +1,139 @@
+{
+  "day": 5,
+  "title": "Prepositions of place · there is / there are",
+  "units": [
+    {
+      "id": 9,
+      "code": "G",
+      "title": "Prepositions of place",
+      "rule": "Joy predloglari narsa qayerdaligini koʻrsatadi: *in* (ichida), *on* (ustida), *under* (tagida), *behind* (orqasida), *next to* (yonida), *in front of* (oldida), *between* (oʻrtasida), *near* (yaqinida). *The cat is on the chair.* — Mushuk stulning ustida. *The bag is under the table.* — Sumka stolning tagida. Predlog otdan oldin keladi: *in the box*, *on the table*, *next to the door*.",
+      "examples": [
+        "The book is on the table.",
+        "Tom is under the chair.",
+        "The bag is in the box.",
+        "Bekzod is behind the door.",
+        "The bank is next to the shop.",
+        "The car is in front of the house."
+      ],
+      "words": [
+        { "en": "in", "uz": "ichida" },
+        { "en": "on", "uz": "ustida" },
+        { "en": "under", "uz": "tagida" },
+        { "en": "behind", "uz": "orqasida" },
+        { "en": "next to", "uz": "yonida" },
+        { "en": "in front of", "uz": "oldida" },
+        { "en": "between", "uz": "oʻrtasida" },
+        { "en": "near", "uz": "yaqinida" }
+      ],
+      "text": {
+        "title": "Where is Tom?",
+        "en": "Dilnoza: Where is Tom?\nBekzod: He isn't in the kitchen.\nDilnoza: Is he under the table?\nBekzod: No, he isn't. Look! He is on the chair, behind the door.\nDilnoza: And where is my bag?\nBekzod: It is next to the window, between the chair and the table.\nDilnoza: My phone is in the bag. Good. Tom, come here!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "The book is ___ the table. (ustida)", "o": ["in", "on", "under"], "a": 1 },
+          { "q": "Tom is ___ the chair. (tagida)", "o": ["under", "on", "behind"], "a": 0 },
+          { "q": "The pen is ___ the bag. (ichida)", "o": ["on", "near", "in"], "a": 2 },
+          { "q": "The car is ___ the house. (oldida)", "o": ["in front of", "behind", "between"], "a": 0 },
+          { "q": "The bank is ___ the shop. (yonida)", "o": ["under", "next to", "in"], "a": 1 },
+          { "q": "Bekzod is ___ Aziz and Malika. (oʻrtasida)", "o": ["near", "behind", "between"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["on", "the", "is", "table", "book", "the"], "a": "The book is on the table." },
+          { "w": ["under", "Tom", "chair", "is", "the"], "a": "Tom is under the chair." },
+          { "w": ["the", "is", "bag", "the", "in", "phone"], "a": "The phone is in the bag." },
+          { "w": ["next", "to", "the", "shop", "the", "is", "bank"], "a": "The bank is next to the shop." }
+        ],
+        "text": [
+          { "q": "Tom is in the kitchen.", "o": ["True", "False"], "a": 1 },
+          { "q": "Tom is on the chair.", "o": ["True", "False"], "a": 0 },
+          { "q": "The bag is next to the ___.", "o": ["door", "window", "table"], "a": 1 },
+          { "q": "The phone is ___ the bag.", "o": ["in", "on", "under"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "The cat is ___ the table.", "a": ["under"], "hint": "tagida" },
+          { "q": "The book is ___ the bag.", "a": ["in"], "hint": "ichida" },
+          { "q": "The pen is ___ the book.", "a": ["on"], "hint": "ustida" },
+          { "q": "Bekzod is ___ the door.", "a": ["behind"], "hint": "orqasida" }
+        ]
+      },
+      "glossary": {
+        "front": "old tomon (in front of — oldida)", "next to": "yonida", "in front of": "oldida", "bank": "bank",
+        "kitchen": "oshxona", "shop": "doʻkon", "chair": "stul", "box": "quti", "bag": "sumka", "look": "qaramoq",
+        "come": "kelmoq", "here": "bu yerda", "phone": "telefon", "window": "deraza", "door": "eshik"
+      }
+    },
+    {
+      "id": 10,
+      "code": "G",
+      "title": "there is / there are",
+      "rule": "*There is* — bitta narsa bor, *there are* — koʻp narsa bor: *There is a book on the table.* — Stolda kitob bor. *There are two cats in the garden.* — Bogʻda ikkita mushuk bor. Qisqa shakli: *There's a book*. Inkor: *There isn't a shop here.* — Bu yerda doʻkon yoʻq. *There aren't big shops in Usmat.* Savol: *Is there a bank near here? — Yes, there is. / No, there isn't.* *Are there two beds in the room? — Yes, there are.*",
+      "examples": [
+        "There is a book on the table.",
+        "There are two cats in the garden.",
+        "There is a park in Usmat.",
+        "There isn't a bank near here.",
+        "Is there a shop in the street?",
+        "Are there three chairs in the room? Yes, there are."
+      ],
+      "words": [
+        { "en": "there is", "uz": "bor (1 ta)" },
+        { "en": "there are", "uz": "bor (koʻp)" },
+        { "en": "there isn't", "uz": "yoʻq (1 ta)" },
+        { "en": "there aren't", "uz": "yoʻq (koʻp)" },
+        { "en": "fridge", "uz": "muzlatgich" },
+        { "en": "lamp", "uz": "chiroq" },
+        { "en": "wall", "uz": "devor" },
+        { "en": "sofa", "uz": "divan" }
+      ],
+      "text": {
+        "title": "Our house",
+        "en": "Our house is in Usmat. There are five rooms. There is a big kitchen. There is a fridge in the kitchen. There are two bedrooms. In my bedroom there is a bed, a table and a lamp. There isn't a computer in my room. There is a garden behind the house. There isn't a dog, but there is a cat."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "There ___ a cat in the garden.", "o": ["is", "are", "am"], "a": 0 },
+          { "q": "There ___ three books on the table.", "o": ["is", "am", "are"], "a": 2 },
+          { "q": "___ there a bank in Usmat?", "o": ["Is", "Are", "Am"], "a": 0 },
+          { "q": "There ___ a dog in the house. (inkor)", "o": ["aren't", "isn't", "not"], "a": 1 },
+          { "q": "Are there two chairs? — Yes, there ___.", "o": ["is", "am", "are"], "a": 2 },
+          { "q": "There ___ two bedrooms in our house.", "o": ["is", "are", "isn't"], "a": 1 }
+        ],
+        "order": [
+          { "w": ["a", "there", "park", "is", "in", "Usmat"], "a": "There is a park in Usmat." },
+          { "w": ["cats", "are", "there", "two", "in", "the", "garden"], "a": "There are two cats in the garden." },
+          { "w": ["isn't", "a", "there", "bank", "here"], "a": "There isn't a bank here." },
+          { "w": ["a", "is", "there", "shop", "here"], "a": "Is there a shop here?" }
+        ],
+        "text": [
+          { "q": "There are five rooms in the house.", "o": ["True", "False"], "a": 0 },
+          { "q": "There is a computer in the bedroom.", "o": ["True", "False"], "a": 1 },
+          { "q": "There is a ___ in the kitchen.", "o": ["fridge", "sofa", "computer"], "a": 0 },
+          { "q": "There is a ___ behind the house.", "o": ["park", "garden", "shop"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "There ___ a lamp on the table.", "a": ["is", "'s"], "hint": "be (1 ta)" },
+          { "q": "There ___ two cats in the garden.", "a": ["are"], "hint": "be (koʻp)" },
+          { "q": "There ___ a bank in Usmat.", "a": ["isn't", "is not"], "hint": "be + not (inkor, 1 ta)" },
+          { "q": "___ there a park near here?", "a": ["Is", "is"], "hint": "be (savol, 1 ta)" }
+        ]
+      },
+      "glossary": {
+        "fridge": "muzlatgich", "lamp": "chiroq", "wall": "devor", "sofa": "divan", "bed": "karavot",
+        "bedroom": "yotoqxona", "room": "xona", "kitchen": "oshxona", "garden": "bogʻ", "park": "park",
+        "bank": "bank", "shop": "doʻkon", "street": "koʻcha", "chair": "stul", "house": "uy", "computer": "kompyuter"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "The book is on the table.", "uz": "Kitob stolning ustida." },
+    { "en": "Tom is under the chair.", "uz": "Tom stulning tagida." },
+    { "en": "There is a park in Usmat.", "uz": "Usmatda park bor." },
+    { "en": "There are two cats in the garden.", "uz": "Bogʻda ikkita mushuk bor." },
+    { "en": "The bank is next to the shop.", "uz": "Bank doʻkonning yonida." },
+    { "en": "Is there a shop here?", "uz": "Bu yerda doʻkon bormi?" },
+    { "en": "Where is my bag?", "uz": "Mening sumkam qayerda?" },
+    { "en": "There isn't a dog in the house.", "uz": "Uyda it yoʻq." }
+  ],
+  "test": null
+}

@@ -1,0 +1,146 @@
+{
+  "day": 14,
+  "title": "may / might · must / mustn't",
+  "units": [
+    {
+      "id": 23,
+      "code": "G",
+      "title": "may / might",
+      "rule": "*may* va *might* — \"ehtimol, balki\": biror narsa boʻlishi mumkin, lekin aniq emas. Hamma shaxs uchun bir xil, keyin feʼlning asosiy shakli keladi: *It may rain tomorrow. Aziz might come later.* Inkor: *may not / might not*: *She may not come.* *May I…?* — muloyim ruxsat soʻrash: *May I open the window?* — *Yes, you may.*",
+      "examples": [
+        "It may rain tomorrow.",
+        "Aziz might come to the party.",
+        "Dilnoza may be at school.",
+        "We might go to Samarkand next week.",
+        "Bekzod might not come today.",
+        "May I open the window?"
+      ],
+      "words": [
+        { "en": "may", "uz": "mumkin; ehtimol" },
+        { "en": "might", "uz": "ehtimol, balki" },
+        { "en": "May I…?", "uz": "…sam maylimi?" },
+        { "en": "maybe", "uz": "balki" },
+        { "en": "rain", "uz": "yomgʻir; yomgʻir yogʻmoq" },
+        { "en": "later", "uz": "keyinroq" },
+        { "en": "next week", "uz": "kelasi hafta" },
+        { "en": "window", "uz": "deraza" }
+      ],
+      "text": {
+        "title": "Plans for the weekend",
+        "en": "Dilnoza: What are you going to do at the weekend, Aziz?\nAziz: I don't know. I may go to Samarkand. My parents are there.\nDilnoza: And you, Malika?\nMalika: I might stay at home. It may rain on Saturday.\nAziz: Mr Kim might come to Usmat. He may visit our school.\nDilnoza: Great! May I come with you to Samarkand?\nAziz: Yes, of course!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "It ___ rain tomorrow. (ehtimol)", "o": ["may", "mays", "may to"], "a": 0 },
+          { "q": "Aziz might ___ to the party.", "o": ["comes", "come", "coming"], "a": 1 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["She may not come.", "She may doesn't come.", "She not may come."], "a": 0 },
+          { "q": "___ I open the window?", "o": ["Do", "Am", "May"], "a": 2 },
+          { "q": "Bekzod ___ be at home. (balki)", "o": ["might to", "might", "mights"], "a": 1 },
+          { "q": "We ___ go to Tashkent next week. (aniq emas)", "o": ["go", "are", "might"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["rain", "tomorrow", "it", "may"], "a": "It may rain tomorrow." },
+          { "w": ["later", "Aziz", "come", "might"], "a": "Aziz might come later." },
+          { "w": ["open", "I", "the window", "may"], "a": "May I open the window?" },
+          { "w": ["today", "might", "Malika", "not", "come"], "a": "Malika might not come today." }
+        ],
+        "text": [
+          { "q": "Aziz may go to Samarkand.", "o": ["True", "False"], "a": 0 },
+          { "q": "Malika might go to Tashkent.", "o": ["True", "False"], "a": 1 },
+          { "q": "It may ___ on Saturday.", "o": ["snow", "rain", "be hot"], "a": 1 },
+          { "q": "Mr Kim might come to ___.", "o": ["Usmat", "Samarkand", "Tashkent"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "It ___ rain tomorrow.", "a": ["may", "might"], "hint": "may / might (ehtimol)" },
+          { "q": "Aziz might ___ to the party.", "a": ["come"], "hint": "come" },
+          { "q": "___ I open the window?", "a": ["May", "may"], "hint": "ruxsat soʻrash" },
+          { "q": "She ___ not come today.", "a": ["may", "might"], "hint": "may / might" }
+        ]
+      },
+      "glossary": {
+        "may": "mumkin; ehtimol", "might": "ehtimol, balki", "maybe": "balki", "rain": "yomgʻir; yomgʻir yogʻmoq", "tomorrow": "ertaga",
+        "party": "bazm, ziyofat", "later": "keyinroq", "window": "deraza", "open": "ochmoq", "weekend": "dam olish kunlari",
+        "parents": "ota-ona", "stay": "qolmoq", "home": "uy", "snow": "qor; qor yogʻmoq", "hot": "issiq", "visit": "ziyorat qilmoq, bormoq",
+        "school": "maktab", "great": "ajoyib", "of course": "albatta", "course": "kurs", "know": "bilmoq", "come": "kelmoq", "next": "keyingi, kelasi",
+        "next week": "kelasi hafta", "week": "hafta", "do": "qilmoq", "be": "boʻlmoq (am/is/are)", "go": "bormoq", "today": "bugun",
+        "there": "u yerda", "with": "bilan", "what": "nima", "going to": "…moqchi", "our": "bizning", "not": "emas, …ma", "don't": "…maslik (inkor)"
+      }
+    },
+    {
+      "id": 24,
+      "code": "G",
+      "title": "must / mustn't",
+      "rule": "*must* — \"…ishi shart, albatta kerak\" (qoida, majburiyat). Hamma shaxs uchun bir xil, keyin feʼlning asosiy shakli keladi: *You must do your homework. Bekzod must get up early.* *mustn't* (= *must not*) — \"…ish mumkin emas, taqiqlangan\": *You mustn't run in the classroom.* Diqqat: *mustn't* — taqiq, *shouldn't* — faqat maslahat.",
+      "examples": [
+        "You must do your homework.",
+        "Bekzod must get up early.",
+        "Students must be quiet in class.",
+        "You mustn't run in the classroom.",
+        "We mustn't be late for school.",
+        "You mustn't eat in the library."
+      ],
+      "words": [
+        { "en": "must", "uz": "…ishi shart" },
+        { "en": "mustn't", "uz": "…ish mumkin emas, taqiqlangan" },
+        { "en": "rule", "uz": "qoida" },
+        { "en": "homework", "uz": "uy vazifasi" },
+        { "en": "be quiet", "uz": "jim boʻlmoq" },
+        { "en": "library", "uz": "kutubxona" },
+        { "en": "be late", "uz": "kech qolmoq" },
+        { "en": "on time", "uz": "oʻz vaqtida" }
+      ],
+      "text": {
+        "title": "Class rules",
+        "en": "Mr Kim has got some rules for his class. Students must come on time. They mustn't be late. They must do their homework every day. They must speak English in class. They mustn't speak Uzbek. Students mustn't eat in the classroom. They must be quiet in the library. Bekzod says: These are good rules!"
+      },
+      "exercises": {
+        "choice": [
+          { "q": "You ___ do your homework. (shart)", "o": ["must", "mustn't", "must to"], "a": 0 },
+          { "q": "You ___ be late for school. (taqiq)", "o": ["must", "mustn't", "must not to"], "a": 1 },
+          { "q": "Students must ___ quiet in class.", "o": ["are", "be", "to be"], "a": 1 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["He must gets up early.", "He musts get up early.", "He must get up early."], "a": 2 },
+          { "q": "You ___ eat in the library. (taqiq)", "o": ["mustn't", "must", "musts"], "a": 0 },
+          { "q": "We ___ wash our hands before lunch. (shart)", "o": ["mustn't", "must to", "must"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["do", "your homework", "you", "must"], "a": "You must do your homework." },
+          { "w": ["late", "we", "be", "mustn't"], "a": "We mustn't be late." },
+          { "w": ["quiet", "be", "students", "must"], "a": "Students must be quiet." },
+          { "w": ["eat", "in the library", "mustn't", "you"], "a": "You mustn't eat in the library." }
+        ],
+        "text": [
+          { "q": "Students must come on time.", "o": ["True", "False"], "a": 0 },
+          { "q": "Students must speak Uzbek in class.", "o": ["True", "False"], "a": 1 },
+          { "q": "Students mustn't ___ in the classroom.", "o": ["eat", "read", "write"], "a": 0 },
+          { "q": "They must be ___ in the library.", "o": ["late", "quiet", "happy"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "You ___ do your homework.", "a": ["must"], "hint": "must (+ shart)" },
+          { "q": "You ___ be late.", "a": ["mustn't", "must not"], "hint": "must (− taqiq)" },
+          { "q": "Students must ___ quiet.", "a": ["be"], "hint": "be" },
+          { "q": "We ___ wash our hands before dinner.", "a": ["must"], "hint": "must (+ shart)" }
+        ]
+      },
+      "glossary": {
+        "must": "…ishi shart", "mustn't": "…ish mumkin emas, taqiqlangan", "rule": "qoida", "homework": "uy vazifasi", "quiet": "jim",
+        "library": "kutubxona", "classroom": "sinf xonasi", "class": "sinf, dars", "hand": "qoʻl", "wash": "yuvmoq", "on time": "oʻz vaqtida",
+        "time": "vaqt", "late": "kech", "speak": "gapirmoq", "eat": "yemoq", "read": "oʻqimoq", "write": "yozmoq", "come": "kelmoq",
+        "do": "qilmoq", "every day": "har kuni", "every": "har bir", "day": "kun", "good": "yaxshi", "say": "aytmoq", "these": "bular",
+        "before": "oldin", "lunch": "tushlik", "dinner": "kechki ovqat", "early": "erta", "get up": "turmoq (uyqudan)", "get": "olmoq; turmoq",
+        "student": "oʻquvchi", "run": "yugurmoq", "school": "maktab", "happy": "xursand", "some": "baʼzi, bir nechta", "for": "uchun",
+        "his": "uning (erkak)", "their": "ularning", "our": "bizning", "your": "sizning", "be": "boʻlmoq (am/is/are)", "english": "ingliz tili", "uzbek": "oʻzbek tili"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "It may rain tomorrow.", "uz": "Ertaga yomgʻir yogʻishi mumkin." },
+    { "en": "Aziz might come to the party.", "uz": "Aziz bazmga kelishi mumkin." },
+    { "en": "You must do your homework.", "uz": "Siz uy vazifangizni qilishingiz shart." },
+    { "en": "Students must be quiet in class.", "uz": "Oʻquvchilar darsda jim boʻlishi shart." },
+    { "en": "We must be on time.", "uz": "Biz oʻz vaqtida kelishimiz shart." },
+    { "en": "May I open the window?", "uz": "Derazani ochsam maylimi?" },
+    { "en": "Must I do it now?", "uz": "Buni hozir qilishim shartmi?" },
+    { "en": "You mustn't eat in the library.", "uz": "Kutubxonada ovqat yeyish mumkin emas." }
+  ],
+  "test": null
+}

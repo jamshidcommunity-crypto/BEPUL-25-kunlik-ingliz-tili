@@ -1,0 +1,143 @@
+{
+  "day": 11,
+  "title": "much / many · a little / a few",
+  "units": [
+    {
+      "id": 18,
+      "code": "G",
+      "title": "much / many",
+      "rule": "*many* — \"koʻp\": sanaladigan koʻplikdagi otlar bilan (*many apples, many books*). *much* — \"koʻp\": sanalmaydigan otlar bilan (*much water, much money*). Ularni asosan soʻroq va inkor gaplarda ishlatamiz: *How many apples are there? There isn't much milk.* Darak gapda *a lot of* ishlatamiz: *I have got a lot of books.* *How many…?* — \"nechta?\", *How much…?* — \"qancha?\"",
+      "examples": [
+        "How many books have you got?",
+        "How much milk is there?",
+        "There aren't many apples.",
+        "There isn't much sugar.",
+        "Bekzod hasn't got much money.",
+        "I have got a lot of friends."
+      ],
+      "words": [
+        { "en": "much", "uz": "koʻp (sanalmaydigan)" },
+        { "en": "many", "uz": "koʻp (sanaladigan)" },
+        { "en": "a lot of", "uz": "koʻp (+)" },
+        { "en": "How many…?", "uz": "nechta?" },
+        { "en": "How much…?", "uz": "qancha?" },
+        { "en": "money", "uz": "pul" },
+        { "en": "water", "uz": "suv" },
+        { "en": "people", "uz": "odamlar" }
+      ],
+      "text": {
+        "title": "At the market",
+        "en": "Malika: Aziz, how many apples do you want?\nAziz: I want five apples. How much are they?\nMalika: They are not expensive. Have we got much money?\nAziz: No, we haven't got much money. But we have got a lot of bread at home.\nMalika: There are many people at the market today.\nAziz: Yes, there are a lot of people. Look, there isn't much water in the bottle."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "How ___ apples are there?", "o": ["much", "many", "a lot"], "a": 1 },
+          { "q": "How ___ water is there?", "o": ["much", "many", "a lot"], "a": 0 },
+          { "q": "There aren't ___ people here.", "o": ["much", "a lot", "many"], "a": 2 },
+          { "q": "I haven't got ___ money.", "o": ["much", "many", "a lot"], "a": 0 },
+          { "q": "Toʻgʻri gap qaysi?", "o": ["How much books have you got?", "How many books have you got?", "How many book have you got?"], "a": 1 },
+          { "q": "There isn't ___ milk in the fridge.", "o": ["many", "a lot", "much"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["books", "how many", "got", "have", "you"], "a": "How many books have you got?" },
+          { "w": ["much", "there", "sugar", "isn't"], "a": "There isn't much sugar." },
+          { "w": ["milk", "is", "how much", "there"], "a": "How much milk is there?" },
+          { "w": ["people", "here", "aren't", "there", "many"], "a": "There aren't many people here." }
+        ],
+        "text": [
+          { "q": "Aziz wants five apples.", "o": ["True", "False"], "a": 0 },
+          { "q": "They have got much money.", "o": ["True", "False"], "a": 1 },
+          { "q": "There are ___ people at the market.", "o": ["a lot of", "not many", "five"], "a": 0 },
+          { "q": "There is a lot of ___ at home.", "o": ["water", "bread", "milk"], "a": 1 }
+        ],
+        "fill": [
+          { "q": "How ___ apples do you want?", "a": ["many"], "hint": "much / many" },
+          { "q": "How ___ money have you got?", "a": ["much"], "hint": "much / many" },
+          { "q": "There aren't ___ people here.", "a": ["many"], "hint": "much / many" },
+          { "q": "There isn't ___ water in the bottle.", "a": ["much"], "hint": "much / many" }
+        ]
+      },
+      "glossary": {
+        "much": "koʻp (sanalmaydigan)", "many": "koʻp (sanaladigan)", "a lot of": "koʻp", "lot": "koʻp", "how": "qanday; qancha",
+        "expensive": "qimmat", "bottle": "shisha", "market": "bozor", "look": "qaramoq", "here": "bu yerda", "people": "odamlar",
+        "home": "uy", "today": "bugun", "want": "xohlamoq", "five": "besh", "apple": "olma", "money": "pul", "water": "suv",
+        "book": "kitob", "milk": "sut", "sugar": "shakar", "fridge": "muzlatgich", "bread": "non", "friend": "doʻst", "there": "u yerda; (there is — bor)"
+      }
+    },
+    {
+      "id": 19,
+      "code": "G",
+      "title": "a little / a few",
+      "rule": "*a few* — \"bir nechta, ozgina\": sanaladigan koʻplikdagi otlar bilan (*a few apples, a few friends*). *a little* — \"bir oz, ozgina\": sanalmaydigan otlar bilan (*a little water, a little time*). Ikkalasi ham darak gapda ishlatiladi va \"oz, lekin yetarli\" maʼnosini beradi: *I have got a few friends in Tashkent. There is a little milk in the fridge.*",
+      "examples": [
+        "I have got a few friends in Tashkent.",
+        "There are a few apples on the table.",
+        "There is a little milk in the fridge.",
+        "Hamida drinks a little tea.",
+        "Bekzod has got a few books.",
+        "We have got a little time."
+      ],
+      "words": [
+        { "en": "a few", "uz": "bir nechta (sanaladigan)" },
+        { "en": "a little", "uz": "bir oz (sanalmaydigan)" },
+        { "en": "time", "uz": "vaqt" },
+        { "en": "rice", "uz": "guruch" },
+        { "en": "salt", "uz": "tuz" },
+        { "en": "cup", "uz": "piyola, chashka" },
+        { "en": "minutes", "uz": "daqiqa" },
+        { "en": "friends", "uz": "doʻstlar" }
+      ],
+      "text": {
+        "title": "Dinner at home",
+        "en": "Nodira cooks dinner. She has got a little rice and a few potatoes. There is a little meat in the fridge. She puts a little salt in the food. Karim comes home. He is tired. He drinks a few cups of tea. Hamida eats a little bread. Bekzod has got a few friends at home. They eat dinner together."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I have got ___ friends in Tashkent.", "o": ["a little", "a few", "much"], "a": 1 },
+          { "q": "There is ___ milk in the fridge.", "o": ["a little", "a few", "many"], "a": 0 },
+          { "q": "Hamida drinks ___ tea.", "o": ["a few", "a little", "many"], "a": 1 },
+          { "q": "There are ___ apples on the table.", "o": ["a little", "much", "a few"], "a": 2 },
+          { "q": "Bekzod has got ___ books.", "o": ["a few", "a little", "much"], "a": 0 },
+          { "q": "We have got ___ time.", "o": ["a few", "many", "a little"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["a few", "friends", "have got", "I"], "a": "I have got a few friends." },
+          { "w": ["milk", "a little", "there", "is"], "a": "There is a little milk." },
+          { "w": ["tea", "Hamida", "a little", "drinks"], "a": "Hamida drinks a little tea." },
+          { "w": ["apples", "here", "a few", "there", "are"], "a": "There are a few apples here." }
+        ],
+        "text": [
+          { "q": "Nodira has got a little rice.", "o": ["True", "False"], "a": 0 },
+          { "q": "There is a little ___ in the fridge.", "o": ["milk", "meat", "bread"], "a": 1 },
+          { "q": "Karim drinks a few cups of coffee.", "o": ["True", "False"], "a": 1 },
+          { "q": "Bekzod has got ___ friends at home.", "o": ["a few", "a little", "many"], "a": 0 }
+        ],
+        "fill": [
+          { "q": "There is ___ sugar in my tea.", "a": ["a little"], "hint": "a few / a little" },
+          { "q": "I have got ___ friends.", "a": ["a few"], "hint": "a few / a little" },
+          { "q": "We have got ___ time.", "a": ["a little"], "hint": "a few / a little" },
+          { "q": "There are ___ eggs in the fridge.", "a": ["a few"], "hint": "a few / a little" }
+        ]
+      },
+      "glossary": {
+        "a few": "bir nechta", "a little": "bir oz", "few": "oz (sanaladigan)", "little": "oz; kichkina", "together": "birga",
+        "potato": "kartoshka", "rice": "guruch", "meat": "goʻsht", "salt": "tuz", "cup": "piyola, chashka", "cook": "pishirmoq",
+        "dinner": "kechki ovqat", "tired": "charchagan", "time": "vaqt", "friend": "doʻst", "book": "kitob", "apple": "olma",
+        "milk": "sut", "tea": "choy", "coffee": "kofe", "bread": "non", "egg": "tuxum", "sugar": "shakar", "put": "qoʻymoq", "come": "kelmoq",
+        "eat": "yemoq", "drink": "ichmoq", "here": "bu yerda", "home": "uy", "food": "ovqat", "fridge": "muzlatgich", "table": "stol",
+        "minute": "daqiqa", "have got": "bor, ega boʻlmoq", "there": "u yerda; (there is — bor)"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "There are a lot of people here.", "uz": "Bu yerda odamlar koʻp." },
+    { "en": "I have got a few friends.", "uz": "Mening bir nechta doʻstim bor." },
+    { "en": "There is a little milk in the fridge.", "uz": "Muzlatgichda bir oz sut bor." },
+    { "en": "Hamida drinks a little tea.", "uz": "Hamida bir oz choy ichadi." },
+    { "en": "We have got a little time.", "uz": "Bizda bir oz vaqt bor." },
+    { "en": "How many apples do you want?", "uz": "Siz nechta olma xohlaysiz?" },
+    { "en": "How much milk is there?", "uz": "Qancha sut bor?" },
+    { "en": "There isn't much sugar.", "uz": "Shakar koʻp emas." }
+  ],
+  "test": null
+}

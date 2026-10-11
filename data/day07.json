@@ -1,0 +1,79 @@
+{
+  "day": 7,
+  "title": "Present continuous",
+  "units": [
+    {
+      "id": 12,
+      "code": "G",
+      "title": "Present continuous",
+      "rule": "Present Continuous — hozir, shu paytda boʻlayotgan ish-harakat: *am/is/are* + feʼl + *-ing*: *I am reading.* — Men oʻqiyapman. *She is cooking now.* — U hozir ovqat pishiryapti. Eʼtibor bering: *make → making*, *sit → sitting*. Inkor: *He isn't sleeping.* — U uxlamayapti. Savol: *Are you working? — Yes, I am.* *Is he playing? — No, he isn't.* *Now, at the moment* soʻzlari bilan keladi.",
+      "examples": [
+        "I am reading a book now.",
+        "Dilnoza is cooking.",
+        "They are playing football.",
+        "Tom is sleeping on the sofa.",
+        "We aren't watching TV.",
+        "Are you listening to me?"
+      ],
+      "words": [
+        { "en": "now", "uz": "hozir" },
+        { "en": "at the moment", "uz": "hozir, shu paytda" },
+        { "en": "sleep", "uz": "uxlamoq" },
+        { "en": "cook", "uz": "ovqat pishirmoq" },
+        { "en": "write", "uz": "yozmoq" },
+        { "en": "rain", "uz": "yomgʻir yogʻmoq" },
+        { "en": "newspaper", "uz": "gazeta" },
+        { "en": "do homework", "uz": "uy vazifasini bajarmoq" }
+      ],
+      "text": {
+        "title": "It is Sunday",
+        "en": "It is Sunday. It is raining. The family is at home. Nodira is cooking in the kitchen. Karim is reading a newspaper. Dilnoza is writing a letter to Mr Kim. Bekzod isn't doing his homework. He is playing a game on his phone. Tom is sleeping on the sofa.\nDilnoza: Bekzod, what are you doing?\nBekzod: I'm playing.\nDilnoza: Stop! Do your homework."
+      },
+      "exercises": {
+        "choice": [
+          { "q": "I ___ reading a book now.", "o": ["am", "is", "are"], "a": 0 },
+          { "q": "Dilnoza ___ cooking.", "o": ["are", "is", "am"], "a": 1 },
+          { "q": "They are ___ football.", "o": ["play", "plays", "playing"], "a": 2 },
+          { "q": "Tom ___ sleeping. He is eating.", "o": ["isn't", "aren't", "don't"], "a": 0 },
+          { "q": "___ you listening to me?", "o": ["Is", "Are", "Do"], "a": 1 },
+          { "q": "Bekzod is ___ now.", "o": ["sit", "siting", "sitting"], "a": 2 }
+        ],
+        "order": [
+          { "w": ["reading", "I", "a", "book", "am"], "a": "I am reading a book." },
+          { "w": ["is", "Dilnoza", "cooking", "now"], "a": "Dilnoza is cooking now." },
+          { "w": ["aren't", "we", "TV", "watching"], "a": "We aren't watching TV." },
+          { "w": ["you", "are", "what", "doing"], "a": "What are you doing?" }
+        ],
+        "text": [
+          { "q": "It is raining.", "o": ["True", "False"], "a": 0 },
+          { "q": "Karim is watching TV.", "o": ["True", "False"], "a": 1 },
+          { "q": "Nodira is ___.", "o": ["cooking", "sleeping", "reading"], "a": 0 },
+          { "q": "Tom is sleeping on the ___.", "o": ["bed", "chair", "sofa"], "a": 2 }
+        ],
+        "fill": [
+          { "q": "She ___ cooking now.", "a": ["is", "'s"], "hint": "be" },
+          { "q": "They are ___ football.", "a": ["playing"], "hint": "play + -ing" },
+          { "q": "I ___ sleeping. I am reading.", "a": ["am not", "'m not"], "hint": "be + not (inkor)" },
+          { "q": "___ he writing a letter?", "a": ["Is", "is"], "hint": "be (savol: he)" }
+        ]
+      },
+      "glossary": {
+        "newspaper": "gazeta", "sofa": "divan", "moment": "lahza (at the moment — hozir)", "rain": "yomgʻir yogʻmoq",
+        "sleep": "uxlamoq", "cook": "ovqat pishirmoq", "write": "yozmoq", "read": "oʻqimoq", "letter": "xat",
+        "homework": "uy vazifasi", "game": "oʻyin", "stop": "toʻxtamoq", "listen": "tinglamoq", "sit": "oʻtirmoq",
+        "eat": "yemoq", "do": "qilmoq", "bed": "karavot", "chair": "stul"
+      }
+    }
+  ],
+  "shadowing": [
+    { "en": "I am reading a book.", "uz": "Men kitob oʻqiyapman." },
+    { "en": "She is cooking now.", "uz": "U hozir ovqat pishiryapti." },
+    { "en": "They are playing football.", "uz": "Ular futbol oʻynashyapti." },
+    { "en": "It is raining.", "uz": "Yomgʻir yogʻyapti." },
+    { "en": "Tom is sleeping on the sofa.", "uz": "Tom divanda uxlayapti." },
+    { "en": "What are you doing?", "uz": "Siz nima qilyapsiz?" },
+    { "en": "Is he writing a letter?", "uz": "U xat yozyaptimi?" },
+    { "en": "We aren't watching TV.", "uz": "Biz televizor koʻrmayapmiz." }
+  ],
+  "test": null
+}
