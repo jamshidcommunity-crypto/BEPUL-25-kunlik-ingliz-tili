@@ -1,4 +1,4 @@
-const CACHE = 'b25-mv4capc1';
+const CACHE = 'b25-mv52ypvf';
 const FILES = ['./', './index.html', './course.js', './manifest.json', './assets/icon-192.png', './assets/icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });

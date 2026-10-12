@@ -160,12 +160,16 @@ async function onAdmin(from, text) {
     await col('b25_config').doc('main').set({ openDay: n, updatedAt: now() }, { merge: true });
     return tg.send(id, `Ilovada ochiq kun: <b>${n}</b> (oʻquvchilar ilovani qayta ochganda yangilanadi).`);
   }
+  if (cmd === '/eslat') {
+    const r = await require('./cron-morning').run();
+    return tg.send(id, r.skipped ? `Day ${r.day} allaqachon eʼlon qilingan. Avval /kun ${r.day + 1} qiling.` : `📣 Day ${r.day} eʼloni yuborildi: ${r.sent} ta, xato: ${r.failed}`);
+  }
   if (cmd === '/natija') {
     const prog = await col('b25_progress').orderBy('updatedAt', 'desc').limit(40).get();
-    const lines = prog.docs.map(x => { const p = x.data(); const done = Object.values(p.units || {}).filter(u => u.score >= 14).length; const sh = Object.keys(p.shadow || {}).length; return `• ${tg.esc(p.name)} @${p.username || '-'} — ${done}/34 dars, ${sh} shadowing${p.test ? `, test ${p.test.score}` : ''}`; });
+    const lines = prog.docs.map(x => { const p = x.data(); const done = Object.values(p.units || {}).filter(u => u.score >= 14).length; const sh = Object.keys(p.shadow || {}).length; return `• ${tg.esc(p.name)} @${p.username || '-'} — ${done}/34 dars, ${sh} shadowing, ${p.points || 0} ball${p.streak ? `, 🔥${p.streak}` : ''}${p.test ? `, test ${p.test.score}` : ''}`; });
     return tg.send(id, `📚 <b>Oxirgi natijalar</b>\n${lines.join('\n') || '—'}`);
   }
-  return tg.send(id, 'Admin buyruqlari:\n/stat — umumiy statistika\n/natija — oʻquvchilar natijalari\n/kun N — ilovada N-kungacha ochish\n/kodber <user_id> — kodni majburan berish');
+  return tg.send(id, 'Admin buyruqlari:\n/stat — umumiy statistika\n/natija — oʻquvchilar natijalari\n/kun N — ilovada N-kungacha ochish (ertasi 08:00 da hammaga eʼlon ketadi)\n/eslat — yangi kun eʼlonini hozir yuborish\n/kodber <user_id> — kodni majburan berish');
 }
 
 exports.handler = async (event) => {

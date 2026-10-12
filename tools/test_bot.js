@@ -92,6 +92,31 @@ let fails = 0; const ok = (cond, m) => { console.log((cond ? 'PASS ' : 'FAIL ') 
   ok(/Foydalanuvchilar: <b>\d+<\/b>/.test(last(1)), 'admin /stat');
   await msg(1, '/kun 7');
   ok(store.b25_config.main.openDay === 7, 'admin /kun sets openDay');
+
+  // progress: badges congratulated once, final pass message
+  sent.length=0;
+  await progress.handler({ httpMethod: 'POST', body: JSON.stringify({ code: u10.code, name: 'Aziz', units: { 1: { score: 17.5 } }, shadow: {}, test: null, badges: ['first','perfect','bogus'], streak: 3 }) });
+  ok(sent.filter(s=>s.chat==='10' && /Yangi nishon/.test(s.text)).length===2, 'two new badges congratulated (bogus ignored)');
+  ok(store.b25_progress['10'].units['1'].score===17.5 && store.b25_progress['10'].points>0, 'half points kept, points computed');
+  sent.length=0;
+  await progress.handler({ httpMethod: 'POST', body: JSON.stringify({ code: u10.code, name: 'Aziz', units: { 1: { score: 18 } }, shadow: {1:true}, test: {score:33}, badges: ['first','perfect','final'] }) });
+  ok(sent.some(s=>/Tabriklaymiz/.test(s.text)) && sent.filter(s=>/Yangi nishon/.test(s.text)).length===1, 'final pass message + only new badge');
+  // leaderboard
+  const lb = require(FN + '/leaderboard.js');
+  r = JSON.parse((await lb.handler({ queryStringParameters: { code: u10.code } })).body);
+  ok(r.ok && r.me && r.me.rank===1 && r.top[0].me, 'leaderboard ranks me first');
+  // cron morning: announces once per new day
+  const morning = require(FN + '/cron-morning.js');
+  sent.length=0; let m = await morning.run();
+  ok(!m.skipped && m.day===7 && sent.some(s=>/Day 7/.test(s.text)), 'morning announces day 7');
+  m = await morning.run(); ok(m.skipped, 'morning not repeated for same day');
+  // cron evening: inactive reminder
+  const evening = require(FN + '/cron-evening.js');
+  store.b25_progress['10'].lastActive = Date.now() - 3*864e5;
+  sent.length=0; const ev = await evening.run(Date.UTC(2026,9,14,14));
+  ok(sent.some(s=>s.chat==='10' && /koʻrmayapmiz/.test(s.text)), 'evening reminder for inactive user');
+  sent.length=0; await evening.run(Date.UTC(2026,9,14,15)); ok(!sent.some(s=>/koʻrmayapmiz/.test(s.text)), 'no repeat reminder same day');
+  sent.length=0; await evening.run(Date.UTC(2026,9,18,14)); ok(sent.some(s=>/Haftaning eng faol/.test(s.text)), 'sunday weekly top');
   console.log(fails ? `\n${fails} FAILED` : '\nALL PASSED');
   process.exit(fails ? 1 : 0);
 })();

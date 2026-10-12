@@ -4,6 +4,7 @@
 
 [functions]
   node_bundler = "esbuild"
+  included_files = ["netlify/functions/lib/days.json"]
 
 [[headers]]
   for = "/sw.js"
@@ -14,3 +15,11 @@
   for = "/course.js"
   [headers.values]
     Cache-Control = "no-cache"
+
+# Scheduled jobs (times are UTC; Tashkent = UTC+5)
+[functions."cron-morning"]
+  schedule = "0 3 * * *"
+
+[functions."cron-evening"]
+  schedule = "0 14 * * *"
+

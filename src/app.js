@@ -37,10 +37,24 @@ async function refreshOpenDay(){if(!P.code||DEMO()||!navigator.onLine)return;try
 window.addEventListener('online',()=>{if(P.dirty)sync();});
 
 /* ===== TTS ===== */
-const TTS={voice:null,init(){if(!('speechSynthesis'in window))return;const pick=()=>{const vs=speechSynthesis.getVoices();this.voice=vs.find(v=>/en-GB/i.test(v.lang)&&/female|Google UK English Female|Serena|Kate/i.test(v.name))||vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/en-US/i.test(v.lang)&&/Google|Samantha|Zira/i.test(v.name))||vs.find(v=>/^en/i.test(v.lang))||null;};pick();speechSynthesis.onvoiceschanged=pick;},
-  speak(text,rate=0.9){return new Promise(res=>{if(!('speechSynthesis'in window)){toast('Bu qurilmada ovoz yoʻq');return res();}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';if(this.voice)u.voice=this.voice;u.rate=rate;u.pitch=1;u.onend=res;u.onerror=res;speechSynthesis.speak(u);});},
-  stop(){if('speechSynthesis'in window)speechSynthesis.cancel();}};
+/* Names the English voice would mangle → how to say them (display text is never changed) */
+const SAY={'Usmat':'Oosmat','Jizzax':'Jizzakh','Bekzod':'Bekzod','Dilnoza':'Dilnoza','Nodira':'Nodeera','Hamida':'Hameeda','Aziz':'Azeez','Malika':'Maleeka','Karim':'Kareem','Samarkand':'Samarkand','Tashkent':'Tashkent','Tom':'Tom','Kim':'Kim','Bukhara':'Bukhara'};
+const sayText=t=>String(t).replace(/\b(Usmat|Jizzax|Nodira|Hamida|Aziz|Malika|Karim)('s)?\b/g,(m,n,ps)=>SAY[n]+(ps||''));
+const TTS={voice:null,voices:[],ready:false,
+  init(){if(!('speechSynthesis'in window))return;const pick=()=>{const vs=speechSynthesis.getVoices();if(!vs.length)return;this.voices=vs.filter(v=>/^en[-_]/i.test(v.lang));this.ready=true;const want=P.voice&&vs.find(v=>v.name===P.voice);
+    this.voice=want||this.voices.find(v=>/en[-_]GB/i.test(v.lang)&&/Google UK English Female/i.test(v.name))||this.voices.find(v=>/en[-_]GB/i.test(v.lang)&&/female|Kate|Serena|Stephanie|Libby|Sonia/i.test(v.name))||this.voices.find(v=>/en[-_]US/i.test(v.lang)&&/Google US English|Samantha|Zira|Aria|Jenny/i.test(v.name))||this.voices.find(v=>/en[-_]GB/i.test(v.lang))||this.voices[0]||null;};
+    pick();speechSynthesis.onvoiceschanged=pick;setTimeout(pick,300);setTimeout(pick,1500);},
+  // Robust speak: keeps a reference (iOS GC bug), resumes paused engine (Chrome), and never hangs if onend is lost.
+  speak(text,rate=0.9,opts){return new Promise(res=>{if(!('speechSynthesis'in window)){toast('Bu qurilmada ovoz yoʻq');return res();}
+    try{speechSynthesis.cancel();}catch(e){}
+    const u=new SpeechSynthesisUtterance(opts&&opts.raw?text:sayText(text));if(opts&&opts.onb)u.onboundary=opts.onb;u.lang=(this.voice&&this.voice.lang)||'en-GB';if(this.voice)u.voice=this.voice;u.rate=rate;u.pitch=1;u.volume=1;
+    let done=false;const fin=()=>{if(done)return;done=true;clearTimeout(t);this._u=null;res();};u.onend=fin;u.onerror=fin;
+    const est=Math.max(1200,(text.length*75)/rate+900);const t=setTimeout(fin,est+2500);
+    this._u=u;try{speechSynthesis.speak(u);if(speechSynthesis.paused)speechSynthesis.resume();}catch(e){fin();}});},
+  stop(){if('speechSynthesis'in window){try{speechSynthesis.cancel();}catch(e){}}this._u=null;}};
 TTS.init();
+// Unlock speech on first touch (iOS / Android require a user gesture before audio plays)
+document.addEventListener('touchend',function unlock(){if(!('speechSynthesis'in window))return;try{const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);speechSynthesis.cancel();}catch(e){}document.removeEventListener('touchend',unlock);},{once:true});
 const SPK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
 function spkBtn(text,rate){return `<button class="spk" data-say="${esc(text)}" data-rate="${rate||0.9}" aria-label="Tinglash">${SPK}</button>`;}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(!b)return;document.querySelectorAll('.spk.on').forEach(x=>x.classList.remove('on'));b.classList.add('on');TTS.speak(b.dataset.say,parseFloat(b.dataset.rate)).then(()=>b.classList.remove('on'));});
@@ -64,6 +78,8 @@ function route(){TTS.stop();document.querySelectorAll('.pop').forEach(p=>p.remov
   if(k==='test')return viewTest(+a);
   if(k==='profile')return viewProfile();
   if(k==='install')return viewInstall();
+  if(k==='ustoz')return viewUstoz();
+  if(!sessionStorage.getItem('b25_ustoz')&&k!=='start'){return viewUstoz(true);}
   return viewHome();}
 function topbar(back_,title){return `<div class="top">${back_?`<button class="back" onclick="back('${back_}')">‹ Orqaga</button>`:`<img src="${EMBLEM}" alt=""><div class="brand">${esc(CFG.courseName)}<small>Imamov Academy</small></div>`}<div class="sp"></div>${title?`<span class="pill">${esc(title)}</span>`:''}${back_?'':`<button class="iconbtn" onclick="go('profile')" aria-label="Profil">👤</button>`}</div><div class="curve"></div>`;}
 function foot(){return `<div class="foot"><img src="${EMBLEM}" alt="">Imamov Academy · ${esc(CFG.telegram)} · ${esc(CFG.phone)}</div>`;}
@@ -81,17 +97,32 @@ setTimeout(()=>{if(!pre)$('#code')?.focus();},50);}
 async function login(){const inp=$('#code'),err=$('#err'),btn=$('#loginbtn');let code=inp.value.trim().toUpperCase().replace(/\s+/g,'');if(code&&!code.startsWith('B25-')&&/^[A-Z2-9]{5}$/.test(code))code='B25-'+code;if(!code){err.textContent='Kodni kiriting';return;}
 if(code==='DEMO'){P.uid='demo';P.code='DEMO';P.name='Mehmon';save();return go('home');}
 btn.disabled=true;btn.textContent='Tekshirilmoqda…';err.textContent='';
-try{const j=await verifyCode(code);if(j.ok){P.code=code;P.uid=j.uid;P.name=j.name||'Oʻquvchi';P.tg=j.username?'@'+j.username:'';if(j.openDay)P.openDay=j.openDay;save();buzz(20);go(isStandalone()||P.hideInstall?'home':'install');}
+try{const j=await verifyCode(code);if(j.ok){P.code=code;P.uid=j.uid;P.name=j.name||'Oʻquvchi';P.tg=j.username?'@'+j.username:'';if(j.openDay)P.openDay=j.openDay;save();buzz(20);go('home');}
 else{err.textContent=j.error==='invalid'?'Bunday kod topilmadi. Botdan olgan kodni tekshiring.':'Xatolik. Keyinroq urinib koʻring.';}}
 catch(e){err.textContent=navigator.onLine?'Server bilan bogʻlanib boʻlmadi.':'Internet yoʻq. Ulanib, qayta urinib koʻring.';}
 btn.disabled=false;btn.textContent='Kirish';}
 
 /* ===== Home ===== */
-function viewHome(){const {t,g}=courseProgress();const pct=Math.round(g/t*100);const od=openDay();const r=58,c=2*Math.PI*r;
+function streak(){const days=new Set();Object.values(P.units).forEach(u=>{if(u.at)days.add(new Date(u.at).toDateString());});Object.values(P.shadowAt||{}).forEach(t=>days.add(new Date(t).toDateString()));let n=0;const d=new Date();for(;;){if(days.has(d.toDateString())){n++;d.setDate(d.getDate()-1);}else if(n===0&&days.has(new Date(Date.now()-864e5).toDateString())){d.setDate(d.getDate()-1);}else break;}return n;}
+function viewHome(){const {t,g}=courseProgress();const stk=streak();const pct=Math.round(g/t*100);const od=openDay();const r=58,c=2*Math.PI*r;
 const nextDay=DAYS.find(d=>d.day<=od&&dayStatus(d).st!=='done');
-render(`${topbar()}<div class="card hero"><div class="arc"><svg viewBox="0 0 132 132"><circle cx="66" cy="66" r="${r}" stroke="var(--line)" stroke-width="10" fill="none"/><circle cx="66" cy="66" r="${r}" stroke="url(#gr)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-g/t)}"/><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E9BE6"/><stop offset="1" stop-color="#0B3FAF"/></linearGradient></defs></svg><div class="n">${pct}%<small>${g}/${t}</small></div></div><div><h1>Salom, ${esc((P.name||'').split(' ')[0]||'doʻstim')}!</h1><p>${nextDay?`Bugungi qadam: <b>Day ${nextDay.day}</b> — ${esc(nextDay.title)}.`:'Hamma ochiq kunlar tugallangan — zoʻr!'}<br>Ochiq kunlar: 1–${od}.</p>${nextDay?`<button class="btn" style="margin-top:10px" onclick="go('day/${nextDay.day}')">Davom etish ›</button>`:''}</div></div>
+render(`${topbar()}<div class="card hero"><div class="arc"><svg viewBox="0 0 132 132"><circle cx="66" cy="66" r="${r}" stroke="var(--line)" stroke-width="10" fill="none"/><circle cx="66" cy="66" r="${r}" stroke="url(#gr)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-g/t)}"/><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E9BE6"/><stop offset="1" stop-color="#0B3FAF"/></linearGradient></defs></svg><div class="n">${pct}%<small>${g}/${t}</small></div></div><div><h1>Salom, ${esc((P.name||'').split(' ')[0]||'doʻstim')}!</h1><p>${nextDay?`Bugungi qadam: <b>Day ${nextDay.day}</b> — ${esc(nextDay.title)}.`:'Hamma ochiq kunlar tugallangan — zoʻr!'}<br>Ochiq kunlar: 1–${od}.${stk?` · 🔥 ${stk} kun ketma-ket`:''}</p>${nextDay?`<button class="btn" style="margin-top:10px" onclick="go('day/${nextDay.day}')">Davom etish ›</button>`:''}</div></div>
 ${installCard()}
 <div class="days">${DAYS.map(d=>{const {st,got,total}=dayStatus(d);const locked=d.day>od;const n=d.units.length;const sub=n?`${n} ta dars (Unit ${d.units[0].id}${n>1?'–'+d.units[n-1].id:''}) · shadowing`:'40 ta savol · shadowing';return `<button class="day ${st} ${locked?'locked':''} ${nextDay&&nextDay.day===d.day?'next':''}" ${locked?'disabled':''} onclick="go('day/${d.day}')"><span class="num">${d.day}</span><span><span class="t">${esc(d.title)}</span><span class="s">${esc(sub)}</span>${!locked&&got?`<span class="mini"><i style="width:${got/total*100}%"></i></span>`:''}</span><span class="st">${locked?'🔒':st==='done'?'✅':'›'}</span></button>`;}).join('')}</div>${foot()}`);}
+
+
+/* ===== Ustoz haqida ===== */
+const UST=C.ustoz;
+const mdLinks=s=>esc(s).replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+function viewUstoz(gate){if(!UST)return viewHome();
+render(`${gate?`<div class="top"><img src="${EMBLEM}" alt=""><div class="brand">${esc(CFG.courseName)}<small>Imamov Academy</small></div><div class="sp"></div><span class="pill">Ustoz haqida</span></div><div class="curve"></div>`:topbar('home','Ustoz haqida')}
+<div class="uhero"><img src="${esc(UST.hero)}" alt="${esc(UST.name)}"><div class="cap"><span class="tag">KURS MUALLIFI VA OʻQITUVCHISI</span><h1>${esc(UST.name)}</h1><p>${esc(UST.role)}</p></div></div>
+<div class="ustats">${UST.stats.map(s=>`<div><b>${esc(s.n)}</b><small>${esc(s.l)}</small></div>`).join('')}</div>
+<div class="card ustory"><p class="lead">${mdLinks(UST.intro)}</p>${UST.story.map(p=>`<p>${mdLinks(p)}</p>`).join('')}</div>
+<div class="ugal">${UST.photos.map((p,i)=>`<figure class="${i===0?'wide':''}"><img src="${esc(p.src)}" alt="${esc(p.cap)}" loading="lazy"><figcaption>${esc(p.cap)}</figcaption></figure>`).join('')}</div>
+<div class="card" style="text-align:center"><div style="font-family:var(--serif);font-size:20px;color:var(--royal);font-weight:600">Natijalar va darslar — kanalda</div><p class="note" style="margin:6px 0 12px">Join and share</p><a class="btn" href="${esc(UST.channel)}" target="_blank" rel="noopener">${esc(UST.channelName)}</a></div>
+<div class="${gate?'':'ucta'}">${gate?`<button class="btn wide" onclick="ustozDone()">Oʻqib chiqdim — darslarga oʻtish ›</button>`:`<button class="btn ghost" onclick="back('home')">‹ Orqaga</button>`}</div>${foot()}`);}
+function ustozDone(){try{sessionStorage.setItem('b25_ustoz','1');}catch(e){}go(isStandalone()||P.hideInstall?'home':'install');}
 
 /* ===== Install (PWA) ===== */
 let deferredInstall=null;
@@ -134,7 +165,7 @@ render(`${topbar('home','Profil')}<div class="card"><h2 class="sec">${esc(P.name
 <div class="form"><label>Ism (ilovada koʻrinadi)</label><input id="nm" value="${esc(P.name)}"></div>
 <div class="toolbar" style="margin-top:12px"><button class="btn" onclick="P.name=$('#nm').value.trim()||P.name;save();sync();toast('Saqlandi')">Saqlash</button><button class="btn ghost" onclick="sync().then(()=>toast(P.dirty?'Yuborilmadi — internetni tekshiring':'Natijalar botga yuborildi'))">Natijani yuborish</button></div>
 <p class="note">Natijalar avtomatik botga yuboriladi (${P.syncedAt?'oxirgi: '+new Date(P.syncedAt).toLocaleString('uz'):'hali yuborilmagan'}). Botda <b>/holat</b> buyrugʻi bilan koʻrasiz.</p></div>
-<div class="card"><div class="toolbar" style="margin:0"><a class="btn ghost" href="https://t.me/${BOT}" target="_blank" rel="noopener">Bot: @${BOT}</a><button class="btn ghost" onclick="go('install')">Ilovani oʻrnatish</button></div></div>
+<div class="card"><div class="toolbar" style="margin:0"><a class="btn ghost" href="https://t.me/${BOT}" target="_blank" rel="noopener">Bot: @${BOT}</a><button class="btn ghost" onclick="go('install')">Ilovani oʻrnatish</button><button class="btn ghost" onclick="go('ustoz')">Ustoz haqida</button></div></div>
 <button class="btn ghost wide" onclick="if(confirm('Chiqasizmi? Natijalar botda saqlanadi, qayta kirish uchun kod kerak.')){sync();localStorage.removeItem('${LS}');P=load();go('start');}">Chiqish</button>${foot()}`);}
 
 /* ===== Day ===== */
@@ -142,7 +173,8 @@ function viewDay(n){const d=DAYS.find(x=>x.day===n);if(!d)return go('home');cons
 const units=d.units.map(u=>{const s=unitScore(u.id);return `<button class="unit" onclick="go('unit/${u.id}')"><span class="k ${u.code}">${u.code==='S'?'S':'G'}</span><span><span class="t">Unit ${u.id} — ${esc(u.title)}</span><span class="s">Qoida · soʻzlar · matn · 18 ta mashq</span></span><span class="score ${s!=null&&s>=CFG.passScore?'ok':''}">${s==null?'—':s+'/'+CFG.unitMax}</span></button>`;}).join('');
 const sh=`<button class="unit" onclick="go('shadow/${n}')"><span class="k sh">🎧</span><span><span class="t">Shadowing — 8 ta gap</span><span class="s">Tinglash → takrorlash → birga aytish (10 daqiqa)</span></span><span class="score ${P.shadow[n]?'ok':''}">${P.shadow[n]?'✓':'—'}</span></button>`;
 const tst=d.test?`<button class="unit" onclick="go('test/${n}')"><span class="k">T</span><span><span class="t">Yakuniy test — 40 ta savol</span><span class="s">Oʻtish: ${CFG.testPass}/40</span></span><span class="score ${P.test&&P.test.score>=CFG.testPass?'ok':''}">${P.test?P.test.score+'/40':'—'}</span></button>`:'';
-render(`${topbar('home','Day '+n)}<h2 class="sec">Day ${n}: ${esc(d.title)}</h2><p class="sub">${d.units.length>1?'Bugun '+d.units.length+' ta dars. Tartib bilan ishlang, oxirida shadowing.':d.units.length?'Bugun 1 ta dars, keyin shadowing.':'Yakuniy kun: shadowing va test.'}</p><div class="units">${units}${sh}${tst}</div>${foot()}`);}
+const nextU=d.units.find(u=>!unitDone(u.id));const cont=nextU?`unit/${nextU.id}`:(!P.shadow[n]?`shadow/${n}`:null);
+render(`${topbar('home','Day '+n)}<h2 class="sec">Day ${n}: ${esc(d.title)}</h2><p class="sub">${d.units.length>1?'Bugun '+d.units.length+' ta dars. Tartib bilan ishlang, oxirida shadowing.':d.units.length?'Bugun 1 ta dars, keyin shadowing.':'Yakuniy kun: shadowing va test.'}</p><div class="units">${units}${sh}${tst}</div>${cont?`<button class="btn wide" style="margin-top:14px" onclick="go('${cont}')">${nextU?'Davom etish: Unit '+nextU.id+' ›':'Shadowingni boshlash ›'}</button>`:''}${foot()}`);}
 
 /* ===== Unit ===== */
 let EX=null;
@@ -157,7 +189,7 @@ else if(tab==='words'){pane.innerHTML=`<p class="note">Kartochkani bosing — ta
 else if(tab==='text'){pane.innerHTML=`<div class="card"><div class="toolbar"><strong style="font-family:var(--serif);font-size:18px">${esc(u.text.title||'Matn')}</strong><span class="sp" style="flex:1"></span>${spkBtn(u.text.en.replace(/\n/g,' '),0.85)}</div><div class="text" id="txt">${renderText(u.text.en)}</div><p class="note">Soʻzga bossangiz tarjimasi chiqadi va oʻqib beradi.</p></div><button class="btn wide" onclick="go('unit/${id}/ex')">Mashqlarga oʻtish ›</button>`;bindText();}
 else{renderEx(u);}}
 function renderText(t){const lines=t.split('\n');return lines.map(line=>{const m=line.match(/^([A-Z][a-z]+(?: [A-Z][a-z]+)?):\s*(.*)$/);let pre='',body=line;if(m){pre=`<span class="spkr">${esc(m[1])}:</span> `;body=m[2];}
-const toks=body.split(/(\s+)/);return pre+toks.map(tk=>{if(/^\s+$/.test(tk)||!tk)return tk;const c=Lexicon.clean(tk);if(!c||Lexicon.isName(tk)||/^\d+$/.test(c))return `<span>${esc(tk)}</span>`;return `<span class="w" data-w="${esc(tk)}">${esc(tk)}</span>`;}).join('');}).join('<br>');}
+const toks=body.split(/(\s+)/);return pre+toks.map(tk=>{if(/^\s+$/.test(tk)||!tk)return tk;const c=Lexicon.clean(tk);if(!c||Lexicon.isName(tk)||/^\d+$/.test(c))return `<span class="nw">${esc(tk)}</span>`;return `<span class="w" data-w="${esc(tk)}">${esc(tk)}</span>`;}).join('');}).join('<br>');}
 function bindText(){const box=$('#txt');let pop=null;const close=()=>{if(pop){pop.remove();pop=null;}box.querySelectorAll('.w.on').forEach(x=>x.classList.remove('on'));};
 box.addEventListener('click',e=>{const w=e.target.closest('.w');if(!w){close();return;}close();w.classList.add('on');
 const tok=w.dataset.w;let hit=null;const next=w.nextElementSibling;const nxt=next&&next.classList.contains('w')?next.dataset.w:null;
@@ -191,22 +223,40 @@ function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)re
 
 /* ===== Shadowing ===== */
 let SH=null;
-function viewShadow(n){const d=DAYS.find(x=>x.day===n);if(!d||n>openDay())return go('home');TTS.stop();SH={day:n,items:d.shadowing,stage:0,i:0,running:false,doneStages:{},token:0};
+const RATES=[['0.7','Sekin'],['0.85','Oʻrtacha'],['1','Tez']];
+function shRate(){return P.shRate||0.85;}
+function viewShadow(n){const d=DAYS.find(x=>x.day===n);if(!d||n>openDay())return go('home');TTS.stop();SH={day:n,items:d.shadowing,stage:0,i:0,running:false,paused:false,doneStages:{},token:0};
 render(`${topbar('day/'+n,'Shadowing')}<h2 class="sec">Shadowing — Day ${n}</h2><p class="sub">8 ta gap, 3 bosqich. Ovoz chiqarib ishlang — maqsad toʻgʻri talaffuz va ritm.</p>
-<div class="stages">${[['1','Tinglash','gap + tarjima'],['2','Takrorlash','sekin, pauzada siz aytasiz'],['3','Birga aytish','audio bilan bir vaqtda']].map((s,k)=>`<button class="stage" id="st${k}" onclick="startStage(${k})"><b>${s[0]}</b>${s[1]}<br><small>${s[2]}</small></button>`).join('')}</div>
-<div class="card"><div class="shline" id="shl">Bosqichni tanlang</div><div class="shuz" id="shu"></div><div class="bar"><i id="shb"></i></div><div class="shmeta"><span id="shm">—</span><button class="btn ghost" id="shstop" onclick="stopStage()">Toʻxtatish</button></div></div>
-<div class="shlist">${d.shadowing.map((s,k)=>`<div class="it" id="shi${k}"><span class="i">${k+1}</span><span style="flex:1"><div>${esc(s.en)}</div><div class="uz">${esc(s.uz)}</div></span>${spkBtn(s.en,0.85)}</div>`).join('')}</div>
+<div class="stages">${[['1','Tinglash','gap + tarjima'],['2','Takrorlash','pauzada siz aytasiz'],['3','Birga aytish','audio bilan bir vaqtda']].map((s,k)=>`<button class="stage ${SH.doneStages[k]?'ok':''}" id="st${k}" onclick="startStage(${k})"><b>${s[0]}</b>${s[1]}<br><small>${s[2]}</small></button>`).join('')}</div>
+<div class="card"><div class="shline" id="shl">Bosqichni tanlang</div><div class="shuz" id="shu"></div><div class="bar"><i id="shb"></i></div><div class="bar mic hidden" id="shmic"><i id="shmici"></i></div>
+<div class="shmeta"><span id="shm">—</span><span style="display:flex;gap:6px"><button class="btn ghost" id="shpause" onclick="pauseStage()" disabled>⏸ Pauza</button><button class="btn ghost" id="shstop" onclick="stopStage()">■ Toʻxtatish</button></span></div></div>
+<div class="card" style="padding:12px 16px"><div class="toolbar" style="margin:0;justify-content:space-between"><span style="font-size:13px;color:var(--muted)">Tezlik</span><span class="seg">${RATES.map(([r,l])=>`<button class="${+r===shRate()?'on':''}" onclick="setRate(${r})">${l}</button>`).join('')}</span></div>
+<div class="toolbar" style="margin:10px 0 0;justify-content:space-between"><span style="font-size:13px;color:var(--muted)">Ovoz</span><select id="voicesel" onchange="setVoice(this.value)" style="max-width:62%;font-size:13px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink)"></select></div></div>
+<div class="shlist">${d.shadowing.map((s,k)=>`<div class="it" id="shi${k}"><span class="i">${k+1}</span><span style="flex:1"><div>${esc(s.en)}</div><div class="uz">${esc(s.uz)}</div></span>${spkBtn(s.en,shRate())}</div>`).join('')}</div>
 <div id="shres"></div>${foot()}`);
+fillVoices();
 if(P.shadow[n])$('#shres').innerHTML=`<p class="note" style="text-align:center">Bu kun shadowingi tugallangan ✓ — xohlasangiz yana ishlang.</p>`;}
+function fillVoices(){const sel=$('#voicesel');if(!sel)return;const vs=TTS.voices;if(!vs.length){sel.innerHTML='<option>Qurilma ovozi</option>';if(!TTS.ready)setTimeout(fillVoices,600);return;}
+sel.innerHTML=vs.map(v=>`<option value="${esc(v.name)}" ${TTS.voice&&TTS.voice.name===v.name?'selected':''}>${esc(v.name.replace(/Microsoft |Google /,''))} (${v.lang})</option>`).join('');}
+function setVoice(name){const v=TTS.voices.find(x=>x.name===name);if(v){TTS.voice=v;P.voice=name;save();TTS.speak('Hello! I am your teacher.',shRate());}}
+function setRate(r){P.shRate=r;save();document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.textContent===RATES.find(x=>+x[0]===r)[1]));document.querySelectorAll('.shlist [data-rate]').forEach(b=>b.dataset.rate=r);}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function startStage(k){if(SH.running)stopStage();SH.stage=k;SH.running=true;const tok=++SH.token;document.querySelectorAll('.stage').forEach((s,j)=>s.classList.toggle('on',j===k));
-const items=SH.items;const cfg=[{rate:0.85,pause:2200,uz:true,twice:false},{rate:0.75,pause:4200,uz:false,twice:false},{rate:0.95,pause:1200,uz:false,twice:true}][k];
-for(let i=0;i<items.length&&SH.token===tok;i++){const s=items[i];$('#shl').textContent=s.en;$('#shu').textContent=cfg.uz?s.uz:(k===1?'Endi siz ayting…':'Birga ayting');$('#shm').textContent=`${i+1}/${items.length} · ${k+1}-bosqich`;$('#shb').style.width=((i+1)/items.length*100)+'%';document.querySelectorAll('.shlist .it').forEach((x,j)=>x.classList.toggle('on',j===i));
-await TTS.speak(s.en,cfg.rate);if(SH.token!==tok)return;if(cfg.twice){await sleep(700);if(SH.token!==tok)return;await TTS.speak(s.en,cfg.rate);if(SH.token!==tok)return;}
-if(k===1)$('#shu').textContent='🎤 Siz ayting…';await sleep(cfg.pause);}
-if(SH.token!==tok)return;SH.running=false;SH.doneStages[k]=true;$('#st'+k).classList.add('ok');$('#st'+k).classList.remove('on');$('#shl').textContent=k<2?'Bosqich tugadi — keyingisiga oʻting':'Ajoyib! Shadowing tugadi';$('#shu').textContent='';
-if(k===2){P.shadow[SH.day]=true;save();sync();confetti();const nd=DAYS.find(x=>x.day===SH.day+1);$('#shres').innerHTML=`<div class="result"><div class="big">✓</div><p>Day ${SH.day} shadowingi tugallandi.</p><div class="toolbar" style="justify-content:center;margin:0"><button class="btn" onclick="go('day/${SH.day}')">Kunga qaytish</button>${nd&&nd.day<=openDay()?`<button class="btn" onclick="go('day/${nd.day}')">Day ${nd.day} ›</button>`:''}</div></div>`;}}
-function stopStage(){SH.token++;SH.running=false;TTS.stop();document.querySelectorAll('.stage.on').forEach(s=>s.classList.remove('on'));$('#shu').textContent='';}
+async function waitWhilePaused(tok){while(SH&&SH.paused&&SH.token===tok)await sleep(150);}
+async function countdown(ms,tok){const bar=$('#shmic'),fill=$('#shmici');if(!bar)return;bar.classList.remove('hidden');const t0=Date.now();while(Date.now()-t0<ms){if(SH.token!==tok)return;if(SH.paused){await waitWhilePaused(tok);}fill.style.width=(100-(Date.now()-t0)/ms*100)+'%';await sleep(60);}bar.classList.add('hidden');}
+async function startStage(k){if(SH.running)stopStage();SH.stage=k;SH.running=true;SH.paused=false;const tok=++SH.token;document.querySelectorAll('.stage').forEach((s,j)=>s.classList.toggle('on',j===k));$('#shpause').disabled=false;$('#shpause').textContent='⏸ Pauza';
+const items=SH.items;const base=shRate();const cfg=[{rate:base,pause:1800,uz:true,twice:false},{rate:Math.max(0.6,base-0.15),pause:0,uz:false,twice:false},{rate:base,pause:900,uz:false,twice:true}][k];
+for(let i=0;i<items.length&&SH.token===tok;i++){const s=items[i];await waitWhilePaused(tok);if(SH.token!==tok)return;
+$('#shl').textContent=s.en;$('#shu').textContent=cfg.uz?s.uz:(k===1?'Tinglang…':'Birga ayting');$('#shm').textContent=`${i+1}/${items.length} · ${k+1}-bosqich`;$('#shb').style.width=((i+1)/items.length*100)+'%';document.querySelectorAll('.shlist .it').forEach((x,j)=>x.classList.toggle('on',j===i));
+await TTS.speak(s.en,cfg.rate);if(SH.token!==tok)return;
+if(k===1){$('#shu').textContent='🎤 Endi siz ayting…';const ms=Math.max(2500,s.en.length*110);await countdown(ms,tok);if(SH.token!==tok)return;}
+else if(cfg.twice){await sleep(600);await waitWhilePaused(tok);if(SH.token!==tok)return;$('#shu').textContent='Yana bir marta — birga';await TTS.speak(s.en,cfg.rate);if(SH.token!==tok)return;await sleep(cfg.pause);}
+else{await sleep(cfg.pause);}}
+if(SH.token!==tok)return;SH.running=false;SH.doneStages[k]=true;$('#st'+k).classList.add('ok');$('#st'+k).classList.remove('on');$('#shpause').disabled=true;$('#shl').textContent=k<2?'Bosqich tugadi — keyingisiga oʻting':'Ajoyib! Shadowing tugadi';$('#shu').textContent='';$('#shm').textContent='—';document.querySelectorAll('.shlist .it.on').forEach(x=>x.classList.remove('on'));
+if(k<2){const nb=$('#st'+(k+1));if(nb)nb.classList.add('on');}
+if(k===2){P.shadow[SH.day]=true;P.shadowAt=P.shadowAt||{};P.shadowAt[SH.day]=Date.now();save();sync();confetti();const nd=DAYS.find(x=>x.day===SH.day+1);$('#shres').innerHTML=`<div class="result"><div class="big">✓</div><p>Day ${SH.day} shadowingi tugallandi.</p><div class="toolbar" style="justify-content:center;margin:0"><button class="btn" onclick="go('day/${SH.day}')">Kunga qaytish</button>${nd&&nd.day<=openDay()?`<button class="btn" onclick="go('day/${nd.day}')">Day ${nd.day} ›</button>`:''}</div></div>`;$('#shres').scrollIntoView({behavior:'smooth'});}}
+function pauseStage(){if(!SH||!SH.running)return;SH.paused=!SH.paused;const b=$('#shpause');if(SH.paused){TTS.stop();b.textContent='▶ Davom';$('#shu').textContent='Pauza';}else{b.textContent='⏸ Pauza';}}
+function stopStage(){if(!SH)return;SH.token++;SH.running=false;SH.paused=false;TTS.stop();document.querySelectorAll('.stage.on').forEach(s=>s.classList.remove('on'));const u=$('#shu');if(u)u.textContent='';const m=$('#shmic');if(m)m.classList.add('hidden');const b=$('#shpause');if(b){b.disabled=true;b.textContent='⏸ Pauza';}}
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&SH&&SH.running&&!SH.paused)pauseStage();});
 
 /* ===== Final test ===== */
 let T=null;
@@ -216,6 +266,3 @@ function ansTest(i,j,a){const q=$('#T'+i);if(q.dataset.done)return;q.dataset.don
 const n=Object.keys(T.answers).length,s=Object.values(T.answers).reduce((x,y)=>x+y,0);$('#pbn').textContent=`${n}/40`;$('#pbi').style.width=(n/40*100)+'%';$('#pbs').textContent=`${s} ✓`;
 if(n===T.items.length){if(!P.test||s>P.test.score){P.test={score:s,at:Date.now()};save();sync();}const ok=s>=CFG.testPass;$('#tres').innerHTML=`<div class="result"><div class="big">${s}/40</div><p>${ok?'Tabriklaymiz! Testdan oʻtdingiz. Natija botga yuborildi.':'Oʻtish uchun '+CFG.testPass+' ball kerak. Zaif kunlarni qayta ishlab, yana urinib koʻring.'}</p><button class="btn" onclick="go('profile')">Profil va natija</button></div>`;$('#tres').scrollIntoView({behavior:'smooth'});if(ok)confetti();}}
 
-/* ===== Boot ===== */
-initHistory();route();refreshOpenDay();if(P.dirty)sync();
-if('serviceWorker'in navigator&&location.protocol.startsWith('http')){navigator.serviceWorker.register('sw.js').catch(()=>{});}

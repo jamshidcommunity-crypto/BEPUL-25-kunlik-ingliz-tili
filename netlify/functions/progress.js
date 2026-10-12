@@ -1,7 +1,11 @@
-// POST /.netlify/functions/progress  { code, name, units, shadow, test }  → saves the student's progress
-// (keyed by the Telegram user id behind the code), so the bot's /holat and admin /natija can show it.
+// POST /.netlify/functions/progress  { code, name, units, shadow, test, badges, streak, srsCorrect, seconds }
+// Saves progress (keyed by the Telegram user id behind the code), computes points for the leaderboard,
+// and congratulates the student in Telegram for each NEW badge and for passing the final test.
 const { col, now } = require('./lib/db');
+const tg = require('./lib/tg');
+const { BADGES, points } = require('./lib/game');
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'content-type', 'content-type': 'application/json' };
+const TEST_PASS = 28;
 
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS, body: '' };
@@ -14,11 +18,44 @@ exports.handler = async (event) => {
     if (process.env.MASTER_CODE && code === process.env.MASTER_CODE.toUpperCase()) uid = 'master';
     else { const c = await col('b25_codes').doc(code).get(); if (!c.exists) return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: false, error: 'invalid' }) }; uid = String(c.data().uid); }
     const u = uid === 'master' ? null : (await col('b25_users').doc(uid).get()).data();
-    const units = {}; for (const [k, v] of Object.entries(b.units || {})) if (/^\d+$/.test(k) && v && typeof v.score === 'number') units[k] = { score: Math.max(0, Math.min(18, v.score | 0)), at: v.at || 0 };
+    const half = (x, max) => Math.max(0, Math.min(max, Math.round(Number(x) * 2) / 2));
+    const units = {}; for (const [k, v] of Object.entries(b.units || {})) if (/^\d+$/.test(k) && v && typeof v.score === 'number') units[k] = { score: half(v.score, 18), at: v.at || 0 };
     const shadow = {}; for (const k of Object.keys(b.shadow || {})) if (/^\d+$/.test(k)) shadow[k] = true;
     const test = b.test && typeof b.test.score === 'number' ? { score: Math.max(0, Math.min(40, b.test.score | 0)), at: b.test.at || 0 } : null;
-    await col('b25_progress').doc(uid).set({ uid, name: String(b.name || (u && u.name) || '').slice(0, 80), username: (u && u.username) || '', units, shadow, test, updatedAt: now() }, { merge: true });
-    return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
+    const valid = new Set(BADGES.map(x => x.id));
+    const badges = Array.isArray(b.badges) ? [...new Set(b.badges.filter(x => valid.has(x)))] : [];
+    const doc = {
+      uid, name: String(b.name || (u && u.name) || '').slice(0, 80), username: (u && u.username) || '',
+      units, shadow, test, badges,
+      streak: Math.max(0, Math.min(365, b.streak | 0)),
+      srsCorrect: Math.max(0, Math.min(100000, b.srsCorrect | 0)),
+      seconds: Math.max(0, Math.min(1e7, b.seconds | 0)),
+      updatedAt: now(), lastActive: Date.now(),
+    };
+    doc.points = points(doc);
+    doc.lessons = Object.values(units).filter(x => x.score >= 14).length;
+
+    const prevSnap = await col('b25_progress').doc(uid).get();
+    const prev = prevSnap.exists ? prevSnap.data() : {};
+    await col('b25_progress').doc(uid).set(doc, { merge: true });
+
+    if (uid !== 'master') {
+      const had = new Set(prev.badges || []);
+      const fresh = badges.filter(x => !had.has(x));
+      for (const id of fresh.slice(0, 3)) {
+        const bd = BADGES.find(x => x.id === id);
+        await tg.send(uid, `${bd.icon} <b>Yangi nishon: ${tg.esc(bd.name)}</b>\n${tg.esc(bd.desc)}. Barakalla, davom eting! 💪`).catch(() => {});
+      }
+      const passedNow = test && test.score >= TEST_PASS && !(prev.test && prev.test.score >= TEST_PASS);
+      if (passedNow) {
+        await tg.send(uid,
+          `🎓 <b>Tabriklaymiz!</b> Siz «Beginner 25» kursini muvaffaqiyatli tugatdingiz — yakuniy test: <b>${test.score}/40</b>.\n\n` +
+          `Sertifikatingiz ilovada (Profil → Sertifikat) — yuklab olib, doʻstlaringizga ulashing.\n\n` +
+          `Endi keyingi bosqich: Imamov Academy’da ingliz tilini davom ettiring. Kurs bitiruvchilari uchun maxsus shartlar bor — batafsil maʼlumot uchun ustozga yozing: @jamshid_akhatkulov`
+        ).catch(() => {});
+      }
+    }
+    return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true, points: doc.points }) };
   } catch (e) {
     console.error(e);
     return { statusCode: 500, headers: CORS, body: JSON.stringify({ ok: false, error: 'server' }) };

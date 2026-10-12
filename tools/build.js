@@ -10,12 +10,14 @@ const files = fs.readdirSync(DATA).filter(f => /^day\d\d\.json$/.test(f)).sort()
 const days = files.map(f => JSON.parse(fs.readFileSync(path.join(DATA, f), 'utf8')));
 const glossary = Object.assign({}, base);
 for (const d of days) for (const u of d.units) { Object.assign(glossary, u.glossary); for (const w of u.words) if (!glossary[w.en.toLowerCase()]) glossary[w.en.toLowerCase()] = w.uz; }
-const out = { config, glossary, days: days.map(d => ({ ...d, units: d.units.map(u => { const { glossary, ...rest } = u; return rest; }) })) };
+const ustoz = JSON.parse(fs.readFileSync(path.join(DATA, 'ustoz.json'), 'utf8'));
+const out = { config, ustoz, glossary, days: days.map(d => ({ ...d, units: d.units.map(u => { const { glossary, ...rest } = u; return rest; }) })) };
 const js = 'window.COURSE = ' + JSON.stringify(out) + ';\n';
 fs.writeFileSync(path.join(ROOT, 'course.js'), js);
+fs.writeFileSync(path.join(ROOT, 'netlify', 'functions', 'lib', 'days.json'), JSON.stringify(days.map(d => ({ day: d.day, title: d.title, units: d.units.length }))));
 // index.html
 const emblem = fs.readFileSync(path.join(SRC, 'emblem_b64.txt'), 'utf8').trim();
-const app = fs.readFileSync(path.join(SRC, 'app.js'), 'utf8');
+const app = fs.readFileSync(path.join(SRC, 'app.js'), 'utf8') + '\n' + fs.readFileSync(path.join(SRC, 'extras.js'), 'utf8');
 let html = fs.readFileSync(path.join(SRC, 'index.template.html'), 'utf8');
 html = html.replace('__APP__', () => app).split('__EMBLEM__').join(emblem);
 fs.writeFileSync(path.join(ROOT, 'index.html'), html);
