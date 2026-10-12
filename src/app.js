@@ -114,14 +114,16 @@ ${installCard()}
 /* ===== Ustoz haqida ===== */
 const UST=C.ustoz;
 const mdLinks=s=>esc(s).replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+const UPH=(p)=>(window.USTOZ_PHOTOS&&window.USTOZ_PHOTOS[p])||p;
 function viewUstoz(gate){if(!UST)return viewHome();
 render(`${gate?`<div class="top"><img src="${EMBLEM}" alt=""><div class="brand">${esc(CFG.courseName)}<small>Imamov Academy</small></div><div class="sp"></div><span class="pill">Ustoz haqida</span></div><div class="curve"></div>`:topbar('home','Ustoz haqida')}
-<div class="uhero"><img src="${esc(UST.hero)}" alt="${esc(UST.name)}"><div class="cap"><span class="tag">KURS MUALLIFI VA OʻQITUVCHISI</span><h1>${esc(UST.name)}</h1><p>${esc(UST.role)}</p></div></div>
+${gate?`<div class="card gocard"><div><b>Salom, ${esc((P.name||'').split(' ')[0]||'doʻstim')}!</b><small>Darslar sizni kutmoqda</small></div><button class="btn" onclick="ustozDone()">Darslarga oʻtish ›</button></div>`:''}
+<div class="uhero sm"><img src="${UPH(UST.hero)}" alt="${esc(UST.name)}"><div class="cap"><span class="tag">KURS MUALLIFI VA OʻQITUVCHISI</span><h1>${esc(UST.name)}</h1><p>${esc(UST.role)}</p></div></div>
 <div class="ustats">${UST.stats.map(s=>`<div><b>${esc(s.n)}</b><small>${esc(s.l)}</small></div>`).join('')}</div>
 <div class="card ustory"><p class="lead">${mdLinks(UST.intro)}</p>${UST.story.map(p=>`<p>${mdLinks(p)}</p>`).join('')}</div>
-<div class="ugal">${UST.photos.map((p,i)=>`<figure class="${i===0?'wide':''}"><img src="${esc(p.src)}" alt="${esc(p.cap)}" loading="lazy"><figcaption>${esc(p.cap)}</figcaption></figure>`).join('')}</div>
+<div class="ugal">${UST.photos.map((p,i)=>`<figure class="${i===0?'wide':''}"><img src="${UPH(p.src)}" alt="${esc(p.cap)}" onerror="this.parentNode.style.display='none'"><figcaption>${esc(p.cap)}</figcaption></figure>`).join('')}</div>
 <div class="card" style="text-align:center"><div style="font-family:var(--serif);font-size:20px;color:var(--royal);font-weight:600">Natijalar va darslar — kanalda</div><p class="note" style="margin:6px 0 12px">Join and share</p><a class="btn" href="${esc(UST.channel)}" target="_blank" rel="noopener">${esc(UST.channelName)}</a></div>
-<div class="${gate?'':'ucta'}">${gate?`<button class="btn wide" onclick="ustozDone()">Oʻqib chiqdim — darslarga oʻtish ›</button>`:`<button class="btn ghost" onclick="back('home')">‹ Orqaga</button>`}</div>${foot()}`);}
+<div>${gate?`<button class="btn wide" onclick="ustozDone()">Darslarga oʻtish ›</button>`:`<button class="btn ghost wide" onclick="back('home')">‹ Orqaga</button>`}</div>${foot()}`);}
 function ustozDone(){try{sessionStorage.setItem('b25_ustoz','1');}catch(e){}go(isStandalone()||P.hideInstall?'home':'install');}
 
 /* ===== Install (PWA) ===== */

@@ -204,5 +204,5 @@ streak=function(){const days=new Set();Object.values(P.units).forEach(u=>{if(u.a
  let n=0;const d=new Date();if(!days.has(d.toDateString()))d.setDate(d.getDate()-1);while(days.has(d.toDateString())){n++;d.setDate(d.getDate()-1);}return n;};
 
 /* ===== Boot ===== */
-applyPrefs();initHistory();route();refreshOpenDay();if(P.dirty)sync();setTimeout(checkBadges,1500);
+applyPrefs();initHistory();route();refreshOpenDay();setTimeout(()=>{const sp=$('#splash');if(sp){sp.classList.add('off');setTimeout(()=>sp.remove(),500);}},isStandalone()?650:350);if(P.dirty)sync();setTimeout(checkBadges,1500);
 if('serviceWorker'in navigator&&location.protocol.startsWith('http')){navigator.serviceWorker.register('sw.js').catch(()=>{});}
