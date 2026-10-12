@@ -118,7 +118,7 @@ const UPH=(p)=>(window.USTOZ_PHOTOS&&window.USTOZ_PHOTOS[p])||p;
 function viewUstoz(gate){if(!UST)return viewHome();
 render(`${gate?`<div class="top"><img src="${EMBLEM}" alt=""><div class="brand">${esc(CFG.courseName)}<small>Imamov Academy</small></div><div class="sp"></div><span class="pill">Ustoz haqida</span></div><div class="curve"></div>`:topbar('home','Ustoz haqida')}
 ${gate?`<div class="card gocard"><div><b>Salom, ${esc((P.name||'').split(' ')[0]||'doʻstim')}!</b><small>Darslar sizni kutmoqda</small></div><button class="btn" onclick="ustozDone()">Darslarga oʻtish ›</button></div>`:''}
-<div class="uhero sm"><img src="${UPH(UST.hero)}" alt="${esc(UST.name)}"><div class="cap"><span class="tag">KURS MUALLIFI VA OʻQITUVCHISI</span><h1>${esc(UST.name)}</h1><p>${esc(UST.role)}</p></div></div>
+<div class="uhero sm"><div class="duo">${[].concat(UST.hero).map(h=>`<img src="${UPH(h)}" alt="${esc(UST.name)}">`).join('')}</div><div class="cap"><span class="tag">KURS MUALLIFI VA OʻQITUVCHISI</span><h1>${esc(UST.name)}</h1><p>${esc(UST.role)}</p></div></div>
 <div class="ustats">${UST.stats.map(s=>`<div><b>${esc(s.n)}</b><small>${esc(s.l)}</small></div>`).join('')}</div>
 <div class="card ustory"><p class="lead">${mdLinks(UST.intro)}</p>${UST.story.map(p=>`<p>${mdLinks(p)}</p>`).join('')}</div>
 <div class="ugal">${UST.photos.map((p,i)=>`<figure class="${i===0?'wide':''}"><img src="${UPH(p.src)}" alt="${esc(p.cap)}" onerror="this.parentNode.style.display='none'"><figcaption>${esc(p.cap)}</figcaption></figure>`).join('')}</div>

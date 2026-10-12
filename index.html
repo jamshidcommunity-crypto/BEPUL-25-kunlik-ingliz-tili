@@ -194,7 +194,9 @@ canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
 /* ustoz */
 .uhero{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,var(--sky),var(--royal));color:#fff;margin-bottom:14px;box-shadow:var(--shadow2)}
 .uhero img{width:100%;height:360px;object-fit:cover;object-position:center 20%;display:block}
-.uhero.sm img{height:230px;object-position:center 15%} .uhero.sm h1{font-size:24px} .uhero.sm .cap{padding:12px 16px 14px}
+.uhero.sm img{height:230px;object-position:center 15%}
+.uhero .duo{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:#fff} .uhero .duo img{height:240px;object-position:center 20%} .uhero .duo img:first-child{object-position:center 30%}
+@media(min-width:720px){.uhero .duo img{height:340px}} .uhero.sm h1{font-size:24px} .uhero.sm .cap{padding:12px 16px 14px}
 .gocard{display:flex;align-items:center;justify-content:space-between;gap:12px;border:2px solid var(--sky)} .gocard .btn{white-space:nowrap;flex:none} .gocard b{display:block;font-family:var(--serif);font-size:20px;color:var(--royal)} .gocard small{color:var(--muted);font-size:13px}
 .uhero .cap{padding:16px 18px 18px}
 .uhero .tag{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:1.5px}
@@ -381,7 +383,7 @@ const UPH=(p)=>(window.USTOZ_PHOTOS&&window.USTOZ_PHOTOS[p])||p;
 function viewUstoz(gate){if(!UST)return viewHome();
 render(`${gate?`<div class="top"><img src="${EMBLEM}" alt=""><div class="brand">${esc(CFG.courseName)}<small>Imamov Academy</small></div><div class="sp"></div><span class="pill">Ustoz haqida</span></div><div class="curve"></div>`:topbar('home','Ustoz haqida')}
 ${gate?`<div class="card gocard"><div><b>Salom, ${esc((P.name||'').split(' ')[0]||'doʻstim')}!</b><small>Darslar sizni kutmoqda</small></div><button class="btn" onclick="ustozDone()">Darslarga oʻtish ›</button></div>`:''}
-<div class="uhero sm"><img src="${UPH(UST.hero)}" alt="${esc(UST.name)}"><div class="cap"><span class="tag">KURS MUALLIFI VA OʻQITUVCHISI</span><h1>${esc(UST.name)}</h1><p>${esc(UST.role)}</p></div></div>
+<div class="uhero sm"><div class="duo">${[].concat(UST.hero).map(h=>`<img src="${UPH(h)}" alt="${esc(UST.name)}">`).join('')}</div><div class="cap"><span class="tag">KURS MUALLIFI VA OʻQITUVCHISI</span><h1>${esc(UST.name)}</h1><p>${esc(UST.role)}</p></div></div>
 <div class="ustats">${UST.stats.map(s=>`<div><b>${esc(s.n)}</b><small>${esc(s.l)}</small></div>`).join('')}</div>
 <div class="card ustory"><p class="lead">${mdLinks(UST.intro)}</p>${UST.story.map(p=>`<p>${mdLinks(p)}</p>`).join('')}</div>
 <div class="ugal">${UST.photos.map((p,i)=>`<figure class="${i===0?'wide':''}"><img src="${UPH(p.src)}" alt="${esc(p.cap)}" onerror="this.parentNode.style.display='none'"><figcaption>${esc(p.cap)}</figcaption></figure>`).join('')}</div>
