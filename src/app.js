@@ -16,7 +16,7 @@ const API=(CFG.apiBase||'')+'/.netlify/functions';
 const BOT=CFG.bot||'InglizTili0danBot';
 const LS='b25_progress';
 let P=load();
-function load(){try{return Object.assign({code:'',uid:'',name:'',tg:'',openDay:null,units:{},shadow:{},test:null,dirty:false,seen:{}},JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){return{code:'',uid:'',name:'',tg:'',openDay:null,units:{},shadow:{},test:null,dirty:false,seen:{}};}}
+function load(){try{return Object.assign({code:'',uid:'',name:'',tg:'',openDay:null,startDate:null,units:{},shadow:{},test:null,dirty:false,seen:{}},JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){return{code:'',uid:'',name:'',tg:'',openDay:null,startDate:null,units:{},shadow:{},test:null,dirty:false,seen:{}};}}
 function save(){try{localStorage.setItem(LS,JSON.stringify(P));}catch(e){}}
 const $=s=>document.querySelector(s); const app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -24,17 +24,37 @@ const md=s=>esc(s).replace(/\*([^*]+)\*/g,'<em>$1</em>').replace(/\n/g,'<br>');
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2400);}
 const buzz=ms=>{try{navigator.vibrate&&navigator.vibrate(ms);}catch(e){}};
 const DEMO=()=>location.hash.includes('demo')||P.uid==='demo';
-const openDay=()=>location.hash.includes('all')||P.uid==='master'?25:(P.openDay||CFG.openDay||1);
+/* ===== Course calendar & gating =====
+   openDay()  — calendar day (0..25): from startDate (Day 1 = startDate, one new day every midnight), else manual openDay.
+   reachDay() — first day the student has not finished yet (all units passed + shadowing [+ test]).
+   maxDay()   — what he may open now = min(calendar, reach): no skipping ahead, no jumping to tomorrow. */
+const MONTHS_UZ=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+function parseYMD(s){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?new Date(+m[1],+m[2]-1,+m[3]):null;}
+function fmtDate(d){return d?`${d.getDate()}-${MONTHS_UZ[d.getMonth()]}`:'';}
+function todayMid(){const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate());}
+function dayDate(n){const sd=parseYMD(P.startDate||CFG.startDate);if(!sd)return null;const d=new Date(sd);d.setDate(d.getDate()+n-1);return d;}
+function calendarDay(){const sd=parseYMD(P.startDate||CFG.startDate);if(!sd)return P.openDay||CFG.openDay||1;const n=Math.round((todayMid()-sd)/864e5)+1;return Math.max(0,Math.min(25,n));}
+const isMaster=()=>location.hash.includes('all')||P.uid==='master';
+const openDay=()=>isMaster()?25:calendarDay();
+function reachDay(){if(isMaster())return 25;for(const d of DAYS){if(dayStatus(d).st!=='done')return d.day;}return 25;}
+const maxDay=()=>Math.min(openDay(),reachDay());
+function lockInfo(n){const od=openDay(),rd=reachDay();if(n<=od&&n<=rd)return null;if(n>od){const dt=dayDate(n);return{why:'date',msg:od===0?`Kurs ${fmtDate(dayDate(1))} kuni boshlanadi`:(n===od+1?'Ertaga ochiladi':dt?`${fmtDate(dt)} kuni ochiladi`:'Hali ochilmagan')};}return{why:'prev',msg:`Avval Day ${rd} ni tugating`};}
+function guardDay(n){const li=lockInfo(n);if(!li)return true;toast(li.why==='prev'?li.msg:'Bu kun hali ochilmagan. '+li.msg);return false;}
 function unitScore(id){const u=P.units[id];return u?u.score:null;}
-function unitDone(id){return (unitScore(id)||0)>=CFG.passScore;}
+/* A unit counts as DONE when all 18 exercises were answered (any score) — mistakes are reviewed, the student moves on.
+   PASSED (≥passScore) is only for badges/colours/"zoʻr natija". */
+function unitDone(id){return !!P.units[id];}
+function unitPassed(id){return (unitScore(id)||0)>=CFG.passScore;}
 function dayStatus(d){const ids=d.units.map(u=>u.id);const done=ids.filter(unitDone).length;const sh=!!P.shadow[d.day];const tst=d.test?(P.test&&P.test.score>=CFG.testPass):true;const total=ids.length+1+(d.test?1:0);const got=done+(sh?1:0)+(d.test&&tst?1:0);return{st:got===total?'done':got>0?'part':'',got,total};}
 function courseProgress(){let t=0,g=0;DAYS.forEach(d=>{d.units.forEach(u=>{t++;if(unitDone(u.id))g++;});t++;if(P.shadow[d.day])g++;if(d.test){t++;if(P.test&&P.test.score>=CFG.testPass)g++;}});return{t,g};}
 
 /* ===== Server sync (best effort) ===== */
 async function verifyCode(code){const r=await fetch(`${API}/verify?code=${encodeURIComponent(code)}`,{cache:'no-store'});return r.json();}
 async function sync(){if(!P.code||DEMO())return;P.dirty=true;save();if(!navigator.onLine)return;try{const r=await fetch(`${API}/progress`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code:P.code,name:P.name,units:P.units,shadow:P.shadow,test:P.test})});const j=await r.json();if(j.ok){P.dirty=false;P.syncedAt=Date.now();save();}}catch(e){}}
-async function refreshOpenDay(){if(!P.code||DEMO()||!navigator.onLine)return;try{const j=await verifyCode(P.code);if(j.ok&&j.openDay){if(P.openDay!==j.openDay){P.openDay=j.openDay;save();if(location.hash==='#home'||!location.hash)viewHome();}}}catch(e){}}
+async function refreshOpenDay(){if(!P.code||DEMO()||!navigator.onLine)return;try{const j=await verifyCode(P.code);if(j.ok){const ch=P.openDay!==(j.openDay||null)||P.startDate!==(j.startDate||null);P.openDay=j.openDay||null;P.startDate=j.startDate||null;if(ch){save();if(location.hash==='#home'||!location.hash)viewHome();}}}catch(e){}}
 window.addEventListener('online',()=>{if(P.dirty)sync();});
+/* new calendar day while the app stayed open → refresh */
+let _dayKey=todayMid().getTime();document.addEventListener('visibilitychange',()=>{if(document.hidden)return;refreshOpenDay();if(todayMid().getTime()!==_dayKey){_dayKey=todayMid().getTime();if(location.hash==='#home'||!location.hash)viewHome();}});
 
 /* ===== TTS ===== */
 /* Names the English voice would mangle → how to say them (display text is never changed) */
@@ -97,7 +117,7 @@ setTimeout(()=>{if(!pre)$('#code')?.focus();},50);}
 async function login(){const inp=$('#code'),err=$('#err'),btn=$('#loginbtn');let code=inp.value.trim().toUpperCase().replace(/\s+/g,'');if(code&&!code.startsWith('B25-')&&/^[A-Z2-9]{5}$/.test(code))code='B25-'+code;if(!code){err.textContent='Kodni kiriting';return;}
 if(code==='DEMO'){P.uid='demo';P.code='DEMO';P.name='Mehmon';save();return go('home');}
 btn.disabled=true;btn.textContent='Tekshirilmoqda…';err.textContent='';
-try{const j=await verifyCode(code);if(j.ok){P.code=code;P.uid=j.uid;P.name=j.name||'Oʻquvchi';P.tg=j.username?'@'+j.username:'';if(j.openDay)P.openDay=j.openDay;save();buzz(20);go('home');}
+try{const j=await verifyCode(code);if(j.ok){P.code=code;P.uid=j.uid;P.name=j.name||'Oʻquvchi';P.tg=j.username?'@'+j.username:'';P.openDay=j.openDay||null;P.startDate=j.startDate||null;save();buzz(20);go('home');}
 else{err.textContent=j.error==='invalid'?'Bunday kod topilmadi. Botdan olgan kodni tekshiring.':'Xatolik. Keyinroq urinib koʻring.';}}
 catch(e){err.textContent=navigator.onLine?'Server bilan bogʻlanib boʻlmadi.':'Internet yoʻq. Ulanib, qayta urinib koʻring.';}
 btn.disabled=false;btn.textContent='Kirish';}
@@ -105,10 +125,11 @@ btn.disabled=false;btn.textContent='Kirish';}
 /* ===== Home ===== */
 function streak(){const days=new Set();Object.values(P.units).forEach(u=>{if(u.at)days.add(new Date(u.at).toDateString());});Object.values(P.shadowAt||{}).forEach(t=>days.add(new Date(t).toDateString()));let n=0;const d=new Date();for(;;){if(days.has(d.toDateString())){n++;d.setDate(d.getDate()-1);}else if(n===0&&days.has(new Date(Date.now()-864e5).toDateString())){d.setDate(d.getDate()-1);}else break;}return n;}
 function viewHome(){const {t,g}=courseProgress();const stk=streak();const pct=Math.round(g/t*100);const od=openDay();const r=58,c=2*Math.PI*r;
-const nextDay=DAYS.find(d=>d.day<=od&&dayStatus(d).st!=='done');
-render(`${topbar()}<div class="card hero"><div class="arc"><svg viewBox="0 0 132 132"><circle cx="66" cy="66" r="${r}" stroke="var(--line)" stroke-width="10" fill="none"/><circle cx="66" cy="66" r="${r}" stroke="url(#gr)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-g/t)}"/><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E9BE6"/><stop offset="1" stop-color="#0B3FAF"/></linearGradient></defs></svg><div class="n">${pct}%<small>${g}/${t}</small></div></div><div><h1>Salom, ${esc((P.name||'').split(' ')[0]||'doʻstim')}!</h1><p>${nextDay?`Bugungi qadam: <b>Day ${nextDay.day}</b> — ${esc(nextDay.title)}.`:'Hamma ochiq kunlar tugallangan — zoʻr!'}<br>Ochiq kunlar: 1–${od}.${stk?` · 🔥 ${stk} kun ketma-ket`:''}</p>${nextDay?`<button class="btn" style="margin-top:10px" onclick="go('day/${nextDay.day}')">Davom etish ›</button>`:''}</div></div>
+const md_=maxDay(),rd=reachDay();const nextDay=DAYS.find(d=>d.day<=md_&&dayStatus(d).st!=='done');
+const heroMsg=od===0?`Kurs <b>${fmtDate(dayDate(1))}</b> kuni boshlanadi — ${Math.round((dayDate(1)-todayMid())/864e5)} kun qoldi. Hozircha ilovani oʻrnatib, «Ustoz haqida» bilan tanishib qoʻying.`:nextDay?`Bugungi qadam: <b>Day ${nextDay.day}</b> — ${esc(nextDay.title)}.${rd<od?` <span style="color:#c47a00;font-weight:600">Kalendar Day ${od} da — yetib oling!</span>`:''}`:(od>=25?`Kurs toʻliq tugallandi — zoʻr! 🎓 <a href="https://t.me/${BOT}?start=keyingi" target="_blank" rel="noopener" style="color:var(--royal);font-weight:700">Keyingi bosqich: Imamov Academy Elementary ›</a>`:`Day ${od} tugallandi ✅ Day ${od+1} ertaga ochiladi.`);
+render(`${topbar()}<div class="card hero"><div class="arc"><svg viewBox="0 0 132 132"><circle cx="66" cy="66" r="${r}" stroke="var(--line)" stroke-width="10" fill="none"/><circle cx="66" cy="66" r="${r}" stroke="url(#gr)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-g/t)}"/><defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E9BE6"/><stop offset="1" stop-color="#0B3FAF"/></linearGradient></defs></svg><div class="n">${pct}%<small>${g}/${t}</small></div></div><div><h1>Salom, ${esc((P.name||'').split(' ')[0]||'doʻstim')}!</h1><p>${heroMsg}<br>${od>0?`Bugun: Day ${od} / 25.`:''}${stk?` · 🔥 ${stk} kun ketma-ket`:''}</p>${nextDay?`<button class="btn" style="margin-top:10px" onclick="go('day/${nextDay.day}')">Davom etish ›</button>`:''}</div></div>
 ${installCard()}
-<div class="days">${DAYS.map(d=>{const {st,got,total}=dayStatus(d);const locked=d.day>od;const n=d.units.length;const sub=n?`${n} ta dars (Unit ${d.units[0].id}${n>1?'–'+d.units[n-1].id:''}) · shadowing`:'40 ta savol · shadowing';return `<button class="day ${st} ${locked?'locked':''} ${nextDay&&nextDay.day===d.day?'next':''}" ${locked?'disabled':''} onclick="go('day/${d.day}')"><span class="num">${d.day}</span><span><span class="t">${esc(d.title)}</span><span class="s">${esc(sub)}</span>${!locked&&got?`<span class="mini"><i style="width:${got/total*100}%"></i></span>`:''}</span><span class="st">${locked?'🔒':st==='done'?'✅':'›'}</span></button>`;}).join('')}</div>${foot()}`);}
+<div class="days">${DAYS.map(d=>{const {st,got,total}=dayStatus(d);const li=lockInfo(d.day);const locked=!!li;const n=d.units.length;const sub=n?`${n} ta dars (Unit ${d.units[0].id}${n>1?'–'+d.units[n-1].id:''}) · shadowing`:'40 ta savol · shadowing';return `<button class="day ${st} ${locked?'locked':''} ${nextDay&&nextDay.day===d.day?'next':''}" ${locked?'disabled':''} onclick="go('day/${d.day}')"><span class="num">${d.day}</span><span><span class="t">${esc(d.title)}</span><span class="s">${locked?esc(li.msg):esc(sub)}</span>${!locked&&got?`<span class="mini"><i style="width:${got/total*100}%"></i></span>`:''}</span><span class="st">${locked?'🔒':st==='done'?'✅':'›'}</span></button>`;}).join('')}</div>${foot()}`);}
 
 
 /* ===== Ustoz haqida ===== */
@@ -171,7 +192,7 @@ render(`${topbar('home','Profil')}<div class="card"><h2 class="sec">${esc(P.name
 <button class="btn ghost wide" onclick="if(confirm('Chiqasizmi? Natijalar botda saqlanadi, qayta kirish uchun kod kerak.')){sync();localStorage.removeItem('${LS}');P=load();go('start');}">Chiqish</button>${foot()}`);}
 
 /* ===== Day ===== */
-function viewDay(n){const d=DAYS.find(x=>x.day===n);if(!d)return go('home');const od=openDay();if(n>od){toast('Bu kun hali ochilmagan');return go('home');}
+function viewDay(n){const d=DAYS.find(x=>x.day===n);if(!d)return go('home');if(!guardDay(n))return go('home');
 const units=d.units.map(u=>{const s=unitScore(u.id);return `<button class="unit" onclick="go('unit/${u.id}')"><span class="k ${u.code}">${u.code==='S'?'S':'G'}</span><span><span class="t">Unit ${u.id} — ${esc(u.title)}</span><span class="s">Qoida · soʻzlar · matn · 18 ta mashq</span></span><span class="score ${s!=null&&s>=CFG.passScore?'ok':''}">${s==null?'—':s+'/'+CFG.unitMax}</span></button>`;}).join('');
 const sh=`<button class="unit" onclick="go('shadow/${n}')"><span class="k sh">🎧</span><span><span class="t">Shadowing — 8 ta gap</span><span class="s">Tinglash → takrorlash → birga aytish (10 daqiqa)</span></span><span class="score ${P.shadow[n]?'ok':''}">${P.shadow[n]?'✓':'—'}</span></button>`;
 const tst=d.test?`<button class="unit" onclick="go('test/${n}')"><span class="k">T</span><span><span class="t">Yakuniy test — 40 ta savol</span><span class="s">Oʻtish: ${CFG.testPass}/40</span></span><span class="score ${P.test&&P.test.score>=CFG.testPass?'ok':''}">${P.test?P.test.score+'/40':'—'}</span></button>`:'';
@@ -180,7 +201,7 @@ render(`${topbar('home','Day '+n)}<h2 class="sec">Day ${n}: ${esc(d.title)}</h2>
 
 /* ===== Unit ===== */
 let EX=null;
-function viewUnit(id,tab){const u=UNITS[id];if(!u)return go('home');if(u.day>openDay())return go('home');
+function viewUnit(id,tab){const u=UNITS[id];if(!u)return go('home');if(!guardDay(u.day))return go('home');
 const tabs=[['rule','Qoida'],['words','Soʻzlar'],['text','Matn'],['ex','Mashqlar']];
 const done=unitDone(id);P.seen[id]=P.seen[id]||{};P.seen[id][tab]=true;save();
 render(`${topbar('day/'+u.day,'Unit '+id)}<h2 class="sec">${esc(u.title)}</h2><p class="sub">Day ${u.day} · ${u.code==='G'?'Grammatika':'Soʻz va koʻnikma'} ${done?'· <b style="color:var(--ok)">tugallandi ✓</b>':''}</p>
@@ -210,7 +231,7 @@ const sec=(k,title,n,html)=>`<h3>${title}<small>${n} ta</small></h3>${html}`;
 const choice=(items,pre)=>items.map((it,i)=>`<div class="q" id="${pre}${i}"><div class="qq"><span class="n">${i+1}.</span>${esc(it.q)}</div><div class="opts">${it.o.map((o,j)=>`<button class="opt" onclick="ansChoice('${pre}',${i},${j},${it.a})">${esc(o)}</button>`).join('')}</div></div>`).join('');
 const order=ex.order.map((it,i)=>{const ws=shuffle(it.w.map((w,k)=>({w,k})));return `<div class="q" id="o${i}" data-a="${esc(it.a)}"><div class="qq"><span class="n">${i+1}.</span>Soʻzlarni tartiblang</div><div class="build" id="ob${i}"><span class="ph">Soʻzlarni bosing…</span></div><div class="opts">${ws.map(x=>`<button class="chip" data-k="${x.k}" onclick="pickWord(${i},this)">${esc(x.w)}</button>`).join('')}</div><div class="toolbar" style="margin:8px 0 0"><button class="btn ghost" onclick="clearOrder(${i})">Tozalash</button><button class="btn" onclick="checkOrder(${i})">Tekshirish</button></div><div class="fb" id="of${i}"></div></div>`;}).join('');
 const fill=ex.fill.map((it,i)=>`<div class="q" id="f${i}"><div class="qq"><span class="n">${i+1}.</span>${esc(it.q).replace('___','<b style="color:var(--royal)">______</b>')} ${it.hint?`<span class="kbd">(${esc(it.hint)})</span>`:''}</div><div class="fillrow"><input id="fi${i}" placeholder="javob" autocapitalize="none" autocomplete="off" onkeydown="if(event.key==='Enter')checkFill(${i})"><button class="btn" onclick="checkFill(${i})">Tekshirish</button></div><div class="fb" id="ff${i}"></div></div>`).join('');
-pane.innerHTML=`<div class="exs"><p class="note">18 ta mashq, har biri 1 ball. ${CFG.passScore} va undan koʻp ball — dars tugallandi.</p>
+pane.innerHTML=`<div class="exs"><p class="note">18 ta mashq, har biri 1 ball. Hammasini bajaring — dars tugallanadi. Oxirida xatolaringizni koʻrib chiqasiz; ${CFG.passScore}+ ball — zoʻr natija (qayta ishlab oshirish mumkin).</p>
 ${sec('c','Tanlash',6,choice(ex.choice,'c'))}${sec('o','Gap tuzish',4,order)}${sec('t','Matn boʻyicha',4,choice(ex.text,'t'))}${sec('f','Yozish',4,fill)}<div id="res"></div></div><div class="progressbar"><span id="pbn">0/18</span><div class="bar"><i id="pbi"></i></div><span id="pbs">0 ✓</span></div>`;
 window._ex=u;}
 function mark(key,ok){EX.answers[key]=ok?1:0;buzz(ok?20:[40,40,40]);const n=Object.keys(EX.answers).length;const s=Object.values(EX.answers).reduce((a,b)=>a+b,0);const pb=$('#pbn');if(pb){pb.textContent=`${n}/18`;$('#pbi').style.width=(n/18*100)+'%';$('#pbs').textContent=`${s} ✓`;}if(n>=EX.total)finishEx();}
@@ -220,14 +241,14 @@ function clearOrder(i){const q=$('#o'+i);if(q.dataset.done)return;$('#ob'+i).inn
 function checkOrder(i){const q=$('#o'+i);if(q.dataset.done)return;const built=[...$('#ob'+i).querySelectorAll('.chip')].map(x=>x.textContent).join(' ');if(!built){toast('Avval soʻzlarni tanlang');return;}const a=q.dataset.a;const norm=s=>s.toLowerCase().replace(/[.!?,]/g,'').replace(/\s+/g,' ').trim();const ok=norm(built)===norm(a);q.dataset.done=1;q.classList.add(ok?'right':'wrong');$('#of'+i).className='fb '+(ok?'good':'badp');$('#of'+i).innerHTML=ok?'Toʻgʻri! '+esc(a):'Notoʻgʻri. <span class="key">Toʻgʻri javob: '+esc(a)+'</span>';q.querySelectorAll('.chip').forEach(x=>x.disabled=true);mark('o'+i,ok);}
 function checkFill(i){const q=$('#f'+i);if(q.dataset.done)return;const it=window._ex.exercises.fill[i];const v=$('#fi'+i).value.trim();if(!v){toast('Javob yozing');return;}const norm=s=>s.toLowerCase().replace(/[.!?]/g,'').replace(/[‘’]/g,"'").replace(/\s+/g,' ').trim();const ok=it.a.some(x=>norm(x)===norm(v));q.dataset.done=1;q.classList.add(ok?'right':'wrong');$('#fi'+i).disabled=true;$('#ff'+i).className='fb '+(ok?'good':'badp');$('#ff'+i).innerHTML=ok?'Toʻgʻri!':'Notoʻgʻri. <span class="key">Toʻgʻri javob: '+esc(it.a[0])+'</span>';mark('f'+i,ok);}
 function finishEx(){const score=Object.values(EX.answers).reduce((a,b)=>a+b,0);const prev=P.units[EX.id];if(!prev||score>prev.score){P.units[EX.id]={score,max:EX.total,at:Date.now()};save();sync();}const ok=score>=CFG.passScore;const u=UNITS[EX.id];const d=DAYS.find(x=>x.day===u.day);const idx=d.units.findIndex(x=>x.id===u.id);const nxt=idx+1<d.units.length?`unit/${d.units[idx+1].id}`:`shadow/${u.day}`;
-$('#res').innerHTML=`<div class="result"><div class="big">${score}/${EX.total}</div><p>${ok?'Dars tugallandi! Davom eting.':'Qoidani yana bir oʻqib, qayta urinib koʻring.'}</p><div class="toolbar" style="justify-content:center;margin:0"><button class="btn" onclick="renderEx(UNITS[${EX.id}]);window.scrollTo(0,0)">Qayta ishlash</button><button class="btn" onclick="go('${nxt}')">${idx+1<d.units.length?'Keyingi dars ›':'Shadowingga ›'}</button></div></div>`;$('#res').scrollIntoView({behavior:'smooth',block:'center'});if(ok)confetti();}
+$('#res').innerHTML=`<div class="result"><div class="big">${score}/${EX.total}</div><p>${ok?'Dars tugallandi! Davom eting.':'Dars tugallandi. Pastdagi xatolaringizni koʻrib chiqing — keyin davom etasiz. Qayta ishlasangiz ball oshadi.'}</p><div class="toolbar" style="justify-content:center;margin:0"><button class="btn" onclick="renderEx(UNITS[${EX.id}]);window.scrollTo(0,0)">Qayta ishlash</button><button class="btn" id="nextbtn" onclick="go('${nxt}')">${idx+1<d.units.length?'Keyingi dars ›':'Shadowingga ›'}</button></div></div>`;$('#res').scrollIntoView({behavior:'smooth',block:'center'});if(ok)confetti();}
 function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const c=document.createElement('canvas');c.className='confetti';document.body.appendChild(c);const ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const cols=['#1E9BE6','#0B3FAF','#F2B134','#22C55E','#ffffff'];const ps=Array.from({length:90},()=>({x:innerWidth/2+(Math.random()-.5)*120,y:innerHeight*0.55,vx:(Math.random()-.5)*14,vy:-Math.random()*14-4,r:4+Math.random()*5,c:cols[Math.floor(Math.random()*cols.length)],a:Math.random()*6}));let t=0;(function f(){ctx.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.45;p.vx*=.99;p.a+=.2;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);ctx.restore();});if(++t<90)requestAnimationFrame(f);else c.remove();})();}
 
 /* ===== Shadowing ===== */
 let SH=null;
 const RATES=[['0.7','Sekin'],['0.85','Oʻrtacha'],['1','Tez']];
 function shRate(){return P.shRate||0.85;}
-function viewShadow(n){const d=DAYS.find(x=>x.day===n);if(!d||n>openDay())return go('home');TTS.stop();SH={day:n,items:d.shadowing,stage:0,i:0,running:false,paused:false,doneStages:{},token:0};
+function viewShadow(n){const d=DAYS.find(x=>x.day===n);if(!d||!guardDay(n))return go('home');TTS.stop();SH={day:n,items:d.shadowing,stage:0,i:0,running:false,paused:false,doneStages:{},token:0};
 render(`${topbar('day/'+n,'Shadowing')}<h2 class="sec">Shadowing — Day ${n}</h2><p class="sub">8 ta gap, 3 bosqich. Ovoz chiqarib ishlang — maqsad toʻgʻri talaffuz va ritm.</p>
 <div class="stages">${[['1','Tinglash','gap + tarjima'],['2','Takrorlash','pauzada siz aytasiz'],['3','Birga aytish','audio bilan bir vaqtda']].map((s,k)=>`<button class="stage ${SH.doneStages[k]?'ok':''}" id="st${k}" onclick="startStage(${k})"><b>${s[0]}</b>${s[1]}<br><small>${s[2]}</small></button>`).join('')}</div>
 <div class="card"><div class="shline" id="shl">Bosqichni tanlang</div><div class="shuz" id="shu"></div><div class="bar"><i id="shb"></i></div><div class="bar mic hidden" id="shmic"><i id="shmici"></i></div>
@@ -255,14 +276,14 @@ else if(cfg.twice){await sleep(600);await waitWhilePaused(tok);if(SH.token!==tok
 else{await sleep(cfg.pause);}}
 if(SH.token!==tok)return;SH.running=false;SH.doneStages[k]=true;$('#st'+k).classList.add('ok');$('#st'+k).classList.remove('on');$('#shpause').disabled=true;$('#shl').textContent=k<2?'Bosqich tugadi — keyingisiga oʻting':'Ajoyib! Shadowing tugadi';$('#shu').textContent='';$('#shm').textContent='—';document.querySelectorAll('.shlist .it.on').forEach(x=>x.classList.remove('on'));
 if(k<2){const nb=$('#st'+(k+1));if(nb)nb.classList.add('on');}
-if(k===2){P.shadow[SH.day]=true;P.shadowAt=P.shadowAt||{};P.shadowAt[SH.day]=Date.now();save();sync();confetti();const nd=DAYS.find(x=>x.day===SH.day+1);$('#shres').innerHTML=`<div class="result"><div class="big">✓</div><p>Day ${SH.day} shadowingi tugallandi.</p><div class="toolbar" style="justify-content:center;margin:0"><button class="btn" onclick="go('day/${SH.day}')">Kunga qaytish</button>${nd&&nd.day<=openDay()?`<button class="btn" onclick="go('day/${nd.day}')">Day ${nd.day} ›</button>`:''}</div></div>`;$('#shres').scrollIntoView({behavior:'smooth'});}}
+if(k===2){P.shadow[SH.day]=true;P.shadowAt=P.shadowAt||{};P.shadowAt[SH.day]=Date.now();save();sync();confetti();const nd=DAYS.find(x=>x.day===SH.day+1);$('#shres').innerHTML=`<div class="result"><div class="big">✓</div><p>Day ${SH.day} shadowingi tugallandi.</p><div class="toolbar" style="justify-content:center;margin:0"><button class="btn" onclick="go('day/${SH.day}')">Kunga qaytish</button>${nd&&!lockInfo(nd.day)?`<button class="btn" onclick="go('day/${nd.day}')">Day ${nd.day} ›</button>`:(nd&&dayStatus(d).st==='done'?`<span class="sub">Day ${nd.day} ${lockInfo(nd.day).msg.toLowerCase()}</span>`:'')}</div></div>`;$('#shres').scrollIntoView({behavior:'smooth'});}}
 function pauseStage(){if(!SH||!SH.running)return;SH.paused=!SH.paused;const b=$('#shpause');if(SH.paused){TTS.stop();b.textContent='▶ Davom';$('#shu').textContent='Pauza';}else{b.textContent='⏸ Pauza';}}
 function stopStage(){if(!SH)return;SH.token++;SH.running=false;SH.paused=false;TTS.stop();document.querySelectorAll('.stage.on').forEach(s=>s.classList.remove('on'));const u=$('#shu');if(u)u.textContent='';const m=$('#shmic');if(m)m.classList.add('hidden');const b=$('#shpause');if(b){b.disabled=true;b.textContent='⏸ Pauza';}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&SH&&SH.running&&!SH.paused)pauseStage();});
 
 /* ===== Final test ===== */
 let T=null;
-function viewTest(n){const d=DAYS.find(x=>x.day===n);if(!d||!d.test||n>openDay())return go('home');T={answers:{},items:d.test.choice};
+function viewTest(n){const d=DAYS.find(x=>x.day===n);if(!d||!d.test||!guardDay(n))return go('home');T={answers:{},items:d.test.choice};
 render(`${topbar('day/'+n,'Test')}<h2 class="sec">Yakuniy test</h2><p class="sub">40 ta savol, butun kurs. Oʻtish balli: ${CFG.testPass}/40. Bir marta javob berasiz.</p><div class="exs">${T.items.map((it,i)=>`<div class="q" id="T${i}"><div class="qq"><span class="n">${i+1}.</span>${esc(it.q)}</div><div class="opts">${it.o.map((o,j)=>`<button class="opt" onclick="ansTest(${i},${j},${it.a})">${esc(o)}</button>`).join('')}</div></div>`).join('')}<div id="tres"></div></div><div class="progressbar"><span id="pbn">0/40</span><div class="bar"><i id="pbi"></i></div><span id="pbs">0 ✓</span></div>${foot()}`);}
 function ansTest(i,j,a){const q=$('#T'+i);if(q.dataset.done)return;q.dataset.done=1;q.querySelectorAll('.opt').forEach((b,k)=>{b.disabled=true;if(k===a)b.classList.add('good');if(k===j&&j!==a)b.classList.add('badp');});q.classList.add(j===a?'right':'wrong');T.answers[i]=j===a?1:0;buzz(j===a?20:[40,40,40]);
 const n=Object.keys(T.answers).length,s=Object.values(T.answers).reduce((x,y)=>x+y,0);$('#pbn').textContent=`${n}/40`;$('#pbi').style.width=(n/40*100)+'%';$('#pbs').textContent=`${s} ✓`;

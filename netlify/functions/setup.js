@@ -18,14 +18,22 @@ exports.handler = async (event) => {
       { command: 'holat', description: 'Holatim va taklif qilganlarim' },
       { command: 'havola', description: 'Mening taklif havolam' },
       { command: 'kod', description: 'Ilovaga kirish kodim' },
+      { command: 'yopiq', description: 'Yopiq kanal havolam' },
+      { command: 'keyingi', description: 'Keyingi bosqichga yozilish' },
     ] });
     const info = await tg.call('getWebhookInfo', {});
     const me = await tg.call('getMe', {});
     const checks = [];
-    for (const ch of [process.env.CHANNEL_1, process.env.CHANNEL_2, process.env.CLOSED_CHANNEL_ID].filter(Boolean)) {
+    const normChat = (v) => { v = String(v || '').trim(); if (!v || /^@/.test(v) || /^-100\d+$/.test(v)) return v; if (/^100\d{6,}$/.test(v)) return '-' + v; if (/^-?\d+$/.test(v)) return '-100' + v.replace('-', ''); return v; };
+    const closed = normChat(process.env.CLOSED_CHANNEL_ID);
+    for (const ch of [process.env.CHANNEL_1, process.env.CHANNEL_2, closed].filter(Boolean)) {
       try { const m = await tg.call('getChatMember', { chat_id: ch, user_id: me.id }); checks.push(`<li>${ch}: ${m.status === 'administrator' ? '✅ bot admin' : '⚠️ bot admin emas (' + m.status + ')'}</li>`); }
       catch (e) { checks.push(`<li>${ch}: ⚠️ ${e.message}</li>`); }
     }
+    if (closed) {
+      try { const l = await tg.oneTimeInvite(closed, 'setup-test'); await tg.call('revokeChatInviteLink', { chat_id: closed, invite_link: l }).catch(() => {}); checks.push('<li>Yopiq kanal: ✅ bot bir martalik havola yarata oladi</li>'); }
+      catch (e) { checks.push(`<li>Yopiq kanal: ❌ havola yaratib boʻlmadi — ${e.message}. Botga yopiq kanalda <b>«Invite users via link»</b> huquqini bering yoki Netlify’ga <b>CLOSED_INVITE_LINK</b> (doimiy havola) qoʻying.</li>`); }
+    } else checks.push('<li>Yopiq kanal: ⚠️ CLOSED_CHANNEL_ID yoʻq</li>');
     return html(`<h2>✅ Bot ulandi</h2><p>@${me.username} → <code>${info.url}</code></p><p>Kuzatiladigan hodisalar: ${(info.allowed_updates || []).join(', ')}</p><h3>Kanallar</h3><ul>${checks.join('')}</ul>${info.last_error_message ? `<p>Oxirgi xato: ${info.last_error_message}</p>` : ''}<p>Endi botga /start yozib tekshiring.</p>`);
   } catch (e) {
     return html(`<h2>❌ Xato</h2><p>${e.message}</p><p>BOT_TOKEN toʻgʻriligini tekshiring.</p>`);

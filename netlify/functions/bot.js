@@ -5,17 +5,20 @@
 // an app access code + a one-time link to the closed channel.
 const { col, now, inc } = require('./lib/db');
 const tg = require('./lib/tg');
+const course = require('./lib/course');
 
 const ENV = {
   BOT: process.env.BOT_USERNAME || 'InglizTili0danBot',
   CH1: process.env.CHANNEL_1 || '@jamshid_akhatkulov_en',
   CH2: process.env.CHANNEL_2 || '@Imamov_academy',
-  CLOSED: process.env.CLOSED_CHANNEL_ID, // e.g. -1001234567890
+  CLOSED: normChat(process.env.CLOSED_CHANNEL_ID), // e.g. -1001234567890 (a bare 1001234567890 / 1234567890 is fixed automatically)
+  CLOSED_LINK: process.env.CLOSED_INVITE_LINK || '', // optional: permanent invite link used when the bot cannot create one-time links
   APP: process.env.APP_URL || 'https://beginner25.netlify.app',
   REQUIRED: parseInt(process.env.REQUIRED_INVITES || '3', 10),
   ADMINS: (process.env.ADMIN_IDS || '').split(',').map(s => s.trim()).filter(Boolean),
   SECRET: process.env.WEBHOOK_SECRET || '',
 };
+function normChat(v) { v = String(v || '').trim(); if (!v) return ''; if (/^@/.test(v)) return v; if (/^-100\d+$/.test(v)) return v; if (/^100\d{6,}$/.test(v)) return '-' + v; if (/^-?\d+$/.test(v)) return '-100' + v.replace('-', ''); return v; }
 const norm = (ch) => String(ch || '').replace('@', '').toLowerCase();
 const isOurChannel = (chat) => chat && chat.username && [norm(ENV.CH1), norm(ENV.CH2)].includes(chat.username.toLowerCase());
 const chUrl = (ch) => `https://t.me/${String(ch).replace('@', '')}`;
@@ -39,6 +42,34 @@ const shareRow = (id) => [{ text: '📤 Doʻstlarga ulashish', url: shareUrl(id)
 const mainKb = (id) => channelsKb([shareRow(id), [{ text: '📊 Holatim', callback_data: 'status' }]]);
 
 async function getUser(id) { const d = await users().doc(String(id)).get(); return d.exists ? d.data() : null; }
+
+// Invite link to the closed channel for this user: stored one-time link → new one-time link → permanent CLOSED_INVITE_LINK.
+async function closedLink(u) {
+  if (!u) return null;
+  if (u.closedLink) return u.closedLink;
+  if (ENV.CLOSED) {
+    try {
+      const link = await tg.oneTimeInvite(ENV.CLOSED, u.name);
+      await users().doc(String(u.id)).set({ closedLink: link, closedLinkAt: now() }, { merge: true });
+      return link;
+    } catch (e) {
+      console.error('invite', e.message);
+      await alertAdmins(`⚠️ Yopiq kanal havolasini yaratib boʻlmadi (${tg.esc(e.message)}).\nCLOSED_CHANNEL_ID = <code>${ENV.CLOSED}</code>. Bot yopiq kanalda admin va «Invite users» huquqi bormi? Tekshirish: /yopiqtest`);
+    }
+  } else await alertAdmins('⚠️ CLOSED_CHANNEL_ID Netlify’da yoʻq — oʻquvchilar yopiq kanal havolasini ololmayapti.');
+  return ENV.CLOSED_LINK || null;
+}
+// Admin alert at most once per hour (so a broken channel id does not spam).
+async function alertAdmins(text) {
+  try {
+    const ref = col('b25_config').doc('main'); const c = (await ref.get()).data() || {};
+    const t = c.alertAt && c.alertAt.toMillis ? c.alertAt.toMillis() : (c.alertAt || 0);
+    if (Date.now() - t < 3600e3) return;
+    await ref.set({ alertAt: Date.now() }, { merge: true });
+    for (const a of ENV.ADMINS) await tg.send(a, text).catch(() => {});
+  } catch (e) { console.error('alert', e.message); }
+}
+const closedRow = (link) => link ? [[{ text: '🔒 Yopiq kanalga kirish', url: link }]] : [[{ text: '🔒 Yopiq kanal havolasi', callback_data: 'closed' }]];
 
 async function checkMembership(id) {
   const [a, b] = await Promise.all([tg.isMember(ENV.CH1, id), tg.isMember(ENV.CH2, id)]);
@@ -95,6 +126,7 @@ async function onStart(from, payload) {
   } else if (u.name !== name || u.username !== (from.username || '')) {
     await users().doc(id).set({ name, username: from.username || '' }, { merge: true });
   }
+  if (payload === 'keyingi') return onNext(from);
   const after = await evaluate(id, { quiet: false });
   if (after && after.joined) return sendStatus(id, after);
   await tg.send(id,
@@ -117,14 +149,67 @@ async function issueCode(uid) {
     await col('b25_codes').doc(code).set({ uid, createdAt: now() });
     await users().doc(uid).set({ code, codeAt: now() }, { merge: true });
   }
-  let link = null;
-  if (ENV.CLOSED) { try { link = await tg.oneTimeInvite(ENV.CLOSED, u.name); } catch (e) { console.error('invite', e.message); } }
+  const link = await closedLink(Object.assign(u, { code }));
   await tg.send(uid,
     `🎉 <b>Tabriklaymiz!</b> ${ENV.REQUIRED} ta doʻstingiz qoʻshildi.\n\n` +
     `🔑 Ilovaga kirish kodingiz: <code>${code}</code>\n` +
     `📱 Ilova: ${ENV.APP}/?code=${code}\n   Havolani <b>Chrome</b> (Android/kompyuter) yoki <b>Safari</b> (iPhone) da oching va «Oʻrnatish» ni bosing — ilova telefoningizga oʻrnatiladi.\n\n` +
-    (link ? `🔒 Yopiq kanal (darslar shu yerda): ${link}\n   <i>Havola faqat siz uchun, 1 marta ishlaydi.</i>` : `🔒 Yopiq kanal havolasi tez orada yuboriladi.`),
-    tg.kb([[{ text: '📱 Ilovani ochish', url: `${ENV.APP}/?code=${code}` }], ...(link ? [[{ text: '🔒 Yopiq kanalga kirish', url: link }]] : [])]));
+    (link ? `🔒 Yopiq kanal (onlayn darslar shu yerda): ${link}\n   <i>Havola faqat siz uchun, 1 marta ishlaydi — hozir kirib qoʻying.</i>` : `🔒 Yopiq kanal havolasi hozircha tayyor emas — pastdagi tugmani yoki /yopiq ni bosing, biroz vaqtdan keyin yana urinib koʻring.`),
+    tg.kb([[{ text: '📱 Ilovani ochish', url: `${ENV.APP}/?code=${code}` }], ...closedRow(link)]));
+}
+
+async function sendClosed(id) {
+  const u = await evaluate(id, { quiet: true });
+  if (!u || !u.code) return tg.send(id, `Yopiq kanal havolasi kod bilan birga beriladi. Avval ${ENV.REQUIRED} ta doʻst taklif qiling: ${refLink(id)}`, tg.kb([shareRow(id)]));
+  const link = await closedLink(u);
+  return tg.send(id, link ? `🔒 Yopiq kanal havolangiz (1 marta ishlaydi):\n${link}` : `Havola hozircha tayyor emas — ustoz xabardor qilindi, birozdan keyin /yopiq ni qayta bosing.`, link ? tg.kb(closedRow(link)) : undefined);
+}
+
+// Feature 10: application for the next course (Elementary). Student presses the button → admins get a card.
+async function onNext(from) {
+  const id = String(from.id);
+  const u = await getUser(id);
+  const p = (await col('b25_progress').doc(id).get()).data() || {};
+  const name = [from.first_name, from.last_name].filter(Boolean).join(' ') || (u && u.name) || 'Oʻquvchi';
+  const ref = col('b25_next').doc(id);
+  const prev = (await ref.get()).data();
+  await ref.set({ id, name, username: from.username || '', lessons: p.lessons || 0, test: p.test ? p.test.score : null, points: p.points || 0, at: now(), count: inc(1) }, { merge: true });
+  const prevAt = !prev ? 0 : prev.at && prev.at.toMillis ? prev.at.toMillis() : (typeof prev.at === 'number' ? prev.at : 0);
+  if (Date.now() - prevAt > 6 * 3600e3) {
+    for (const a of ENV.ADMINS) await tg.send(a, `📝 <b>Keyingi bosqichga ariza</b>\n👤 ${tg.esc(name)} ${from.username ? '@' + from.username : ''} (id <code>${id}</code>)\n📚 ${p.lessons || 0}/34 dars · ${Object.keys(p.shadow || {}).length} shadowing · ${p.points || 0} ball${p.test ? ` · test ${p.test.score}/40` : ''}\n👥 Taklif qilganlari: ${(u && u.invites) || 0}`,
+      tg.kb([[{ text: '✍️ Yozish', url: from.username ? `https://t.me/${from.username}` : `tg://user?id=${id}` }]])).catch(() => {});
+  }
+  return tg.send(id, `✅ <b>Rahmat, ${tg.esc(from.first_name)}!</b> Arizangiz ustozga yetkazildi — tez orada oʻzi yozadi.\n\n🎓 <b>Imamov Academy Elementary</b>: Beginner 25 bitiruvchilari uchun 1-dars bepul va maxsus shartlar.\n📍 Usmat (markaziy bino) va Kamar (2-son texnikum).\n\nShoshayotgan boʻlsangiz hoziroq yozing: @jamshid_akhatkulov · +998 93 633 64 07`);
+}
+
+// Feature 7: one-question poll after the online lesson. Admin: /sorov [savol] → everyone with a code gets 3 buttons.
+const POLL_OPTS = [['👍 Tushunarli', 'ok'], ['😐 Qisman', 'mid'], ['👎 Qiyin boʻldi', 'hard']];
+async function sendPoll(adminId, question) {
+  const pid = Date.now().toString(36);
+  const q = question || 'Bugungi onlayn dars qanday boʻldi?';
+  await col('b25_polls').doc(pid).set({ id: pid, q, at: now(), votes: {} });
+  await col('b25_config').doc('main').set({ lastPoll: pid }, { merge: true });
+  const list = (await users().get()).docs.map(x => x.data()).filter(x => x.code);
+  const r = await require('./lib/broadcast').broadcast(list, () => ({ text: `🗣 <b>${tg.esc(q)}</b>\nBitta tugmani bosing — bu ustozga keyingi darsni yaxshilashga yordam beradi.`, extra: tg.kb([POLL_OPTS.map(([t, v]) => ({ text: t, callback_data: `poll:${pid}:${v}` }))]) }), { deadlineMs: 20000 });
+  return tg.send(adminId, `🗣 Soʻrov yuborildi: ${r.sent} ta (xato ${r.failed}). Natija: /sorovnatija`);
+}
+async function onPollVote(cq) {
+  const [, pid, v] = cq.data.split(':');
+  const ref = col('b25_polls').doc(pid); const d = (await ref.get()).data();
+  if (!d) return tg.answerCb(cq.id, 'Bu soʻrov yopilgan');
+  const votes = d.votes || {}; const first = !votes[String(cq.from.id)];
+  votes[String(cq.from.id)] = v;
+  await ref.set({ votes }, { merge: true });
+  await tg.answerCb(cq.id, first ? 'Rahmat! Javobingiz qabul qilindi 🙌' : 'Javobingiz oʻzgartirildi');
+  if (first && v === 'hard') await tg.send(cq.from.id, 'Qiyin boʻlgan boʻlsa — ilovada shu kunning «Qoida» boʻlimini qayta oʻqing va mashqlarni qayta ishlang. Savol boʻlsa ustozga yozing: @jamshid_akhatkulov').catch(() => {});
+}
+async function pollResult(adminId) {
+  const cfg = (await col('b25_config').doc('main').get()).data() || {};
+  if (!cfg.lastPoll) return tg.send(adminId, 'Hali soʻrov yuborilmagan. /sorov');
+  const d = (await col('b25_polls').doc(cfg.lastPoll).get()).data() || {};
+  const vs = Object.values(d.votes || {}); const n = vs.length || 1;
+  const line = POLL_OPTS.map(([t, v]) => { const c = vs.filter(x => x === v).length; return `${t}: <b>${c}</b> (${Math.round(c / n * 100)}%)`; }).join('\n');
+  return tg.send(adminId, `🗣 <b>${tg.esc(d.q || '')}</b>\nJavob berganlar: <b>${vs.length}</b>\n${line}`);
 }
 
 async function sendStatus(id, u) {
@@ -137,8 +222,10 @@ async function sendStatus(id, u) {
   if (u.code) {
     const p = await col('b25_progress').doc(String(id)).get();
     const d = p.exists ? p.data() : null;
-    const done = d ? Object.values(d.units || {}).filter(x => x.score >= 14).length : 0;
-    txt += `\n\n🔑 Kod: <code>${u.code}</code>\n📱 Ilova: ${ENV.APP}/?code=${u.code}\n📚 Tugallangan darslar: <b>${done}/34</b>${d && d.test ? ` · Test: ${d.test.score}/40` : ''}`;
+    const done = d ? Object.keys(d.units || {}).length : 0;
+    const link = await closedLink(u);
+    txt += `\n\n🔑 Kod: <code>${u.code}</code>\n📱 Ilova: ${ENV.APP}/?code=${u.code}\n🔒 Yopiq kanal: ${link || 'havola hali tayyor emas (/yopiq)'}\n📚 Tugallangan darslar: <b>${done}/34</b>${d && d.test ? ` · Test: ${d.test.score}/40` : ''}`;
+    return tg.send(id, txt, tg.kb([[{ text: '📱 Ilovani ochish', url: `${ENV.APP}/?code=${u.code}` }], ...closedRow(link), shareRow(id)]));
   }
   return tg.send(id, txt, u.joined ? tg.kb([shareRow(id)]) : mainKb(id));
 }
@@ -152,24 +239,71 @@ async function onAdmin(from, text) {
     const joined = d.filter(x => x.joined).length, coded = d.filter(x => x.code).length;
     const top = d.filter(x => x.invites).sort((a, b) => b.invites - a.invites).slice(0, 15).map(x => `• ${tg.esc(x.name)} @${x.username || '-'} — ${x.invites}${x.code ? ' 🔑' : ''}`).join('\n');
     const prog = await col('b25_progress').get();
-    return tg.send(id, `👥 Foydalanuvchilar: <b>${d.length}</b>\n✅ Ikkala kanalga aʼzo: <b>${joined}</b>\n🔑 Kod olganlar: <b>${coded}</b>\n📱 Ilovada ishlayotganlar: <b>${prog.size}</b>\n\n<b>Eng faol taklifchilar:</b>\n${top || '—'}`);
+    const cfg = (await col('b25_config').doc('main').get()).data() || {};
+    const cd = course.calendarDay(cfg);
+    return tg.send(id, `📅 Boshlanish: <b>${cfg.startDate ? course.fmt(cfg.startDate) : 'belgilanmagan (/boshlash)'}</b> · bugun: <b>${cd ? 'Day ' + cd : 'boshlanmagan'}</b>\n👥 Foydalanuvchilar: <b>${d.length}</b>\n✅ Ikkala kanalga aʼzo: <b>${joined}</b>\n🔑 Kod olganlar: <b>${coded}</b>\n📱 Ilovada ishlayotganlar: <b>${prog.size}</b>\n\n<b>Eng faol taklifchilar:</b>\n${top || '—'}`);
   }
   if (cmd === '/kodber' && arg) { await issueCode(String(arg).replace('@', '')); return tg.send(id, `Kod yuborildi: ${arg}`); }
+  if ((cmd === '/boshlash' || cmd === '/sana') && arg) {
+    if (!course.parseDate(arg)) return tg.send(id, 'Sana formati: /boshlash 2026-10-27');
+    await col('b25_config').doc('main').set({ startDate: arg, openDay: null, updatedAt: now() }, { merge: true });
+    const cd = course.calendarDay({ startDate: arg });
+    return tg.send(id, `📅 Kurs boshlanish sanasi: <b>${course.fmt(arg)}</b> (${arg}).\nBugun kalendar boʻyicha: <b>${cd ? 'Day ' + cd : 'kurs hali boshlanmagan'}</b>.\nHar kuni 08:00 da yangi kun eʼloni ketadi; oʻquvchi oldingi kunni tugatmasa, keyingisi ochilmaydi.`);
+  }
   if (cmd === '/kun' && arg) {
     const n = parseInt(arg, 10);
-    await col('b25_config').doc('main').set({ openDay: n, updatedAt: now() }, { merge: true });
-    return tg.send(id, `Ilovada ochiq kun: <b>${n}</b> (oʻquvchilar ilovani qayta ochganda yangilanadi).`);
+    if (!(n >= 1 && n <= course.TOTAL)) return tg.send(id, 'Kun 1–25 oraligʻida boʻlsin: /kun 3');
+    const sd = course.startDateForDay(n);
+    await col('b25_config').doc('main').set({ startDate: sd, openDay: null, updatedAt: now() }, { merge: true });
+    return tg.send(id, `Bugun <b>Day ${n}</b> qilib belgilandi (boshlanish sanasi ${course.fmt(sd)} deb hisoblanadi). Oʻquvchilar ilovani qayta ochganda yangilanadi.`);
+  }
+  if (cmd === '/sorov') return sendPoll(id, text.replace(/^\/sorov\s*/, '').trim());
+  if (cmd === '/sorovnatija') return pollResult(id);
+  if (cmd === '/arizalar') {
+    const snap = await col('b25_next').orderBy('at', 'desc').limit(30).get();
+    const lines = snap.docs.map(x => x.data()).map(x => `• ${tg.esc(x.name)} ${x.username ? '@' + x.username : ''} — ${x.lessons}/34 dars${x.test != null ? `, test ${x.test}` : ''}`);
+    return tg.send(id, `📝 <b>Keyingi bosqichga arizalar</b> (${snap.size})\n${lines.join('\n') || '—'}`);
+  }
+  if (cmd === '/yopiqyubor') {
+    // Re-send the closed-channel link to everyone who already has a code but never received a link
+    // (/yopiqyubor hammaga — to every code holder, reusing stored links).
+    const all = arg === 'hammaga';
+    const list = (await users().get()).docs.map(x => x.data()).filter(x => x.code && (all || !x.closedLink));
+    if (!list.length) return tg.send(id, all ? 'Kod olganlar yoʻq.' : '✅ Havola olmagan kod egalari yoʻq — hammaga yetib borgan.');
+    if (!ENV.CLOSED && !ENV.CLOSED_LINK) return tg.send(id, '❌ CLOSED_CHANNEL_ID (yoki CLOSED_INVITE_LINK) Netlify’da yoʻq.');
+    const t0 = Date.now(); let sent = 0, noLink = 0, failed = 0;
+    for (const u of list) {
+      if (Date.now() - t0 > 20000) break;
+      const link = await closedLink(u);
+      if (!link) { noLink++; continue; }
+      try { await tg.send(u.id, `🔒 <b>Yopiq kanal havolangiz</b> (onlayn darslar shu yerda):\n${link}\n<i>Havola faqat siz uchun, 1 marta ishlaydi — hozir kirib qoʻying.</i>`, tg.kb(closedRow(link))); sent++; }
+      catch (e) { failed++; }
+    }
+    const left = list.length - sent - noLink - failed;
+    return tg.send(id, `🔒 Yopiq kanal havolasi yuborildi: <b>${sent}</b> ta${noLink ? `\n⚠️ havola yaratib boʻlmadi: ${noLink} (/yopiqtest)` : ''}${failed ? `\n❌ yetib bormadi (botni bloklagan): ${failed}` : ''}${left > 0 ? `\n⏳ vaqt tugadi, qolgani: ${left} — /yopiqyubor ni yana bosing` : ''}`);
+  }
+  if (cmd === '/yopiqtest') {
+    if (!ENV.CLOSED) return tg.send(id, '❌ CLOSED_CHANNEL_ID Netlify’da yoʻq.');
+    try {
+      const me = await tg.call('getMe', {});
+      const m = await tg.call('getChatMember', { chat_id: ENV.CLOSED, user_id: me.id });
+      const link = await tg.oneTimeInvite(ENV.CLOSED, 'test');
+      await tg.call('revokeChatInviteLink', { chat_id: ENV.CLOSED, invite_link: link }).catch(() => {});
+      return tg.send(id, `✅ Yopiq kanal ishlayapti.\nID: <code>${ENV.CLOSED}</code>\nBot holati: ${m.status}\nSinov havolasi yaratildi va bekor qilindi.`);
+    } catch (e) {
+      return tg.send(id, `❌ Yopiq kanal xatosi: <code>${tg.esc(e.message)}</code>\nID: <code>${ENV.CLOSED}</code>\n\nTekshiring: 1) ID toʻgʻri (−100 bilan boshlanadi); 2) bot yopiq kanalda <b>admin</b>; 3) adminlik huquqlarida <b>«Invite users via link»</b> yoqilgan.${ENV.CLOSED_LINK ? '\nHozircha CLOSED_INVITE_LINK ishlatilmoqda.' : ''}`);
+    }
   }
   if (cmd === '/eslat') {
     const r = await require('./cron-morning').run();
-    return tg.send(id, r.skipped ? `Day ${r.day} allaqachon eʼlon qilingan. Avval /kun ${r.day + 1} qiling.` : `📣 Day ${r.day} eʼloni yuborildi: ${r.sent} ta, xato: ${r.failed}`);
+    return tg.send(id, r.skipped ? (r.day < 1 ? 'Kurs hali boshlanmagan (/boshlash bilan sana qoʻying).' : `Day ${r.day} allaqachon eʼlon qilingan. Keyingi kun ertaga oʻzi ochiladi.`) : `📣 Day ${r.day} eʼloni yuborildi: ${r.sent} ta, xato: ${r.failed}`);
   }
   if (cmd === '/natija') {
     const prog = await col('b25_progress').orderBy('updatedAt', 'desc').limit(40).get();
-    const lines = prog.docs.map(x => { const p = x.data(); const done = Object.values(p.units || {}).filter(u => u.score >= 14).length; const sh = Object.keys(p.shadow || {}).length; return `• ${tg.esc(p.name)} @${p.username || '-'} — ${done}/34 dars, ${sh} shadowing, ${p.points || 0} ball${p.streak ? `, 🔥${p.streak}` : ''}${p.test ? `, test ${p.test.score}` : ''}`; });
+    const lines = prog.docs.map(x => { const p = x.data(); const done = Object.keys(p.units || {}).length; const sh = Object.keys(p.shadow || {}).length; return `• ${tg.esc(p.name)} @${p.username || '-'} — ${done}/34 dars, ${sh} shadowing, ${p.points || 0} ball${p.streak ? `, 🔥${p.streak}` : ''}${p.test ? `, test ${p.test.score}` : ''}`; });
     return tg.send(id, `📚 <b>Oxirgi natijalar</b>\n${lines.join('\n') || '—'}`);
   }
-  return tg.send(id, 'Admin buyruqlari:\n/stat — umumiy statistika\n/natija — oʻquvchilar natijalari\n/kun N — ilovada N-kungacha ochish (ertasi 08:00 da hammaga eʼlon ketadi)\n/eslat — yangi kun eʼlonini hozir yuborish\n/kodber <user_id> — kodni majburan berish');
+  return tg.send(id, 'Admin buyruqlari:\n/stat — umumiy statistika\n/natija — oʻquvchilar natijalari\n/boshlash 2026-10-27 — kurs boshlanish sanasi (Day 1). Keyin har kuni bitta kun oʻzi ochiladi\n/kun N — bugunni Day N deb belgilash\n/eslat — bugungi kun eʼlonini hozir yuborish\n/sorov [savol] — darsdan keyin 1 savollik soʻrov yuborish\n/sorovnatija — oxirgi soʻrov natijasi\n/arizalar — keyingi bosqichga yozilganlar\n/yopiqtest — yopiq kanal havolasi ishlashini tekshirish\n/yopiqyubor — kod olib, havola olmaganlarga yopiq kanal havolasini yuborish (/yopiqyubor hammaga — barcha kod egalariga)\n/kodber <user_id> — kodni majburan berish');
 }
 
 exports.handler = async (event) => {
@@ -198,13 +332,18 @@ exports.handler = async (event) => {
       if (t.startsWith('/start')) await onStart(from, t.split(/\s+/)[1]);
       else if (t.startsWith('/link') || t.startsWith('/havola')) await tg.send(from.id, `🔗 Sizning havolangiz:\n${refLink(from.id)}`, tg.kb([shareRow(from.id)]));
       else if (t.startsWith('/holat') || t.startsWith('/status') || t.startsWith('/tekshir')) { const u = await evaluate(from.id, { quiet: true }); await sendStatus(String(from.id), u); }
-      else if (t.startsWith('/kod')) { const u = await evaluate(from.id, { quiet: true }); await tg.send(from.id, u && u.code ? `🔑 Kodingiz: <code>${u.code}</code>\n📱 ${ENV.APP}/?code=${u.code}` : `Hali kod yoʻq. ${ENV.REQUIRED} ta doʻst taklif qiling: ${refLink(from.id)}`); }
+      else if (/^\/yopiq(\s|$)/.test(t)) await sendClosed(from.id);
+      else if (/^\/keyingi/.test(t)) await onNext(from);
+      else if (/^\/kod(\s|$)/.test(t)) { const u = await evaluate(from.id, { quiet: true }); await tg.send(from.id, u && u.code ? `🔑 Kodingiz: <code>${u.code}</code>\n📱 ${ENV.APP}/?code=${u.code}` : `Hali kod yoʻq. ${ENV.REQUIRED} ta doʻst taklif qiling: ${refLink(from.id)}`); }
       else if (ENV.ADMINS.includes(String(from.id)) && t.startsWith('/')) await onAdmin(from, t);
       else { await getUser(from.id) ? await sendStatus(String(from.id)) : await onStart(from, ''); }
     } else if (up.callback_query) {
       const cq = up.callback_query, from = cq.from;
-      await tg.answerCb(cq.id);
+      if (!cq.data.startsWith('poll:')) await tg.answerCb(cq.id);
       if (cq.data === 'status' || cq.data === 'check') { const u = await evaluate(from.id, { quiet: true }); await sendStatus(String(from.id), u); }
+      else if (cq.data === 'closed') await sendClosed(from.id);
+      else if (cq.data === 'next') await onNext(from);
+      else if (cq.data.startsWith('poll:')) await onPollVote(cq);
       else if (cq.data === 'link') await tg.send(from.id, `🔗 Sizning havolangiz:\n${refLink(from.id)}`, tg.kb([shareRow(from.id)]));
     }
   } catch (e) { console.error('bot error', e); }

@@ -33,7 +33,7 @@ exports.handler = async (event) => {
       updatedAt: now(), lastActive: Date.now(),
     };
     doc.points = points(doc);
-    doc.lessons = Object.values(units).filter(x => x.score >= 14).length;
+    doc.lessons = Object.keys(units).length; // a lesson counts once all 18 exercises are answered (any score)
 
     const prevSnap = await col('b25_progress').doc(uid).get();
     const prev = prevSnap.exists ? prevSnap.data() : {};
@@ -51,7 +51,8 @@ exports.handler = async (event) => {
         await tg.send(uid,
           `🎓 <b>Tabriklaymiz!</b> Siz «Beginner 25» kursini muvaffaqiyatli tugatdingiz — yakuniy test: <b>${test.score}/40</b>.\n\n` +
           `Sertifikatingiz ilovada (Profil → Sertifikat) — yuklab olib, doʻstlaringizga ulashing.\n\n` +
-          `Endi keyingi bosqich: Imamov Academy’da ingliz tilini davom ettiring. Kurs bitiruvchilari uchun maxsus shartlar bor — batafsil maʼlumot uchun ustozga yozing: @jamshid_akhatkulov`
+          `🎓 Keyingi bosqich — <b>Imamov Academy Elementary</b>: bitiruvchilar uchun 1-dars bepul va maxsus shartlar. Pastdagi tugmani bosing — ustoz oʻzi bogʻlanadi.`,
+          tg.kb([[{ text: '📝 Keyingi bosqichga yozilish', callback_data: 'next' }], [{ text: '✍️ Ustozga yozish', url: 'https://t.me/jamshid_akhatkulov' }]])
         ).catch(() => {});
       }
     }

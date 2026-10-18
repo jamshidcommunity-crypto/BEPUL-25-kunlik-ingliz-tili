@@ -14,7 +14,7 @@ const ustoz = JSON.parse(fs.readFileSync(path.join(DATA, 'ustoz.json'), 'utf8'))
 const out = { config, ustoz, glossary, days: days.map(d => ({ ...d, units: d.units.map(u => { const { glossary, ...rest } = u; return rest; }) })) };
 const js = 'window.COURSE = ' + JSON.stringify(out) + ';\n';
 fs.writeFileSync(path.join(ROOT, 'course.js'), js);
-fs.writeFileSync(path.join(ROOT, 'netlify', 'functions', 'lib', 'days.json'), JSON.stringify(days.map(d => ({ day: d.day, title: d.title, units: d.units.length }))));
+fs.writeFileSync(path.join(ROOT, 'netlify', 'functions', 'lib', 'days.json'), JSON.stringify(days.map(d => ({ day: d.day, title: d.title, units: d.units.length, unitIds: d.units.map(u => u.id) }))));
 // index.html
 const emblem = fs.readFileSync(path.join(SRC, 'emblem_b64.txt'), 'utf8').trim();
 const app = fs.readFileSync(path.join(SRC, 'app.js'), 'utf8') + '\n' + fs.readFileSync(path.join(SRC, 'extras.js'), 'utf8');
