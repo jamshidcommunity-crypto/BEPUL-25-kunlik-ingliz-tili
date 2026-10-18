@@ -271,16 +271,19 @@ async function onAdmin(from, text) {
     const list = (await users().get()).docs.map(x => x.data()).filter(x => x.code && (all || !x.closedLink));
     if (!list.length) return tg.send(id, all ? 'Kod olganlar yoʻq.' : '✅ Havola olmagan kod egalari yoʻq — hammaga yetib borgan.');
     if (!ENV.CLOSED && !ENV.CLOSED_LINK) return tg.send(id, '❌ CLOSED_CHANNEL_ID (yoki CLOSED_INVITE_LINK) Netlify’da yoʻq.');
-    const t0 = Date.now(); let sent = 0, noLink = 0, failed = 0;
+    const t0 = Date.now(); let sent = 0; const noLink = [], failed = [];
+    const who = (u) => `${tg.esc(u.name)}${u.username ? ' @' + u.username : ''} (id ${u.id})`;
     for (const u of list) {
       if (Date.now() - t0 > 20000) break;
-      const link = await closedLink(u);
-      if (!link) { noLink++; continue; }
+      let link = u.closedLink || null, err = '';
+      if (!link && ENV.CLOSED) { try { link = await tg.oneTimeInvite(ENV.CLOSED, u.name); await users().doc(String(u.id)).set({ closedLink: link, closedLinkAt: now() }, { merge: true }); } catch (e) { err = e.message; } }
+      if (!link) link = ENV.CLOSED_LINK || null;
+      if (!link) { noLink.push(`${who(u)} — ${tg.esc(err)}`); continue; }
       try { await tg.send(u.id, `🔒 <b>Yopiq kanal havolangiz</b> (onlayn darslar shu yerda):\n${link}\n<i>Havola faqat siz uchun, 1 marta ishlaydi — hozir kirib qoʻying.</i>`, tg.kb(closedRow(link))); sent++; }
-      catch (e) { failed++; }
+      catch (e) { failed.push(who(u)); }
     }
-    const left = list.length - sent - noLink - failed;
-    return tg.send(id, `🔒 Yopiq kanal havolasi yuborildi: <b>${sent}</b> ta${noLink ? `\n⚠️ havola yaratib boʻlmadi: ${noLink} (/yopiqtest)` : ''}${failed ? `\n❌ yetib bormadi (botni bloklagan): ${failed}` : ''}${left > 0 ? `\n⏳ vaqt tugadi, qolgani: ${left} — /yopiqyubor ni yana bosing` : ''}`);
+    const left = list.length - sent - noLink.length - failed.length;
+    return tg.send(id, `🔒 Yopiq kanal havolasi yuborildi: <b>${sent}</b> ta${noLink.length ? `\n⚠️ havola yaratib boʻlmadi:\n• ${noLink.join('\n• ')}` : ''}${failed.length ? `\n❌ yetib bormadi (botni bloklagan):\n• ${failed.join('\n• ')}` : ''}${left > 0 ? `\n⏳ vaqt tugadi, qolgani: ${left} — /yopiqyubor ni yana bosing` : ''}`);
   }
   if (cmd === '/yopiqtest') {
     if (!ENV.CLOSED) return tg.send(id, '❌ CLOSED_CHANNEL_ID Netlify’da yoʻq.');
